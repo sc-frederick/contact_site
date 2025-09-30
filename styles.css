@@ -13,7 +13,8 @@ body {
     justify-content: center;
     padding: 20px;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .container {
@@ -287,12 +288,24 @@ body {
 }
 
 @media (max-width: 480px) {
-    .container {
+    body {
         padding: 10px;
+        min-height: 100vh;
+        height: auto;
+    }
+    
+    .container {
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
     }
     
     .card {
         border-radius: 20px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
     }
     
     .card-header {
@@ -311,13 +324,12 @@ body {
         font-size: 24px;
     }
     
-    .social-links {
-        gap: 12px;
+    .services {
+        gap: 4px;
     }
     
-    .social-link {
-        width: 44px;
-        height: 44px;
-        font-size: 16px;
+    .service-pill {
+        font-size: 9px;
+        padding: 3px 6px;
     }
 }
