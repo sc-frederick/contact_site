@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Business Card</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="avatar">
+                    <img src="https://sc-frederick.github.io/advancedemailsignature/images/AdvancedLogo.png" alt="Profile Photo">
+                </div>
+                <div class="profile-info">
+                    <h1 class="name">Stephen Frederick</h1>
+                    <p class="title">Staff Engineer</p>
+                    <p class="company">Advanced Engineering Consultants</p>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <div class="services-section">
+                    <h3>Services We Offer</h3>
+                    <div class="services">
+                        <span class="service-pill">Civil Engineering</span>
+                        <span class="service-pill">Structural Engineering</span>
+                        <span class="service-pill">Mechanical Engineering</span>
+                        <span class="service-pill">Electrical Engineering</span>
+                        <span class="service-pill">Fire Protection</span>
+                        <span class="service-pill">Plumbing Engineering</span>
+                        <span class="service-pill">Building Design</span>
+                        <span class="service-pill">Construction Documents</span>
+                        <span class="service-pill">Land Development</span>
+                        <span class="service-pill">Engineering Inspections</span>
+                        <span class="service-pill">Engineering Reports</span>
+                        <span class="service-pill">Permitting</span>
+                        <span class="service-pill">Product Design</span>
+                    </div>
+                </div>
+                
+                <div class="contact-section">
+                    <h3>Contact Information</h3>
+                    <div class="contact-items">
+                        <a href="mailto:sfrederick@advanced-engineers.com" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>sfrederick@advanced-engineers.com</span>
+                        </a>
+                        <a href="tel:+19043334308" class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+1 (904) 333-4308</span>
+                        </a>
+                        <a href="https://www.advanced-engineers.com" target="_blank" class="contact-item">
+                            <i class="fas fa-globe"></i>
+                            <span>www.advanced-engineers.com</span>
+                        </a>
+                        <a href="https://maps.google.com/?q=Tampa,+FL" target="_blank" class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Tampa, FL</span>
+                        </a>
+                    </div>
+                </div>
+                
+
+                
+
+            </div>
+            
+            <div class="card-footer">
+                <button class="action-btn primary" onclick="saveContact()">
+                    <i class="fas fa-user-plus"></i>
+                    Save Contact
+                </button>
+                <button class="action-btn secondary" onclick="shareProfile()">
+                    <i class="fas fa-share-alt"></i>
+                    Share
+                </button>
+            </div>
+        </div>
+        
+        <div class="background-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
