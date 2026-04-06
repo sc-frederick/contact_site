@@ -4,7 +4,6 @@ VERSION:3.0
 FN:Stephen Frederick
 ORG:Advanced Engineering Consultants
 TITLE:Staff Engineer
-TEL:+19043334308
 EMAIL:sfrederick@advanced-engineers.com
 URL:https://www.advanced-engineers.com
 ADR:;;Tampa, FL;;;
