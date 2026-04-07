@@ -1,5 +1,8 @@
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { createRootRoute, Outlet, ScrollRestoration, Scripts } from "@tanstack/react-router";
 import appStyles from "~/styles.css?url";
+import { Navbar } from "~/components/layout/navbar";
+import { Footer } from "~/components/layout/footer";
+import { NoiseOverlay } from "~/components/ui/noise-overlay";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -23,7 +26,14 @@ function RootComponent() {
         <title>Stephen Frederick</title>
       </head>
       <body className="bg-bg-primary text-text-primary font-body">
-        <Outlet />
+        <NoiseOverlay />
+        <Navbar />
+        <main className="min-h-screen pt-[72px]">
+          <Outlet />
+        </main>
+        <Footer />
+        <ScrollRestoration />
+        <Scripts />
       </body>
     </html>
   );
