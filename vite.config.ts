@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import viteReact from "@vitejs/plugin-react";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { cloudflare } from "@cloudflare/vite-plugin";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   server: {
@@ -11,6 +12,7 @@ export default defineConfig({
   plugins: [
     cloudflare({ viteEnvironment: { name: "ssr" } }),
     tsConfigPaths({ root: "./" }),
+    tailwindcss(),
     tanstackStart({
       srcDirectory: "app",
     }),
