@@ -12,20 +12,14 @@ interface GetBlogPostsOptions {
 }
 
 export const getBlogPosts = createServerFn({ method: 'GET' })
-  .handler(async (ctx): Promise<ApiResponse<PaginatedResponse<BlogPost>>> => {
+  .handler(async (): Promise<ApiResponse<PaginatedResponse<BlogPost>>> => {
     try {
-      const options = (ctx.data as unknown as GetBlogPostsOptions) || {};
-      const { published = true, page = 1, limit = 10, tag } = options;
+      const published = true;
+      const page = 1;
+      const limit = 10;
 
       // Fetch posts from database (mock data for now)
       let allPosts = await getBlogPostsFromDB(published);
-
-      // Filter by tag if specified
-      if (tag) {
-        allPosts = allPosts.filter((post) => 
-          post.tags.some((t) => t.toLowerCase() === tag.toLowerCase())
-        );
-      }
 
       // Calculate pagination
       const total = allPosts.length;
@@ -56,7 +50,9 @@ export const getBlogPosts = createServerFn({ method: 'GET' })
 export const getBlogPost = createServerFn({ method: 'GET' })
   .handler(async (ctx): Promise<ApiResponse<BlogPost | null>> => {
     try {
-      const { slug } = (ctx.data as unknown as { slug: string }) || {};
+      // Access data from context - slug should be passed as ctx.data
+      const data = ctx.data as unknown as { slug?: string };
+      const slug = data?.slug;
 
       if (!slug) {
         return {
