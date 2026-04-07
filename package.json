@@ -4,9 +4,13 @@
   "description": "A modern, responsive digital business card for Stephen Frederick, Staff Engineer at Advanced Engineering Consultants.",
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start",
+    "preview": "vinxi preview",
+    "db:setup": "wrangler d1 execute contact-site-db --local --file=./db/schema.sql",
+    "db:seed": "wrangler d1 execute contact-site-db --local --file=./db/seed.sql",
+    "deploy": "wrangler deploy"
   },
   "keywords": [],
   "author": "",
