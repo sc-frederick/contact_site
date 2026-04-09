@@ -2,19 +2,21 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "contact-site",
   "compatibility_date": "2024-12-01",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "main": "@tanstack/react-start/server-entry",
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "contact-site-db",
-      "database_id": "placeholder-will-be-set-after-create"
+      "database_id": "f3fb4f29-7bd9-468d-a716-13da94ef2718"
     }
   ],
   "kv_namespaces": [
     {
       "binding": "CACHE",
-      "id": "placeholder-will-be-set-after-create",
+      "id": "48413adf59da4926be2da155619af648",
       "preview_id": "placeholder-will-be-set-after-create"
     }
   ]
