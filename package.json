@@ -35,5 +35,9 @@
     "typescript": "^5.9.3",
     "vite": "^8.0.5",
     "wrangler": "^4.74.0"
+  },
+  "optionalDependencies": {
+    "@emnapi/core": "1.9.2",
+    "@emnapi/runtime": "1.9.2"
   }
 }
