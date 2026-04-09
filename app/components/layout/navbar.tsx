@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 
 const routes = [
   { path: "/", label: "Home" },
-  { path: "/portfolio", label: "Portfolio" },
+  { path: "/portfolio", label: "Developer Portfolio" },
   { path: "/resume", label: "Resume" },
   { path: "/blog", label: "Blog" },
   { path: "/contact", label: "Contact" },

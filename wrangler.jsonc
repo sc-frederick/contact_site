@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "contact-site",
+  "compatibility_date": "2024-12-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "contact-site-db",
+      "database_id": "placeholder-will-be-set-after-create"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "placeholder-will-be-set-after-create",
+      "preview_id": "placeholder-will-be-set-after-create"
+    }
+  ]
+}

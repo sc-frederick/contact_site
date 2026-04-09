@@ -1,14 +1,26 @@
 import type { ContactInfo } from "./contact-data";
 
+function escapeVCardValue(value: string): string {
+  return value
+    .replace(/\\/g, "\\\\")
+    .replace(/\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
+}
+
 export function generateVCard(contact: ContactInfo): string {
+  const nameParts = contact.name.trim().split(/\s+/);
+  const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+  const firstAndMiddle = nameParts.slice(0, -1).join(" ");
+
   const lines = [
     "BEGIN:VCARD",
     "VERSION:3.0",
-    `FN:${contact.name}`,
-    `N:${contact.name.split(" ").reverse().join(";")};;;`,
-    `ORG:${contact.company}`,
-    `TITLE:${contact.title}`,
-    `ADR:;;${contact.location};;;;`,
+    `FN:${escapeVCardValue(contact.name)}`,
+    `N:${escapeVCardValue(lastName)};${escapeVCardValue(firstAndMiddle)};;;`,
+    `ORG:${escapeVCardValue(contact.company)}`,
+    `TITLE:${escapeVCardValue(contact.title)}`,
+    `ADR:;;${escapeVCardValue(contact.location)};;;;`,
   ];
 
   // Add emails
@@ -32,9 +44,13 @@ export function generateVCard(contact: ContactInfo): string {
   return lines.join("\r\n");
 }
 
-export function downloadVCard(contact: ContactInfo): void {
+export function createVCardBlob(contact: ContactInfo): Blob {
   const vcardContent = generateVCard(contact);
-  const blob = new Blob([vcardContent], { type: "text/vcard;charset=utf-8" });
+  return new Blob([vcardContent], { type: "text/vcard;charset=utf-8" });
+}
+
+export function downloadVCard(contact: ContactInfo): void {
+  const blob = createVCardBlob(contact);
   const url = URL.createObjectURL(blob);
 
   const link = document.createElement("a");

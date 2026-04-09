@@ -16,15 +16,15 @@ export const contactData: ContactInfo = {
   company: "Advanced Engineering Consultants",
   location: "Tampa, FL",
   emails: [
-    { label: "Work", address: "stephen.frederick@aec-engineers.com" },
-    { label: "Personal", address: "hello@stephenfrederick.com" },
+    { label: "Work", address: "sfrederick@advanced-engineers.com" },
+    { label: "Personal", address: "sfred.mail@gmail.com" },
   ],
-  phone: { label: "Mobile", number: "+1 (555) 123-4567" },
+  phone: { label: "Mobile", number: "+1 (813) 406-0178" },
   websites: [
-    { label: "Portfolio", url: "https://stephenfrederick.com" },
-    { label: "Company", url: "https://aec-engineers.com" },
+    { label: "Portfolio", url: "https://sfrederick.dev/portfolio" },
+    { label: "Company", url: "https://advanced-engineers.com" },
   ],
-  github: "https://github.com/stephenfrederick",
+  github: "https://github.com/sc-frederick",
   services: [
     "Civil Engineering",
     "Structural Engineering",

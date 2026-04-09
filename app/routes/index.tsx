@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HeroSection } from "~/components/home/hero-section";
-import { ServicesSection } from "~/components/home/services-section";
 import { ContactLinks } from "~/components/home/contact-links";
 import { ActionButtons } from "~/components/home/action-buttons";
 
@@ -19,9 +18,6 @@ function Home() {
 
           {/* Hero Section - Avatar, Name, Title */}
           <HeroSection className="mb-8" />
-
-          {/* Services Pills */}
-          <ServicesSection className="mb-8" />
 
           {/* Divider */}
           <div className="h-px bg-border/50 mb-8" />

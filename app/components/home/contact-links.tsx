@@ -4,6 +4,7 @@ import { cn } from "~/lib/utils";
 
 interface ContactLinksProps {
   className?: string;
+  mode?: "full" | "developer";
 }
 
 interface ContactLinkItemProps {
@@ -32,65 +33,111 @@ function ContactLinkItem({ icon, label, value, href }: ContactLinkItemProps) {
   );
 }
 
-export function ContactLinks({ className }: ContactLinksProps) {
+export function ContactLinks({ className, mode = "full" }: ContactLinksProps) {
+  const personalEmail = contactData.emails.find(
+    (email) => email.label.toLowerCase() === "personal"
+  );
+  const portfolioSite = contactData.websites.find(
+    (site) => site.label.toLowerCase() === "portfolio"
+  );
+
   return (
     <div className={cn("space-y-3", className)}>
       <h2 className="font-display text-lg text-text-secondary mb-4 text-center">
         Contact
       </h2>
 
-      {/* Email */}
-      {contactData.emails.map((email) => (
-        <ContactLinkItem
-          key={email.address}
-          icon={<Mail className="w-4 h-4" />}
-          label={email.label}
-          value={email.address}
-          href={`mailto:${email.address}`}
-        />
-      ))}
+      {mode === "developer" ? (
+        <>
+          {/* Personal Email */}
+          {personalEmail && (
+            <ContactLinkItem
+              icon={<Mail className="w-4 h-4" />}
+              label={personalEmail.label}
+              value={personalEmail.address}
+              href={`mailto:${personalEmail.address}`}
+            />
+          )}
 
-      {/* Phone */}
-      <ContactLinkItem
-        icon={<Phone className="w-4 h-4" />}
-        label={contactData.phone.label}
-        value={contactData.phone.number}
-        href={`tel:${contactData.phone.number.replace(/\s/g, "")}`}
-      />
+          {/* Portfolio */}
+          {portfolioSite && (
+            <ContactLinkItem
+              icon={<Globe className="w-4 h-4" />}
+              label={portfolioSite.label}
+              value={portfolioSite.url.replace("https://", "")}
+              href={portfolioSite.url}
+            />
+          )}
 
-      {/* Websites */}
-      {contactData.websites.map((site) => (
-        <ContactLinkItem
-          key={site.url}
-          icon={<Globe className="w-4 h-4" />}
-          label={site.label}
-          value={site.url.replace("https://", "")}
-          href={site.url}
-        />
-      ))}
+          {/* GitHub */}
+          <ContactLinkItem
+            icon={<Github className="w-4 h-4" />}
+            label="GitHub"
+            value={contactData.github.replace("https://", "")}
+            href={contactData.github}
+          />
+        </>
+      ) : (
+        <>
+          {/* Email */}
+          {contactData.emails.map((email) => (
+            <ContactLinkItem
+              key={email.address}
+              icon={<Mail className="w-4 h-4" />}
+              label={email.label}
+              value={email.address}
+              href={`mailto:${email.address}`}
+            />
+          ))}
 
-      {/* GitHub */}
-      <ContactLinkItem
-        icon={<Github className="w-4 h-4" />}
-        label="GitHub"
-        value={contactData.github.replace("https://", "")}
-        href={contactData.github}
-      />
+          {/* Phone */}
+          <ContactLinkItem
+            icon={<Phone className="w-4 h-4" />}
+            label={contactData.phone.label}
+            value={contactData.phone.number}
+            href={`tel:${contactData.phone.number.replace(/\s/g, "")}`}
+          />
 
-      {/* Location */}
-      <div className="flex items-center gap-3 p-3 rounded-lg bg-bg-surface/50 border border-border">
-        <span className="text-accent">
-          <MapPin className="w-4 h-4" />
-        </span>
-        <div>
-          <p className="font-body text-xs text-text-tertiary uppercase tracking-wider">
-            Location
-          </p>
-          <p className="font-body text-sm text-text-primary">
-            {contactData.location}
-          </p>
-        </div>
-      </div>
+          {/* Websites */}
+          {contactData.websites.map((site) => (
+            <ContactLinkItem
+              key={site.url}
+              icon={<Globe className="w-4 h-4" />}
+              label={site.label}
+              value={site.url.replace("https://", "")}
+              href={site.url}
+            />
+          ))}
+
+          {/* GitHub */}
+          <ContactLinkItem
+            icon={<Github className="w-4 h-4" />}
+            label="GitHub"
+            value={contactData.github.replace("https://", "")}
+            href={contactData.github}
+          />
+
+          {/* Location */}
+          <a
+            href="https://maps.app.goo.gl/8BNGpYQypndip3L39"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 p-3 rounded-lg bg-bg-surface/50 border border-border hover:border-accent/50 hover:bg-bg-surface transition-all duration-300 group"
+          >
+            <span className="text-accent group-hover:scale-110 transition-transform duration-300">
+              <MapPin className="w-4 h-4" />
+            </span>
+            <div>
+              <p className="font-body text-xs text-text-tertiary uppercase tracking-wider">
+                Location
+              </p>
+              <p className="font-body text-sm text-text-primary">
+                {contactData.location}
+              </p>
+            </div>
+          </a>
+        </>
+      )}
     </div>
   );
 }

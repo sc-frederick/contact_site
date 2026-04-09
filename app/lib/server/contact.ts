@@ -56,9 +56,10 @@ function sanitizeInput(input: string): string {
 }
 
 export const submitContactForm = createServerFn({ method: 'POST' })
+  .inputValidator((data: ContactFormData) => data)
   .handler(async (ctx): Promise<ApiResponse<{ id: number }>> => {
     try {
-      const data = ctx.data as unknown as ContactFormData & { 
+      const data = ctx.data as ContactFormData & { 
         sessionId?: string;
         ipAddress?: string;
         userAgent?: string;

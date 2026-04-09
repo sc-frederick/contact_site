@@ -35,30 +35,30 @@ function getDuration(startDate: string, endDate: string | null): string {
 export function Timeline({ items, className }: TimelineProps) {
   return (
     <div className={cn("relative", className)}>
-      {/* Vertical line */}
-      <div className="absolute left-[100px] top-0 bottom-0 w-px bg-border hidden md:block" />
+      {/* Vertical line — left offset matches date column width so labels aren’t clipped under overflow-x-hidden */}
+      <div className="absolute left-[11.5rem] top-0 bottom-0 w-px bg-border hidden md:block" />
 
       <div className="space-y-8">
         {items.map((item, index) => (
           <div key={item.id} className="relative flex gap-6 md:gap-8">
             {/* Date column - desktop */}
-            <div className="hidden md:block w-[100px] flex-shrink-0 text-right pt-1">
-              <div className="font-mono text-xs text-text-tertiary">
+            <div className="hidden md:flex w-[11.5rem] shrink-0 flex-col items-end text-right pt-1 pl-2 pr-4">
+              <div className="font-mono text-xs text-text-tertiary whitespace-nowrap">
                 {formatDate(item.startDate)}
               </div>
-              <div className="font-mono text-xs text-text-tertiary">
+              <div className="font-mono text-xs text-text-tertiary whitespace-nowrap">
                 {formatDate(item.endDate)}
               </div>
-              <div className="font-mono text-[10px] text-accent mt-1">
+              <div className="font-mono text-[10px] text-accent mt-1 whitespace-nowrap">
                 {getDuration(item.startDate, item.endDate)}
               </div>
             </div>
 
             {/* Timeline dot */}
-            <div className="absolute left-[100px] top-2 -translate-x-1/2 w-3 h-3 rounded-full bg-accent border-2 border-bg-primary hidden md:block" />
+            <div className="absolute left-[11.5rem] top-2 -translate-x-1/2 w-3 h-3 rounded-full bg-accent border-2 border-bg-primary hidden md:block" />
 
             {/* Content */}
-            <div className="flex-1 pb-8 border-b border-border/50 last:border-b-0 last:pb-0">
+            <div className="flex-1 min-w-0 pb-8 border-b border-border/50 last:border-b-0 last:pb-0">
               {/* Mobile date */}
               <div className="md:hidden mb-2">
                 <span className="font-mono text-xs text-text-tertiary">

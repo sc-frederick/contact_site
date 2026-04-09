@@ -4,15 +4,26 @@ import { cn } from "~/lib/utils";
 
 interface PortfolioCardProps {
   item: PortfolioItem;
+  onOpen?: (item: PortfolioItem) => void;
   className?: string;
 }
 
-export function PortfolioCard({ item, className }: PortfolioCardProps) {
+export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
   return (
     <div
+      role="button"
+      tabIndex={0}
+      onClick={() => onOpen?.(item)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onOpen?.(item);
+        }
+      }}
       className={cn(
-        "group relative bg-bg-surface/80 backdrop-blur-sm rounded-xl border border-border p-6",
+        "group relative bg-bg-surface/80 backdrop-blur-sm rounded-xl border border-border p-6 cursor-pointer",
         "hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5",
+        "focus:outline-none focus:ring-2 focus:ring-accent/50",
         "transition-all duration-300 ease-out"
       )}
     >
@@ -53,6 +64,7 @@ export function PortfolioCard({ item, className }: PortfolioCardProps) {
             href={item.project_url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(event) => event.stopPropagation()}
             className={cn(
               "flex items-center gap-1.5 text-sm font-body",
               "text-text-secondary hover:text-accent",
@@ -69,6 +81,7 @@ export function PortfolioCard({ item, className }: PortfolioCardProps) {
             href={item.github_url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(event) => event.stopPropagation()}
             className={cn(
               "flex items-center gap-1.5 text-sm font-body",
               "text-text-secondary hover:text-accent",

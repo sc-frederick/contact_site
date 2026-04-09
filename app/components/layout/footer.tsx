@@ -5,9 +5,14 @@ export function Footer() {
         <p className="font-body text-sm text-text-tertiary">
           &copy; {new Date().getFullYear()} Stephen Frederick
         </p>
-        <p className="font-body text-sm text-text-tertiary">
+        <a
+          href="https://maps.app.goo.gl/8BNGpYQypndip3L39"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-body text-sm text-text-tertiary hover:text-accent transition-colors duration-300"
+        >
           Tampa, FL
-        </p>
+        </a>
       </div>
     </footer>
   );

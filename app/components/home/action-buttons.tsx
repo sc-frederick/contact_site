@@ -10,26 +10,23 @@ interface ActionButtonsProps {
 export function ActionButtons({ className }: ActionButtonsProps) {
   const handleShare = async () => {
     const shareData = {
-      title: contactData.name,
-      text: `${contactData.name} - ${contactData.title} at ${contactData.company}`,
+      title: `${contactData.name} | ${contactData.company}`,
+      text: `Connect with ${contactData.name} - ${contactData.title} at ${contactData.company}`,
       url: window.location.href,
     };
 
-    if (navigator.share) {
-      try {
+    try {
+      if (navigator.share) {
         await navigator.share(shareData);
-      } catch (err) {
-        // User cancelled or share failed
-        console.log("Share cancelled");
+        return;
       }
-    } else {
+
       // Fallback: copy to clipboard
-      try {
-        await navigator.clipboard.writeText(window.location.href);
-        alert("Link copied to clipboard!");
-      } catch (err) {
-        console.error("Failed to copy link:", err);
-      }
+      await navigator.clipboard.writeText(window.location.href);
+      alert("Link copied to clipboard!");
+    } catch (err) {
+      // User cancelled or share failed
+      console.log("Share cancelled", err);
     }
   };
 

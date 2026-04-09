@@ -19,7 +19,7 @@ function Portfolio() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="font-display text-4xl md:text-5xl text-text-primary mb-4">
-            Portfolio
+            Developer Portfolio
           </h1>
 
           {/* Decorative line */}
@@ -32,8 +32,8 @@ function Portfolio() {
           </div>
 
           <p className="font-body text-lg text-text-secondary max-w-2xl mx-auto">
-            A collection of projects showcasing my work across various
-            technologies and domains.
+            A collection of software projects showcasing my development work
+            across web platforms, automation, and technical tooling.
           </p>
         </div>
 

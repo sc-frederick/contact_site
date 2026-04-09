@@ -23,21 +23,20 @@ function renderContent(html: string) {
   // with Tailwind classes applied via CSS.
   return (
     <div
-      className="prose prose-invert prose-zinc max-w-none font-body
-        prose-headings:font-display prose-headings:text-text-primary prose-headings:font-semibold
-        prose-h1:text-3xl prose-h1:mb-6 prose-h1:mt-8 prose-h1:pb-4 prose-h1:border-b prose-h1:border-border
-        prose-h2:text-2xl prose-h2:mb-4 prose-h2:mt-8
-        prose-h3:text-xl prose-h3:mb-3 prose-h3:mt-6
-        prose-p:text-text-secondary prose-p:leading-relaxed prose-p:mb-4
-        prose-ul:text-text-secondary prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
-        prose-ol:text-text-secondary prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
-        prose-li:mb-2
-        prose-strong:text-text-primary prose-strong:font-semibold
-        prose-a:text-accent prose-a:no-underline hover:prose-a:underline
-        prose-code:text-accent prose-code:bg-bg-elevated prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
-        prose-pre:bg-bg-elevated prose-pre:border prose-pre:border-border prose-pre:rounded-lg prose-pre:p-4 prose-pre:my-4
-        prose-pre:code:bg-transparent prose-pre:code:p-0 prose-pre:code:text-text-secondary
-        prose-blockquote:border-l-2 prose-blockquote:border-accent prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-text-tertiary prose-blockquote:my-4"
+      className="max-w-none font-body
+        [&_h1]:font-display [&_h1]:text-text-primary [&_h1]:font-semibold [&_h1]:text-3xl md:[&_h1]:text-4xl [&_h1]:mb-6 [&_h1]:mt-2 [&_h1]:pb-4 [&_h1]:border-b [&_h1]:border-border
+        [&_h2]:font-display [&_h2]:text-text-primary [&_h2]:font-semibold [&_h2]:text-2xl [&_h2]:mb-4 [&_h2]:mt-10
+        [&_h3]:font-display [&_h3]:text-text-primary [&_h3]:font-semibold [&_h3]:text-xl [&_h3]:mb-3 [&_h3]:mt-8
+        [&_p]:text-text-secondary [&_p]:leading-relaxed [&_p]:mb-4
+        [&_ul]:text-text-secondary [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6
+        [&_ol]:text-text-secondary [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-6
+        [&_li]:mb-2
+        [&_strong]:text-text-primary [&_strong]:font-semibold
+        [&_a]:text-accent [&_a]:no-underline hover:[&_a]:underline
+        [&_code]:text-accent [&_code]:bg-bg-elevated [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono
+        [&_pre]:bg-bg-elevated [&_pre]:border [&_pre]:border-border [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:my-4
+        [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-text-secondary
+        [&_blockquote]:border-l-2 [&_blockquote]:border-accent [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-text-tertiary [&_blockquote]:my-4"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
