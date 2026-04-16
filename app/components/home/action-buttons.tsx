@@ -2,12 +2,15 @@ import { Download, Share2 } from "lucide-react";
 import { contactData } from "~/lib/contact-data";
 import { downloadVCard } from "~/lib/vcard";
 import { cn } from "~/lib/utils";
+import { useToast } from "~/components/ui/toast";
 
 interface ActionButtonsProps {
   className?: string;
 }
 
 export function ActionButtons({ className }: ActionButtonsProps) {
+  const { toast } = useToast();
+
   const handleShare = async () => {
     const shareData = {
       title: `${contactData.name} | ${contactData.company}`,
@@ -21,11 +24,9 @@ export function ActionButtons({ className }: ActionButtonsProps) {
         return;
       }
 
-      // Fallback: copy to clipboard
       await navigator.clipboard.writeText(window.location.href);
-      alert("Link copied to clipboard!");
+      toast("Link copied to clipboard!", "success");
     } catch (err) {
-      // User cancelled or share failed
       console.log("Share cancelled", err);
     }
   };

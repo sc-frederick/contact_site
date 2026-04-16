@@ -12,13 +12,15 @@ interface ContactLinkItemProps {
   label: string;
   value: string;
   href: string;
+  external?: boolean;
 }
 
-function ContactLinkItem({ icon, label, value, href }: ContactLinkItemProps) {
+function ContactLinkItem({ icon, label, value, href, external }: ContactLinkItemProps) {
   return (
     <a
       href={href}
       className="flex items-center gap-3 p-3 rounded-lg bg-bg-surface/50 border border-border hover:border-accent/50 hover:bg-bg-surface transition-all duration-300 group"
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       <span className="text-accent group-hover:scale-110 transition-transform duration-300">
         {icon}
@@ -27,7 +29,10 @@ function ContactLinkItem({ icon, label, value, href }: ContactLinkItemProps) {
         <p className="font-body text-xs text-text-tertiary uppercase tracking-wider">
           {label}
         </p>
-        <p className="font-body text-sm text-text-primary truncate">{value}</p>
+        <p className="font-body text-sm text-text-primary truncate">
+          {value}
+          {external && <span className="sr-only"> (opens in new tab)</span>}
+        </p>
       </div>
     </a>
   );
@@ -66,6 +71,7 @@ export function ContactLinks({ className, mode = "full" }: ContactLinksProps) {
               label={portfolioSite.label}
               value={portfolioSite.url.replace("https://", "")}
               href={portfolioSite.url}
+              external
             />
           )}
 
@@ -75,6 +81,7 @@ export function ContactLinks({ className, mode = "full" }: ContactLinksProps) {
             label="GitHub"
             value={contactData.github.replace("https://", "")}
             href={contactData.github}
+            external
           />
         </>
       ) : (
@@ -106,6 +113,7 @@ export function ContactLinks({ className, mode = "full" }: ContactLinksProps) {
               label={site.label}
               value={site.url.replace("https://", "")}
               href={site.url}
+              external
             />
           ))}
 
@@ -115,6 +123,7 @@ export function ContactLinks({ className, mode = "full" }: ContactLinksProps) {
             label="GitHub"
             value={contactData.github.replace("https://", "")}
             href={contactData.github}
+            external
           />
 
           {/* Location */}
@@ -133,6 +142,7 @@ export function ContactLinks({ className, mode = "full" }: ContactLinksProps) {
               </p>
               <p className="font-body text-sm text-text-primary">
                 {contactData.location}
+                <span className="sr-only"> (opens in new tab)</span>
               </p>
             </div>
           </a>

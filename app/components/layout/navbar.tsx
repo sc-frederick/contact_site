@@ -117,39 +117,45 @@ export function Navbar() {
       </div>
 
       {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <>
-          {/* Backdrop */}
-          <div className="md:hidden fixed inset-0 top-[65px] bg-black/20 backdrop-blur-sm z-40" />
-          
-          {/* Slide-out Menu */}
-          <div
-            ref={mobileMenuRef}
-            className="md:hidden fixed top-[65px] right-0 w-64 h-[calc(100vh-65px)] bg-bg-primary border-l border-border/50 z-50 shadow-2xl animate-in slide-in-from-right duration-300"
-          >
-            <div className="flex flex-col p-6 gap-4">
-              {routes.map((route) => (
-                <Link
-                  key={route.path}
-                  to={route.path}
-                  className={cn(
-                    "font-body text-base tracking-wide transition-colors duration-300 py-2",
-                    currentPath === route.path
-                      ? "text-accent"
-                      : "text-text-secondary hover:text-text-primary"
-                  )}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {route.label}
-                  {currentPath === route.path && (
-                    <span className="block h-px w-8 bg-accent mt-2" />
-                  )}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
+      {/* Backdrop */}
+      <div
+        className={cn(
+          "md:hidden fixed inset-0 top-[65px] bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-300",
+          isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+
+      {/* Slide-out Menu */}
+      <div
+        ref={mobileMenuRef}
+        className={cn(
+          "md:hidden fixed top-[65px] right-0 w-64 h-[calc(100vh-65px)] bg-bg-primary border-l border-border/50 z-50 shadow-2xl",
+          "transition-transform duration-300 ease-out",
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        )}
+      >
+        <div className="flex flex-col p-6 gap-4">
+          {routes.map((route) => (
+            <Link
+              key={route.path}
+              to={route.path}
+              className={cn(
+                "font-body text-base tracking-wide transition-colors duration-300 py-2",
+                currentPath === route.path
+                  ? "text-accent"
+                  : "text-text-secondary hover:text-text-primary"
+              )}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {route.label}
+              {currentPath === route.path && (
+                <span className="block h-px w-8 bg-accent mt-2" />
+              )}
+            </Link>
+          ))}
+        </div>
+      </div>
     </nav>
   );
 }

@@ -22,6 +22,12 @@ export function PortfolioGrid({ items, className }: PortfolioGridProps) {
     );
   }
 
+  // Sort: featured items first, then by display_order
+  const sorted = [...items].sort((a, b) => {
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    return a.display_order - b.display_order;
+  });
+
   return (
     <>
       <div
@@ -30,7 +36,7 @@ export function PortfolioGrid({ items, className }: PortfolioGridProps) {
           className
         )}
       >
-        {items.map((item) => (
+        {sorted.map((item) => (
           <PortfolioCard
             key={item.id}
             item={item}

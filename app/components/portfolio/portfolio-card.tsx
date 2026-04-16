@@ -1,4 +1,4 @@
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Star } from "lucide-react";
 import type { PortfolioItem } from "~/types";
 import { cn } from "~/lib/utils";
 
@@ -24,19 +24,48 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
         "group relative bg-bg-surface/80 backdrop-blur-sm rounded-xl border border-border p-6 cursor-pointer",
         "hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5",
         "focus:outline-none focus:ring-2 focus:ring-accent/50",
-        "transition-all duration-300 ease-out"
+        "transition-all duration-300 ease-out",
+        item.featured && "md:col-span-2 lg:col-span-2 border-accent/20",
+        className
       )}
     >
       {/* Decorative accent line at top */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-0.5 bg-gradient-to-r from-transparent via-accent/50 to-transparent group-hover:via-accent group-hover:w-24 transition-all duration-300" />
+      <div
+        className={cn(
+          "absolute top-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-transparent via-accent/50 to-transparent group-hover:via-accent transition-all duration-300",
+          item.featured
+            ? "w-24 group-hover:w-32 via-accent"
+            : "w-16 group-hover:w-24"
+        )}
+      />
+
+      {/* Featured badge */}
+      {item.featured && (
+        <div className="flex items-center gap-1.5 mb-3">
+          <Star className="w-3.5 h-3.5 text-accent fill-accent" />
+          <span className="font-body text-xs text-accent uppercase tracking-wider">
+            Featured Project
+          </span>
+        </div>
+      )}
 
       {/* Title */}
-      <h3 className="font-display text-xl text-text-primary mb-3 group-hover:text-accent transition-colors duration-300">
+      <h3
+        className={cn(
+          "font-display text-text-primary mb-3 group-hover:text-accent transition-colors duration-300",
+          item.featured ? "text-2xl" : "text-xl"
+        )}
+      >
         {item.title}
       </h3>
 
       {/* Description */}
-      <p className="font-body text-sm text-text-secondary mb-4 line-clamp-3">
+      <p
+        className={cn(
+          "font-body text-sm text-text-secondary mb-4",
+          item.featured ? "line-clamp-4" : "line-clamp-3"
+        )}
+      >
         {item.description}
       </p>
 

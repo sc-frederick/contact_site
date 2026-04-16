@@ -7,6 +7,7 @@ export interface ContactInfo {
   phone: { label: string; number: string };
   websites: { label: string; url: string }[];
   github: string;
+  linkedin: string;
   services: string[];
 }
 
@@ -25,6 +26,7 @@ export const contactData: ContactInfo = {
     { label: "Company", url: "https://advanced-engineers.com" },
   ],
   github: "https://github.com/sc-frederick",
+  linkedin: "https://linkedin.com/in/stephenfrederick",
   services: [
     "Civil Engineering",
     "Structural Engineering",

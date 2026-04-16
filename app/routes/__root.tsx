@@ -4,6 +4,7 @@ import appStyles from "~/styles.css?url";
 import { Navbar } from "~/components/layout/navbar";
 import { Footer } from "~/components/layout/footer";
 import { NoiseOverlay } from "~/components/ui/noise-overlay";
+import { ToastProvider } from "~/components/ui/toast";
 import * as React from "react";
 
 export const Route = createRootRoute({
@@ -33,12 +34,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="bg-bg-primary text-text-primary font-body overflow-x-hidden">
-        <NoiseOverlay />
-        <Navbar />
-        <main className="min-h-screen pt-[72px]">
-          {children}
-        </main>
-        <Footer />
+        <ToastProvider>
+          <NoiseOverlay />
+          <Navbar />
+          <main className="min-h-screen pt-[72px]">
+            {children}
+          </main>
+          <Footer />
+        </ToastProvider>
         <Scripts />
       </body>
     </html>

@@ -18,8 +18,12 @@ export function HeroSection({ className }: HeroSectionProps) {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-accent flex items-center justify-center">
-          <span className="text-bg-primary text-lg">✓</span>
+        <div
+          className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-accent flex items-center justify-center"
+          role="img"
+          aria-label="Verified profile"
+        >
+          <span className="text-bg-primary text-lg" aria-hidden="true">✓</span>
         </div>
       </div>
 
