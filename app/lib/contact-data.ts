@@ -26,7 +26,7 @@ export const contactData: ContactInfo = {
     { label: "Company", url: "https://advanced-engineers.com" },
   ],
   github: "https://github.com/sc-frederick",
-  linkedin: "https://linkedin.com/in/stephenfrederick",
+  linkedin: "https://www.linkedin.com/in/stephencfrederick/",
   services: [
     "Civil Engineering",
     "Structural Engineering",
