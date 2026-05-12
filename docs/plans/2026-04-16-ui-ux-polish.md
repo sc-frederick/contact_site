@@ -38,7 +38,7 @@ export function NoiseOverlay() {
 
 **Step 2: Verify visually**
 
-Run `npm run dev`, open any page. The noise texture should still be visible. Open a portfolio modal — the modal content should no longer have the noise texture layered on top.
+Run `pnpm run dev`, open any page. The noise texture should still be visible. Open a portfolio modal — the modal content should no longer have the noise texture layered on top.
 
 **Step 3: Commit**
 

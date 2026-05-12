@@ -127,19 +127,19 @@ For local dev the database and KV run in-process — no remote resources needed.
 Apply schema locally:
 
 ```bash
-npm run db:setup
+pnpm run db:setup
 ```
 
 Seed locally:
 
 ```bash
-npm run db:seed
+pnpm run db:seed
 ```
 
 Start dev server:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 ---

@@ -29,15 +29,15 @@
 
 Run:
 ```bash
-npm create @tanstack/start@latest . -- --template basic
+pnpm create @tanstack/start@latest . -- --template basic
 ```
 
 If the interactive CLI blocks, manually create the scaffolding:
 
 ```bash
 npm init -y
-npm install @tanstack/react-start @tanstack/react-router react react-dom vinxi
-npm install -D @types/react @types/react-dom typescript vite-tsconfig-paths
+pnpm install @tanstack/react-start @tanstack/react-router react react-dom vinxi
+pnpm install -D @types/react @types/react-dom typescript vite-tsconfig-paths
 ```
 
 **Step 2: Create `app.config.ts`**
@@ -191,7 +191,7 @@ git commit -m "feat: scaffold TanStack Start project with Cloudflare Workers pre
 **Step 1: Install Tailwind CSS v4**
 
 ```bash
-npm install tailwindcss @tailwindcss/vite
+pnpm install tailwindcss @tailwindcss/vite
 ```
 
 **Step 2: Add Tailwind Vite plugin to `app.config.ts`**
@@ -252,7 +252,7 @@ import appStyles from "~/styles.css?url";
 **Step 5: Install shadcn/ui dependencies**
 
 ```bash
-npm install class-variance-authority clsx tailwind-merge lucide-react
+pnpm install class-variance-authority clsx tailwind-merge lucide-react
 ```
 
 **Step 6: Create `app/lib/utils.ts`**
@@ -778,7 +778,7 @@ git commit -m "feat: build home page with hero, services, contacts, and save/sha
 **Step 1: Install Wrangler**
 
 ```bash
-npm install -D wrangler
+pnpm install -D wrangler
 ```
 
 **Step 2: Create `wrangler.toml`**
@@ -2022,7 +2022,7 @@ Keep `README.md` but update it to reflect the new stack.
 
 **Step 2: Update README.md**
 
-Update `README.md` with the new tech stack, setup instructions (`npm install`, `npm run dev`, `npm run db:setup`), and deployment info.
+Update `README.md` with the new tech stack, setup instructions (`pnpm install`, `pnpm run dev`, `pnpm run db:setup`), and deployment info.
 
 **Step 3: Run dev server and verify all routes**
 
@@ -2050,7 +2050,7 @@ git commit -m "chore: remove old static files and update README"
 **Step 5: Build for Cloudflare**
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Verify the build succeeds without errors.

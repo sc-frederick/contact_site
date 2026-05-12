@@ -1,10 +1,11 @@
 /// <reference types="vite/client" />
-import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
+import { createRootRoute, HeadContent, Link, Outlet, Scripts } from "@tanstack/react-router";
 import appStyles from "~/styles.css?url";
 import { Navbar } from "~/components/layout/navbar";
 import { Footer } from "~/components/layout/footer";
 import { NoiseOverlay } from "~/components/ui/noise-overlay";
 import { ToastProvider } from "~/components/ui/toast";
+import { ArrowLeft } from "lucide-react";
 import * as React from "react";
 
 export const Route = createRootRoute({
@@ -24,8 +25,34 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  notFoundComponent: NotFound,
   shellComponent: RootDocument,
 });
+
+function NotFound() {
+  return (
+    <div className="min-h-[calc(100vh-72px)] flex items-center justify-center px-6">
+      <div className="text-center max-w-md">
+        <span className="font-mono text-sm text-accent uppercase tracking-wider block mb-4">
+          404
+        </span>
+        <h1 className="font-display text-4xl md:text-5xl text-text-primary mb-4">
+          Page not found
+        </h1>
+        <p className="font-body text-text-secondary mb-8">
+          The page you are looking for does not exist or has been moved.
+        </p>
+        <Link
+          to="/"
+          className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-bg-surface border border-border text-text-primary font-body text-sm hover:border-accent hover:text-accent transition-all duration-300"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
+          Back to home
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
