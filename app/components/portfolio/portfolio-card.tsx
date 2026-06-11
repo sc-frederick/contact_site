@@ -9,6 +9,8 @@ interface PortfolioCardProps {
 }
 
 export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
+  const hasLinks = Boolean(item.project_url || item.github_url);
+
   return (
     <div
       role="button"
@@ -21,11 +23,11 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
         }
       }}
       className={cn(
-        "group relative bg-bg-surface/80 backdrop-blur-sm rounded-xl border border-border p-6 cursor-pointer",
+        "group relative flex h-full flex-col bg-bg-surface/80 backdrop-blur-sm rounded-lg border border-border p-5 cursor-pointer",
         "hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5",
         "focus:outline-none focus:ring-2 focus:ring-accent/50",
         "transition-all duration-300 ease-out",
-        item.featured && "md:col-span-2 lg:col-span-2 border-accent/20",
+        item.featured && "border-accent/20",
         className
       )}
     >
@@ -53,7 +55,7 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
       <h3
         className={cn(
           "font-display text-text-primary mb-3 group-hover:text-accent transition-colors duration-300",
-          item.featured ? "text-2xl" : "text-xl"
+          item.featured ? "text-xl md:text-2xl" : "text-xl"
         )}
       >
         {item.title}
@@ -70,7 +72,7 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
       </p>
 
       {/* Tech Stack Tags */}
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 mb-5">
         {item.technologies.map((tech) => (
           <span
             key={tech}
@@ -86,42 +88,43 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
         ))}
       </div>
 
-      {/* Links */}
-      <div className="flex items-center gap-3 pt-4 border-t border-border/50">
-        {item.project_url && (
-          <a
-            href={item.project_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(event) => event.stopPropagation()}
-            className={cn(
-              "flex items-center gap-1.5 text-sm font-body",
-              "text-text-secondary hover:text-accent",
-              "transition-colors duration-300"
-            )}
-          >
-            <ExternalLink className="w-4 h-4" />
-            <span>Live Demo</span>
-          </a>
-        )}
+      {hasLinks && (
+        <div className="mt-auto flex items-center gap-3 pt-4 border-t border-border/50">
+          {item.project_url && (
+            <a
+              href={item.project_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(event) => event.stopPropagation()}
+              className={cn(
+                "flex items-center gap-1.5 text-sm font-body",
+                "text-text-secondary hover:text-accent",
+                "transition-colors duration-300"
+              )}
+            >
+              <ExternalLink className="w-4 h-4" />
+              <span>Live Demo</span>
+            </a>
+          )}
 
-        {item.github_url && (
-          <a
-            href={item.github_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(event) => event.stopPropagation()}
-            className={cn(
-              "flex items-center gap-1.5 text-sm font-body",
-              "text-text-secondary hover:text-accent",
-              "transition-colors duration-300"
-            )}
-          >
-            <Github className="w-4 h-4" />
-            <span>Source</span>
-          </a>
-        )}
-      </div>
+          {item.github_url && (
+            <a
+              href={item.github_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(event) => event.stopPropagation()}
+              className={cn(
+                "flex items-center gap-1.5 text-sm font-body",
+                "text-text-secondary hover:text-accent",
+                "transition-colors duration-300"
+              )}
+            >
+              <Github className="w-4 h-4" />
+              <span>Source</span>
+            </a>
+          )}
+        </div>
+      )}
     </div>
   );
 }

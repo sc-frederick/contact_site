@@ -14,7 +14,7 @@ export const getPortfolioItems = createServerFn({ method: 'GET' })
   .handler(async (ctx): Promise<ApiResponse<PaginatedResponse<PortfolioItem>>> => {
     try {
       const options = (ctx.data as unknown as GetPortfolioItemsOptions) || {};
-      const { featured, page = 1, limit = 10 } = options;
+      const { featured, page = 1, limit = 100 } = options;
 
       // Fetch items from database (mock data for now)
       const allItems = await getPortfolioItemsFromDB(featured);
