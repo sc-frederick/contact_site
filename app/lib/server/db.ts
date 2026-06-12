@@ -139,7 +139,7 @@ const mockPortfolioItems: PortfolioItem[] = [
   },
   {
     id: 11,
-    title: "Trey's Collection",
+    title: 'CardStore',
     description: 'Full-stack sports card e-commerce store with a public catalog, cart, and Stripe checkout, plus an admin dashboard for inventory management, CSV import, image galleries, and sales charts. Built on TanStack Start and Cloudflare.',
     image_url: '',
     project_url: '',
