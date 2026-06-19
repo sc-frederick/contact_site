@@ -1,8 +1,20 @@
 // Server functions for contact form operations
 
 import { createServerFn } from '@tanstack/react-start';
+import { env } from 'cloudflare:workers';
 import { createContactSubmissionInDB } from './db';
+import { sendContactNotification } from './email';
+import { verifyTurnstileToken } from './turnstile';
 import type { ContactFormData, ContactSubmission, ApiResponse } from '~/types';
+
+// What the client actually sends to submitContactForm: the form fields plus a
+// Turnstile token and request metadata.
+type ContactSubmitPayload = ContactFormData & {
+  turnstileToken?: string;
+  sessionId?: string;
+  ipAddress?: string;
+  userAgent?: string;
+};
 
 // Email validation regex
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -56,19 +68,24 @@ function sanitizeInput(input: string): string {
 }
 
 export const submitContactForm = createServerFn({ method: 'POST' })
-  .inputValidator((data: ContactFormData) => data)
+  .inputValidator((data: ContactSubmitPayload) => data)
   .handler(async (ctx): Promise<ApiResponse<{ id: number }>> => {
     try {
-      const data = ctx.data as ContactFormData & { 
-        sessionId?: string;
-        ipAddress?: string;
-        userAgent?: string;
-      };
+      const data = ctx.data;
 
       if (!data) {
         return {
           success: false,
           error: 'No form data provided',
+        };
+      }
+
+      // Bot check: confirm the Turnstile token with Cloudflare before doing any work.
+      const turnstileOk = await verifyTurnstileToken(data.turnstileToken, data.ipAddress);
+      if (!turnstileOk) {
+        return {
+          success: false,
+          error: 'Bot verification failed. Please complete the challenge and try again.',
         };
       }
 
@@ -105,13 +122,23 @@ export const submitContactForm = createServerFn({ method: 'POST' })
         user_agent: data.userAgent || null,
       });
 
-      // TODO: Send notification email (integrate with email service)
-      console.log('Contact form submitted:', {
-        id: submission.id,
-        name: sanitizedData.name,
-        email: sanitizedData.email,
-        subject: sanitizedData.subject,
-      });
+      // Notify the site owner. Email is the delivery mechanism for the message, so
+      // if it fails we tell the user honestly rather than pretending it went through.
+      try {
+        await sendContactNotification({
+          ...sanitizedData,
+          ip_address: data.ipAddress || null,
+          user_agent: data.userAgent || null,
+          submittedAt: submission.created_at,
+        });
+      } catch (emailError) {
+        console.error('Failed to send contact notification email:', emailError);
+        return {
+          success: false,
+          error:
+            "Sorry — your message couldn't be delivered right now. Please try again in a moment, or email me directly at sfred.mail@gmail.com.",
+        };
+      }
 
       return {
         success: true,
@@ -125,6 +152,12 @@ export const submitContactForm = createServerFn({ method: 'POST' })
       };
     }
   });
+
+// Exposes the public Turnstile sitekey to the client (rendered by the contact route
+// loader). The sitekey is public by design; the secret never leaves the server.
+export const getTurnstileSiteKey = createServerFn({ method: 'GET' }).handler(
+  async (): Promise<string> => env.TURNSTILE_SITE_KEY,
+);
 
 // Server function to check if contact form is available
 export const getContactFormStatus = createServerFn({ method: 'GET' })

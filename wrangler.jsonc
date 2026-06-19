@@ -25,5 +25,23 @@
       "id": "48413adf59da4926be2da155619af648",
       "preview_id": "placeholder-will-be-set-after-create"
     }
-  ]
+  ],
+  // Outbound email via Cloudflare Email Sending (enabled on the sfrederick.dev zone).
+  // The binding is unrestricted because the recipient (CONTACT_TO_EMAIL) is a fixed
+  // server-side constant — it is never derived from user input, so there is no
+  // arbitrary-recipient abuse vector.
+  "send_email": [
+    { "name": "SEND_EMAIL" }
+  ],
+  // Non-secret config. Change here, no code edit.
+  // TURNSTILE_SITE_KEY is public (it ships to the browser) — this is the real sitekey
+  // for the sfrederick.dev Turnstile widget. Local dev overrides it with a test key via
+  // .dev.vars. The matching secret is NOT here; set it for prod with:
+  //   wrangler secret put TURNSTILE_SECRET_KEY
+  "vars": {
+    "CONTACT_FROM_EMAIL": "contact@sfrederick.dev",
+    "CONTACT_FROM_NAME": "sfrederick.dev contact form",
+    "CONTACT_TO_EMAIL": "sfred.mail@gmail.com",
+    "TURNSTILE_SITE_KEY": "0x4AAAAAADnzUOVvXoGJmmGf"
+  }
 }

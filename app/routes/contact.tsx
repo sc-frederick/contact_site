@@ -1,11 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ContactForm } from "~/components/contact/contact-form";
+import { getTurnstileSiteKey } from "~/lib/server/contact";
 
 export const Route = createFileRoute("/contact")({
   component: Contact,
+  loader: () => getTurnstileSiteKey(),
 });
 
 function Contact() {
+  const turnstileSiteKey = Route.useLoaderData();
+
   return (
     <div className="min-h-screen bg-bg-primary py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
@@ -30,7 +34,7 @@ function Contact() {
         </div>
 
         {/* Contact Form (two-column: info left, form right) */}
-        <ContactForm />
+        <ContactForm siteKey={turnstileSiteKey} />
 
         {/* Collaboration info */}
         <div className="mt-12 bg-bg-surface/50 rounded-xl border border-border p-6 md:p-8">

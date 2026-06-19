@@ -1,12 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { submitContactForm } from "~/lib/server/contact";
 import { contactData } from "~/lib/contact-data";
 import { cn } from "~/lib/utils";
 
+// Minimal typing for the Turnstile script's global API.
+interface TurnstileRenderOptions {
+  sitekey: string;
+  callback?: (token: string) => void;
+  "expired-callback"?: () => void;
+  "error-callback"?: () => void;
+  "timeout-callback"?: () => void;
+  theme?: "auto" | "light" | "dark";
+}
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: string | HTMLElement, options: TurnstileRenderOptions) => string;
+      reset: (widgetId?: string) => void;
+      remove: (widgetId?: string) => void;
+    };
+  }
+}
+
+// Load the Turnstile script once, lazily, and share the promise across renders.
+const TURNSTILE_SCRIPT_SRC =
+  "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+let turnstileScriptPromise: Promise<void> | null = null;
+function loadTurnstileScript(): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
+  if (window.turnstile) return Promise.resolve();
+  if (turnstileScriptPromise) return turnstileScriptPromise;
+  turnstileScriptPromise = new Promise<void>((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = TURNSTILE_SCRIPT_SRC;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error("Failed to load Turnstile"));
+    document.head.appendChild(script);
+  });
+  return turnstileScriptPromise;
+}
+
 interface ContactFormProps {
   className?: string;
+  /** Public Cloudflare Turnstile sitekey, supplied by the route loader. */
+  siteKey: string;
 }
 
 interface FormFieldProps {
@@ -187,20 +228,75 @@ function SuccessState({ onReset }: SuccessStateProps) {
   );
 }
 
-export function ContactForm({ className }: ContactFormProps) {
+export function ContactForm({ className, siteKey }: ContactFormProps) {
   const submitForm = useServerFn(submitContactForm);
-  
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
-  
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+
+  // Render the Turnstile widget whenever the form is visible. The widget lives only
+  // while the form is mounted (it's replaced by the success state), so we render on
+  // mount / return-to-form and tear down on hide.
+  useEffect(() => {
+    if (isSuccess) return;
+    let cancelled = false;
+
+    loadTurnstileScript()
+      .then(() => {
+        if (cancelled || widgetIdRef.current || !turnstileRef.current || !window.turnstile) {
+          return;
+        }
+        widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+          sitekey: siteKey,
+          theme: "auto",
+          callback: (token) => setTurnstileToken(token),
+          "expired-callback": () => setTurnstileToken(null),
+          "error-callback": () => setTurnstileToken(null),
+          "timeout-callback": () => setTurnstileToken(null),
+        });
+      })
+      .catch(() => {
+        // Script failed to load; submit stays disabled (no token).
+      });
+
+    return () => {
+      cancelled = true;
+      if (widgetIdRef.current && window.turnstile) {
+        try {
+          window.turnstile.remove(widgetIdRef.current);
+        } catch {
+          // ignore
+        }
+      }
+      widgetIdRef.current = null;
+      setTurnstileToken(null);
+    };
+  }, [isSuccess, siteKey]);
+
+  // Turnstile tokens are single-use; get a fresh one after a failed attempt.
+  const resetTurnstile = () => {
+    if (widgetIdRef.current && window.turnstile) {
+      try {
+        window.turnstile.reset(widgetIdRef.current);
+      } catch {
+        // ignore
+      }
+    }
+    setTurnstileToken(null);
+  };
 
   const validateField = (name: string, value: string): string | null => {
     switch (name) {
@@ -268,22 +364,31 @@ export function ContactForm({ className }: ContactFormProps) {
     if (!validateForm()) {
       return;
     }
-    
+
+    if (!turnstileToken) {
+      setSubmitError("Please complete the bot-check challenge before sending.");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitError(null);
-    
+
     try {
-      const result = await submitForm({ data: formData });
-      
+      const result = await submitForm({
+        data: { ...formData, turnstileToken },
+      });
+
       if (result.success) {
         setIsSuccess(true);
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
         setSubmitError(result.error || "Failed to send message. Please try again.");
+        resetTurnstile();
       }
     } catch (error) {
       setSubmitError("An unexpected error occurred. Please try again later.");
       console.error("Contact form submission error:", error);
+      resetTurnstile();
     } finally {
       setIsSubmitting(false);
     }
@@ -372,9 +477,12 @@ export function ContactForm({ className }: ContactFormProps) {
               </div>
             )}
 
+            {/* Cloudflare Turnstile bot check */}
+            <div ref={turnstileRef} className="min-h-[65px]" />
+
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || !turnstileToken}
               className={cn(
                 "w-full flex items-center justify-center gap-2 px-6 py-4 rounded-lg font-body font-medium",
                 "bg-accent text-bg-primary",
