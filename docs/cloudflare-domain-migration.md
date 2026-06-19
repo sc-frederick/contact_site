@@ -31,9 +31,15 @@ Status as of 2026-06-19:
 Nameservers are already `cris/pearl.ns.cloudflare.com`, so the DNS step is done. Go straight
 to the registrar transfer:
 
-1. **Get the auth code from Vercel:** Vercel dashboard → **Domains** → **⋯ (triple-dot)
-   menu** on `scoutwork.app` → **Transfer Out**. Copy the **EPP/auth code** from the modal.
-   (For Vercel-registered domains this modal is the unlock mechanism; no separate lock toggle.)
+1. **Unlock + get the auth code from Vercel:** Vercel dashboard → **Domains** → **⋯
+   (triple-dot) menu** on `scoutwork.app` → **Transfer Out**. For Vercel-registered domains
+   there is **no separate unlock toggle** — running **Transfer Out** is what removes the
+   transfer lock (`clientTransferProhibited`) *and* reveals the **EPP/auth code**. Copy the code.
+   - ⚠️ **Do this BEFORE starting the transfer in Cloudflare.** If you skip it, Cloudflare's
+     pre-check stops with *"scoutwork.app cannot be transferred — Domain is locked"* and never
+     prompts for the code.
+   - Allow **5–24h** for the unlock to propagate. Verify at <https://lookup.icann.org> that
+     **Domain Status** no longer shows `clientTransferProhibited` (should read `ok`).
 2. **Start the transfer in Cloudflare:** dashboard → **Domain Registration → Transfer
    Domains** → select `scoutwork.app` → paste the auth code.
 3. **Pay + contact info:** confirm payment (≈ $15, +1 yr) and enter accurate registrant
