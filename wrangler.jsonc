@@ -8,6 +8,10 @@
   "main": "@tanstack/react-start/server-entry",
   "workers_dev": false,
   "preview_urls": false,
+  "routes": [
+    { "pattern": "sfrederick.dev", "custom_domain": true },
+    { "pattern": "www.sfrederick.dev", "custom_domain": true }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
