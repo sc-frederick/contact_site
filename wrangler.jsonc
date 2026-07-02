@@ -5,7 +5,9 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "main": "@tanstack/react-start/server-entry",
+  // Custom entry (wraps @tanstack/react-start/server-entry) that enforces HTTPS
+  // and adds security headers (CSP, HSTS, etc.) to every response.
+  "main": "./server.ts",
   "workers_dev": false,
   "preview_urls": false,
   "routes": [

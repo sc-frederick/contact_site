@@ -132,7 +132,7 @@ export const trackEvent = createServerFn({ method: 'POST' })
       console.error('Error tracking analytics event:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to track event',
+        error: 'Failed to track event',
       };
     }
   });
@@ -185,7 +185,7 @@ export const trackPageView = createServerFn({ method: 'POST' })
       console.error('Error tracking page view:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to track page view',
+        error: 'Failed to track page view',
       };
     }
   });
@@ -225,7 +225,7 @@ export const getAnalyticsSummary = createServerFn({ method: 'GET' })
       console.error('Error fetching analytics summary:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch analytics summary',
+        error: 'Failed to fetch analytics summary',
       };
     }
   });

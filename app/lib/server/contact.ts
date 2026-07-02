@@ -1,6 +1,7 @@
 // Server functions for contact form operations
 
 import { createServerFn } from '@tanstack/react-start';
+import { getRequest } from '@tanstack/react-start/server';
 import { env } from 'cloudflare:workers';
 import { createContactSubmissionInDB } from './db';
 import { sendContactNotification } from './email';
@@ -8,19 +9,15 @@ import { verifyTurnstileToken } from './turnstile';
 import type { ContactFormData, ContactSubmission, ApiResponse } from '~/types';
 
 // What the client actually sends to submitContactForm: the form fields plus a
-// Turnstile token and request metadata.
+// Turnstile token. Request metadata (IP, user agent) is derived server-side from
+// trusted headers — never accepted from the client, where it would be spoofable.
 type ContactSubmitPayload = ContactFormData & {
   turnstileToken?: string;
-  sessionId?: string;
-  ipAddress?: string;
-  userAgent?: string;
 };
 
 // Email validation regex
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Rate limiting store (in production, this should use KV or Redis)
-const rateLimitStore = new Map<string, number>();
 const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 3;
 
@@ -48,15 +45,37 @@ function validateContactForm(data: ContactFormData): string | null {
   return null;
 }
 
-function checkRateLimit(identifier: string): boolean {
+// Fixed-window rate limit backed by KV, keyed on the visitor's real IP. KV is
+// eventually consistent, so a burst can slightly exceed the cap — acceptable here
+// since Turnstile already gates every submission.
+async function checkRateLimit(identifier: string): Promise<boolean> {
+  const key = `ratelimit:contact:${identifier}`;
   const now = Date.now();
-  const lastRequest = rateLimitStore.get(identifier);
 
-  if (lastRequest && now - lastRequest < RATE_LIMIT_WINDOW_MS) {
+  let count = 0;
+  let windowStart = now;
+  const raw = await env.CACHE.get(key);
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw) as { count: number; windowStart: number };
+      if (now - parsed.windowStart < RATE_LIMIT_WINDOW_MS) {
+        count = parsed.count;
+        windowStart = parsed.windowStart;
+      }
+    } catch {
+      // Corrupt entry; treat as a fresh window.
+    }
+  }
+
+  if (count >= RATE_LIMIT_MAX_REQUESTS) {
     return false;
   }
 
-  rateLimitStore.set(identifier, now);
+  // KV enforces a minimum TTL of 60s; that's also exactly our window.
+  const ttlSeconds = Math.max(60, Math.ceil((windowStart + RATE_LIMIT_WINDOW_MS - now) / 1000));
+  await env.CACHE.put(key, JSON.stringify({ count: count + 1, windowStart }), {
+    expirationTtl: ttlSeconds,
+  });
   return true;
 }
 
@@ -80,8 +99,14 @@ export const submitContactForm = createServerFn({ method: 'POST' })
         };
       }
 
+      // Request metadata from trusted sources only: CF-Connecting-IP is set by
+      // Cloudflare's edge and cannot be forged by the visitor.
+      const request = getRequest();
+      const ipAddress = request.headers.get('cf-connecting-ip');
+      const userAgent = request.headers.get('user-agent');
+
       // Bot check: confirm the Turnstile token with Cloudflare before doing any work.
-      const turnstileOk = await verifyTurnstileToken(data.turnstileToken, data.ipAddress);
+      const turnstileOk = await verifyTurnstileToken(data.turnstileToken, ipAddress);
       if (!turnstileOk) {
         return {
           success: false,
@@ -98,9 +123,9 @@ export const submitContactForm = createServerFn({ method: 'POST' })
         };
       }
 
-      // Check rate limit
-      const identifier = data.sessionId || data.ipAddress || 'anonymous';
-      if (!checkRateLimit(identifier)) {
+      // Check rate limit (per IP; 'unknown' only ever applies in local dev where
+      // there is no Cloudflare edge in front of the Worker)
+      if (!(await checkRateLimit(ipAddress ?? 'unknown'))) {
         return {
           success: false,
           error: 'Too many requests. Please try again in a minute.',
@@ -118,8 +143,8 @@ export const submitContactForm = createServerFn({ method: 'POST' })
       // Create submission in database
       const submission: ContactSubmission = await createContactSubmissionInDB({
         ...sanitizedData,
-        ip_address: data.ipAddress || null,
-        user_agent: data.userAgent || null,
+        ip_address: ipAddress,
+        user_agent: userAgent,
       });
 
       // Notify the site owner. Email is the delivery mechanism for the message, so
@@ -127,8 +152,8 @@ export const submitContactForm = createServerFn({ method: 'POST' })
       try {
         await sendContactNotification({
           ...sanitizedData,
-          ip_address: data.ipAddress || null,
-          user_agent: data.userAgent || null,
+          ip_address: ipAddress,
+          user_agent: userAgent,
           submittedAt: submission.created_at,
         });
       } catch (emailError) {
@@ -145,10 +170,11 @@ export const submitContactForm = createServerFn({ method: 'POST' })
         data: { id: submission.id },
       };
     } catch (error) {
+      // Log the detail server-side; never echo internal error messages to the client.
       console.error('Error submitting contact form:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to submit contact form',
+        error: 'Failed to submit contact form. Please try again later.',
       };
     }
   });
@@ -174,7 +200,7 @@ export const getContactFormStatus = createServerFn({ method: 'GET' })
       console.error('Error checking contact form status:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to check contact form status',
+        error: 'Failed to check contact form status',
       };
     }
   });

@@ -42,7 +42,7 @@ export const getBlogPosts = createServerFn({ method: 'GET' })
       console.error('Error fetching blog posts:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch blog posts',
+        error: 'Failed to fetch blog posts',
       };
     }
   });
@@ -87,7 +87,7 @@ export const getBlogPost = createServerFn({ method: 'GET' })
       console.error('Error fetching blog post:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch blog post',
+        error: 'Failed to fetch blog post',
       };
     }
   });
@@ -110,7 +110,7 @@ export const getBlogTags = createServerFn({ method: 'GET' })
       console.error('Error fetching blog tags:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch blog tags',
+        error: 'Failed to fetch blog tags',
       };
     }
   });
@@ -134,7 +134,7 @@ export const getRecentBlogPosts = createServerFn({ method: 'GET' })
       console.error('Error fetching recent blog posts:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch recent blog posts',
+        error: 'Failed to fetch recent blog posts',
       };
     }
   });
