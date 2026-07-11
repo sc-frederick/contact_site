@@ -5,10 +5,16 @@
     "module": "ESNext",
     "target": "ES2022",
     "skipLibCheck": true,
-    "strictNullChecks": true,
-    "baseUrl": ".",
+    "strict": true,
     "paths": {
       "~/*": ["./app/*"]
     }
-  }
+  },
+  "include": [
+    "app",
+    "vite.config.ts",
+    "server.ts",
+    "env.d.ts",
+    "worker-configuration.d.ts"
+  ]
 }
