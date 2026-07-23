@@ -4,7 +4,7 @@ VERSION:3.0
 FN:Stephen Frederick
 ORG:Advanced Engineering Consultants
 TITLE:Staff Engineer
-EMAIL:sfrederick@advanced-engineers.com
+EMAIL:contact@sfrederick.dev
 URL:https://www.advanced-engineers.com
 ADR:;;Tampa, FL;;;
 NOTE:Passionate about building elegant solutions to complex problems. Specializing in full-stack development and cloud architecture.

@@ -161,7 +161,7 @@ export const submitContactForm = createServerFn({ method: 'POST' })
         return {
           success: false,
           error:
-            "Sorry — your message couldn't be delivered right now. Please try again in a moment, or email me directly at sfred.mail@gmail.com.",
+            "Sorry — your message couldn't be delivered right now. Please try again in a moment, or email me directly at contact@sfrederick.dev.",
         };
       }
 

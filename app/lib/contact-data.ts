@@ -16,10 +16,7 @@ export const contactData: ContactInfo = {
   title: "Staff Engineer",
   company: "Advanced Engineering Consultants",
   location: "Tampa, FL",
-  emails: [
-    { label: "Work", address: "sfrederick@advanced-engineers.com" },
-    { label: "Personal", address: "sfred.mail@gmail.com" },
-  ],
+  emails: [{ label: "Contact", address: "contact@sfrederick.dev" }],
   phone: { label: "Mobile", number: "+1 (813) 406-0178" },
   websites: [
     { label: "Portfolio", url: "https://sfrederick.dev/portfolio" },

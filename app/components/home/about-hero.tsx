@@ -70,7 +70,7 @@ export function AboutHero({ className }: AboutHeroProps) {
                 <span className="hidden sm:inline">LinkedIn</span>
               </a>
               <a
-                href={`mailto:${contactData.emails.find((e) => e.label.toLowerCase() === "personal")?.address || contactData.emails[0].address}`}
+                href={`mailto:${contactData.emails[0].address}`}
                 className="flex items-center gap-2 font-body text-sm text-text-tertiary hover:text-accent transition-colors duration-300"
               >
                 <Mail className="w-5 h-5" />

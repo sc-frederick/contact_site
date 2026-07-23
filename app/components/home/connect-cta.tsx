@@ -8,9 +8,7 @@ interface ConnectCTAProps {
 }
 
 export function ConnectCTA({ className }: ConnectCTAProps) {
-  const personalEmail = contactData.emails.find(
-    (email) => email.label.toLowerCase() === "personal"
-  );
+  const contactEmail = contactData.emails[0];
 
   return (
     <section className={cn("py-24 md:py-32 border-t border-border/50", className)}>
@@ -37,12 +35,12 @@ export function ConnectCTA({ className }: ConnectCTAProps) {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
 
-            {personalEmail && (
+            {contactEmail && (
               <a
-                href={`mailto:${personalEmail.address}`}
+                href={`mailto:${contactEmail.address}`}
                 className="font-body text-sm text-text-tertiary hover:text-accent transition-colors duration-300"
               >
-                {personalEmail.address}
+                {contactEmail.address}
               </a>
             )}
           </div>
