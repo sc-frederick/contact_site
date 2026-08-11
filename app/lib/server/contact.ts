@@ -3,91 +3,14 @@
 import { createServerFn } from '@tanstack/react-start';
 import { getRequest } from '@tanstack/react-start/server';
 import { env } from 'cloudflare:workers';
-import { createContactSubmissionInDB } from './db';
+import { contactSubmitSchema } from '~/lib/contact-validation';
+import { createContactSubmission } from './contact-storage';
 import { sendContactNotification } from './email';
 import { verifyTurnstileToken } from './turnstile';
-import type { ContactFormData, ContactSubmission, ApiResponse } from '~/types';
-
-// What the client actually sends to submitContactForm: the form fields plus a
-// Turnstile token. Request metadata (IP, user agent) is derived server-side from
-// trusted headers — never accepted from the client, where it would be spoofable.
-type ContactSubmitPayload = ContactFormData & {
-  turnstileToken?: string;
-};
-
-// Email validation regex
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 3;
-
-function validateContactForm(data: ContactFormData): string | null {
-  if (!data.name || data.name.trim().length < 2) {
-    return 'Name must be at least 2 characters long';
-  }
-
-  if (!data.email || !EMAIL_REGEX.test(data.email)) {
-    return 'Please provide a valid email address';
-  }
-
-  if (!data.message || data.message.trim().length < 10) {
-    return 'Message must be at least 10 characters long';
-  }
-
-  if (data.subject && data.subject.length > 200) {
-    return 'Subject must be less than 200 characters';
-  }
-
-  if (data.message.length > 5000) {
-    return 'Message must be less than 5000 characters';
-  }
-
-  return null;
-}
-
-// Fixed-window rate limit backed by KV, keyed on the visitor's real IP. KV is
-// eventually consistent, so a burst can slightly exceed the cap — acceptable here
-// since Turnstile already gates every submission.
-async function checkRateLimit(identifier: string): Promise<boolean> {
-  const key = `ratelimit:contact:${identifier}`;
-  const now = Date.now();
-
-  let count = 0;
-  let windowStart = now;
-  const raw = await env.CACHE.get(key);
-  if (raw) {
-    try {
-      const parsed = JSON.parse(raw) as { count: number; windowStart: number };
-      if (now - parsed.windowStart < RATE_LIMIT_WINDOW_MS) {
-        count = parsed.count;
-        windowStart = parsed.windowStart;
-      }
-    } catch {
-      // Corrupt entry; treat as a fresh window.
-    }
-  }
-
-  if (count >= RATE_LIMIT_MAX_REQUESTS) {
-    return false;
-  }
-
-  // KV enforces a minimum TTL of 60s; that's also exactly our window.
-  const ttlSeconds = Math.max(60, Math.ceil((windowStart + RATE_LIMIT_WINDOW_MS - now) / 1000));
-  await env.CACHE.put(key, JSON.stringify({ count: count + 1, windowStart }), {
-    expirationTtl: ttlSeconds,
-  });
-  return true;
-}
-
-function sanitizeInput(input: string): string {
-  // Basic sanitization to prevent XSS
-  return input
-    .replace(/[<>]/g, '')
-    .trim();
-}
+import type { ContactSubmission, ApiResponse } from '~/types';
 
 export const submitContactForm = createServerFn({ method: 'POST' })
-  .validator((data: ContactSubmitPayload) => data)
+  .validator((data: unknown) => contactSubmitSchema.parse(data))
   .handler(async (ctx): Promise<ApiResponse<{ id: number }>> => {
     try {
       const data = ctx.data;
@@ -103,10 +26,27 @@ export const submitContactForm = createServerFn({ method: 'POST' })
       // Cloudflare's edge and cannot be forged by the visitor.
       const request = getRequest();
       const ipAddress = request.headers.get('cf-connecting-ip');
-      const userAgent = request.headers.get('user-agent');
 
-      // Bot check: confirm the Turnstile token with Cloudflare before doing any work.
-      const turnstileOk = await verifyTurnstileToken(data.turnstileToken, ipAddress);
+      // Apply the native edge limiter before making the external Siteverify request.
+      // The contact form has no authenticated user identifier, so the edge-provided
+      // connecting IP is the best available abuse key; Turnstile remains the second gate.
+      const rateLimit = await env.CONTACT_RATE_LIMITER.limit({
+        key: ipAddress ?? 'local-development',
+      });
+      if (!rateLimit.success) {
+        return {
+          success: false,
+          error: 'Too many requests. Please try again in a minute.',
+        };
+      }
+
+      // Bind the token to this form and the hostname on which it was rendered.
+      const turnstileOk = await verifyTurnstileToken({
+        token: data.turnstileToken,
+        remoteip: ipAddress,
+        expectedHostname: new URL(request.url).hostname,
+        expectedAction: 'contact',
+      });
       if (!turnstileOk) {
         return {
           success: false,
@@ -114,46 +54,22 @@ export const submitContactForm = createServerFn({ method: 'POST' })
         };
       }
 
-      // Validate form data
-      const validationError = validateContactForm(data);
-      if (validationError) {
-        return {
-          success: false,
-          error: validationError,
-        };
-      }
-
-      // Check rate limit (per IP; 'unknown' only ever applies in local dev where
-      // there is no Cloudflare edge in front of the Worker)
-      if (!(await checkRateLimit(ipAddress ?? 'unknown'))) {
-        return {
-          success: false,
-          error: 'Too many requests. Please try again in a minute.',
-        };
-      }
-
-      // Sanitize inputs
       const sanitizedData = {
-        name: sanitizeInput(data.name),
-        email: sanitizeInput(data.email).toLowerCase(),
-        subject: data.subject ? sanitizeInput(data.subject) : '',
-        message: sanitizeInput(data.message),
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
       };
 
-      // Create submission in database
-      const submission: ContactSubmission = await createContactSubmissionInDB({
-        ...sanitizedData,
-        ip_address: ipAddress,
-        user_agent: userAgent,
-      });
+      // Persist through a parameterized D1 statement. IP address and user agent are
+      // deliberately not retained because they are not needed to reply to the message.
+      const submission: ContactSubmission = await createContactSubmission(sanitizedData);
 
       // Notify the site owner. Email is the delivery mechanism for the message, so
       // if it fails we tell the user honestly rather than pretending it went through.
       try {
         await sendContactNotification({
           ...sanitizedData,
-          ip_address: ipAddress,
-          user_agent: userAgent,
           submittedAt: submission.created_at,
         });
       } catch (emailError) {

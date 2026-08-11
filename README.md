@@ -18,7 +18,7 @@ step of moving that content into Cloudflare D1.
 - Featured-project and full-portfolio views with modal project details
 - Resume timeline and skills sections backed by structured local data
 - Blog listing and slug pages backed by local mock blog data
-- Contact form with validation, Cloudflare Turnstile verification, KV-backed rate limiting, and Cloudflare Email Sending notifications
+- Contact form with strict validation, Turnstile verification, native rate limiting, D1 persistence, and Email Sending notifications
 - Lightweight analytics server functions for pageview and event tracking
 - Custom Worker entry that enforces HTTPS and adds CSP, HSTS, frame, referrer, and permissions headers
 - D1 schema for portfolio items, blog posts, contact submissions, and analytics events
@@ -29,7 +29,7 @@ step of moving that content into Cloudflare D1.
 - Vite 8 with the Cloudflare Vite plugin
 - Tailwind CSS v4 with custom design tokens
 - Cloudflare Workers for SSR and deployment
-- Cloudflare KV for contact-form rate limiting
+- Cloudflare's native Rate Limiting binding for contact-form abuse protection
 - Cloudflare Turnstile for bot checks
 - Cloudflare Email Sending for contact notifications
 - Cloudflare D1 schema provisioned for future persistent content/submissions
@@ -125,7 +125,7 @@ The app runs at `http://localhost:3000`.
 - Worker name: `contact-site`
 - Custom domains: `sfrederick.dev` and `www.sfrederick.dev`
 - D1 binding: `DB` (`contact-site-db`)
-- KV binding: `CACHE`
+- Native rate-limiting bindings for contact and analytics ingestion
 - Email binding: `SEND_EMAIL`
 - Public vars for contact email metadata and the Turnstile site key
 - Secret required in Cloudflare: `TURNSTILE_SECRET_KEY`
@@ -165,8 +165,9 @@ HTTPS redirects outside local development and security headers on every response
 ## Data Notes
 
 - Portfolio and blog read paths currently return mock data from `app/lib/server/db.ts`.
-- Contact submissions and analytics events are modeled in `db/schema.sql`, but the current helper functions still log/mock writes instead of executing D1 queries.
-- KV is used by the contact form for fixed-window IP rate limiting.
+- Contact submissions and analytics events are persisted with parameterized D1 statements.
+- Contact and analytics ingestion use separate native Rate Limiting bindings.
+- Visitor IP addresses and raw user-agent strings are not retained with submissions or analytics events.
 - Email Sending is the delivery path for contact messages; if email delivery fails, the form reports the failure to the visitor.
 
 ## Contact

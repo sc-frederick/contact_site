@@ -1,7 +1,6 @@
-// D1/KV Database helper functions
-// These are mock implementations since D1 bindings aren't fully set up yet
+// Read helpers for repository-backed portfolio and blog content.
 
-import type { PortfolioItem, BlogPost, ContactSubmission, AnalyticsEvent } from '~/types';
+import type { PortfolioItem, BlogPost } from '~/types';
 
 // Mock data based on the seed.sql file
 const mockPortfolioItems: PortfolioItem[] = [
@@ -307,81 +306,4 @@ export async function getBlogPostBySlugFromDB(
   // TODO: Replace with actual D1 query when bindings are configured
   const post = mockBlogPosts.find((p) => p.slug === slug);
   return post || null;
-}
-
-export async function createContactSubmissionInDB(
-  data: Omit<ContactSubmission, 'id' | 'created_at' | 'status'>
-): Promise<ContactSubmission> {
-  // TODO: Replace with actual D1 query when bindings are configured
-  const newSubmission: ContactSubmission = {
-    ...data,
-    id: Date.now(),
-    status: 'pending',
-    created_at: new Date().toISOString(),
-  };
-
-  console.log('Created contact submission:', newSubmission);
-  return newSubmission;
-}
-
-export async function createAnalyticsEventInDB(
-  data: Omit<AnalyticsEvent, 'id' | 'created_at'>
-): Promise<AnalyticsEvent> {
-  // TODO: Replace with actual D1 query when bindings are configured
-  const newEvent: AnalyticsEvent = {
-    ...data,
-    id: Date.now(),
-    created_at: new Date().toISOString(),
-  };
-
-  console.log('Created analytics event:', newEvent);
-  return newEvent;
-}
-
-// Helper to get platform environment (for use when D1 is configured)
-// This function will work with Cloudflare Workers/Pages environment
-export function getPlatformEnv(): { DB?: D1Database; KV?: KVNamespace } {
-  // In a real Cloudflare environment, this would be available via the request context
-  // For now, return empty object since we're using mock data
-  return {};
-}
-
-// D1Database type stub (for when bindings are configured)
-export interface D1Database {
-  prepare(query: string): D1PreparedStatement;
-  dump(): Promise<ArrayBuffer>;
-  batch<T>(statements: D1PreparedStatement[]): Promise<D1Result<T>[]>;
-  exec(query: string): Promise<D1ExecResult>;
-}
-
-export interface D1PreparedStatement {
-  bind(...values: unknown[]): D1PreparedStatement;
-  first<T>(): Promise<T | null>;
-  run<T>(): Promise<D1Result<T>>;
-  all<T>(): Promise<D1Result<T>>;
-  raw<T>(): Promise<T[]>;
-}
-
-export interface D1Result<T> {
-  results: T[];
-  success: boolean;
-  error?: string;
-  meta?: {
-    duration: number;
-    last_row_id: number;
-    changes: number;
-  };
-}
-
-export interface D1ExecResult {
-  count: number;
-  duration: number;
-}
-
-// KVNamespace type stub (for when bindings are configured)
-export interface KVNamespace {
-  get(key: string, options?: { cacheTtl?: number; type?: 'text' | 'json' | 'arrayBuffer' | 'stream' }): Promise<string | null>;
-  put(key: string, value: string | ArrayBuffer | ReadableStream, options?: { expiration?: number; expirationTtl?: number }): Promise<void>;
-  delete(key: string): Promise<void>;
-  list(options?: { prefix?: string; limit?: number; cursor?: string }): Promise<{ keys: { name: string; expiration?: number }[]; list_complete: boolean; cursor?: string }>;
 }

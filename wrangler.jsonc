@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "contact-site",
-  "compatibility_date": "2024-12-01",
+  "compatibility_date": "2026-08-11",
   "compatibility_flags": [
     "nodejs_compat"
   ],
@@ -21,20 +21,33 @@
       "database_id": "f3fb4f29-7bd9-468d-a716-13da94ef2718"
     }
   ],
-  "kv_namespaces": [
+  "ratelimits": [
     {
-      "binding": "CACHE",
-      "id": "48413adf59da4926be2da155619af648",
-      "preview_id": "placeholder-will-be-set-after-create"
+      "name": "CONTACT_RATE_LIMITER",
+      "namespace_id": "41001",
+      "simple": { "limit": 5, "period": 60 }
+    },
+    {
+      "name": "ANALYTICS_RATE_LIMITER",
+      "namespace_id": "41002",
+      "simple": { "limit": 120, "period": 60 }
     }
   ],
   // Outbound email via Cloudflare Email Sending (enabled on the sfrederick.dev zone).
-  // The binding is unrestricted because the recipient (CONTACT_TO_EMAIL) is a fixed
-  // server-side constant — it is never derived from user input, so there is no
-  // arbitrary-recipient abuse vector.
+  // Sender and destination are constrained at the binding layer as well as being
+  // fixed server-side values, preventing arbitrary-recipient email abuse.
   "send_email": [
-    { "name": "SEND_EMAIL" }
+    {
+      "name": "SEND_EMAIL",
+      "allowed_destination_addresses": ["sfred.mail@gmail.com"],
+      "allowed_sender_addresses": ["contact@sfrederick.dev"]
+    }
   ],
+  "observability": {
+    "enabled": true,
+    "logs": { "enabled": true, "head_sampling_rate": 0.1 },
+    "traces": { "enabled": true, "head_sampling_rate": 0.01 }
+  },
   // Non-secret config. Change here, no code edit.
   // TURNSTILE_SITE_KEY is public (it ships to the browser) — this is the real sitekey
   // for the sfrederick.dev Turnstile widget. Local dev overrides it with a test key via

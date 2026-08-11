@@ -16,11 +16,8 @@ function formatDate(dateString: string | null): string {
   });
 }
 
-// Simple HTML content renderer with styling for common elements
+// Content is sanitized at the server-function boundary before reaching this renderer.
 function renderContent(html: string) {
-  // Note: In production, you'd want to use a proper markdown-to-HTML parser
-  // and sanitize the HTML. For now, we'll render the HTML content directly
-  // with Tailwind classes applied via CSS.
   return (
     <div
       className="max-w-none font-body

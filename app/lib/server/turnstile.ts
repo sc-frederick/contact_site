@@ -5,12 +5,15 @@
 // a token is never sufficient — verification MUST happen here.
 
 import { env } from 'cloudflare:workers';
+import { isExpectedTurnstileResponse } from '~/lib/turnstile-validation';
 
 const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
-interface SiteverifyResponse {
-  success: boolean;
-  'error-codes'?: string[];
+interface VerifyTurnstileOptions {
+  token: string;
+  remoteip?: string | null;
+  expectedHostname: string;
+  expectedAction: string;
 }
 
 /**
@@ -19,28 +22,30 @@ interface SiteverifyResponse {
  * Optionally pass the visitor's IP (CF-Connecting-IP) for an extra check.
  */
 export async function verifyTurnstileToken(
-  token: string | undefined | null,
-  remoteip?: string | null,
+  options: VerifyTurnstileOptions,
 ): Promise<boolean> {
-  if (!token) return false;
-
   try {
     const body: Record<string, string> = {
       secret: env.TURNSTILE_SECRET_KEY,
-      response: token,
+      response: options.token,
     };
-    if (remoteip) body.remoteip = remoteip;
+    if (options.remoteip) body.remoteip = options.remoteip;
 
     const res = await fetch(SITEVERIFY_URL, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) return false;
 
-    const data = (await res.json()) as SiteverifyResponse;
-    return data.success === true;
+    const data: unknown = await res.json();
+    return isExpectedTurnstileResponse(
+      data,
+      options.expectedHostname,
+      options.expectedAction,
+    );
   } catch {
     return false;
   }

@@ -1,14 +1,20 @@
 // Server functions for blog operations
 
 import { createServerFn } from '@tanstack/react-start';
+import { z } from 'zod';
 import { getBlogPostsFromDB, getBlogPostBySlugFromDB } from './db';
+import { sanitizeBlogHtml } from './blog-content';
 import type { BlogPost, ApiResponse, PaginatedResponse } from '~/types';
 
-interface GetBlogPostsOptions {
-  published?: boolean;
-  page?: number;
-  limit?: number;
-  tag?: string;
+const blogSlugSchema = z.strictObject({
+  slug: z.string().min(1).max(200).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+});
+const recentPostsSchema = z.strictObject({
+  limit: z.number().int().min(1).max(10).optional(),
+});
+
+function sanitizePost(post: BlogPost): BlogPost {
+  return { ...post, content: sanitizeBlogHtml(post.content) };
 }
 
 export const getBlogPosts = createServerFn({ method: 'GET' })
@@ -19,7 +25,7 @@ export const getBlogPosts = createServerFn({ method: 'GET' })
       const limit = 10;
 
       // Fetch posts from database (mock data for now)
-      let allPosts = await getBlogPostsFromDB(published);
+      const allPosts = (await getBlogPostsFromDB(published)).map(sanitizePost);
 
       // Calculate pagination
       const total = allPosts.length;
@@ -48,21 +54,11 @@ export const getBlogPosts = createServerFn({ method: 'GET' })
   });
 
 export const getBlogPost = createServerFn({ method: 'GET' })
+  .validator((data: unknown) => blogSlugSchema.parse(data))
   .handler(async (ctx): Promise<ApiResponse<BlogPost | null>> => {
     try {
-      // Access data from context - slug should be passed as ctx.data
-      const data = ctx.data as unknown as { slug?: string };
-      const slug = data?.slug;
-
-      if (!slug) {
-        return {
-          success: false,
-          error: 'Blog post slug is required',
-        };
-      }
-
       // Fetch post from database (mock data for now)
-      const post = await getBlogPostBySlugFromDB(slug);
+      const post = await getBlogPostBySlugFromDB(ctx.data.slug);
 
       if (!post) {
         return {
@@ -81,7 +77,7 @@ export const getBlogPost = createServerFn({ method: 'GET' })
 
       return {
         success: true,
-        data: post,
+        data: sanitizePost(post),
       };
     } catch (error) {
       console.error('Error fetching blog post:', error);
@@ -96,7 +92,7 @@ export const getBlogTags = createServerFn({ method: 'GET' })
   .handler(async (): Promise<ApiResponse<string[]>> => {
     try {
       // Fetch all published posts
-      const posts = await getBlogPostsFromDB(true);
+      const posts = (await getBlogPostsFromDB(true)).map(sanitizePost);
 
       // Extract and deduplicate tags
       const allTags = posts.flatMap((post) => post.tags);
@@ -116,12 +112,13 @@ export const getBlogTags = createServerFn({ method: 'GET' })
   });
 
 export const getRecentBlogPosts = createServerFn({ method: 'GET' })
+  .validator((data: unknown) => recentPostsSchema.parse(data ?? {}))
   .handler(async (ctx): Promise<ApiResponse<BlogPost[]>> => {
     try {
-      const { limit = 3 } = (ctx.data as unknown as { limit?: number }) || {};
+      const { limit = 3 } = ctx.data;
 
       // Fetch published posts
-      const posts = await getBlogPostsFromDB(true);
+      const posts = (await getBlogPostsFromDB(true)).map(sanitizePost);
 
       // Return most recent posts up to the limit
       const recentPosts = posts.slice(0, limit);

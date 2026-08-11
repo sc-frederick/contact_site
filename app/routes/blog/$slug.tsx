@@ -1,12 +1,13 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { getBlogPostBySlugFromDB } from "~/lib/server/db";
+import { getBlogPost } from "~/lib/server/blog";
 import { PostContent } from "~/components/blog/post-content";
 import type { BlogPost } from "~/types";
 
 export const Route = createFileRoute("/blog/$slug")({
   component: BlogPost,
   loader: async ({ params }): Promise<BlogPost> => {
-    const post = await getBlogPostBySlugFromDB(params.slug);
+    const result = await getBlogPost({ data: { slug: params.slug } });
+    const post = result.success ? result.data : null;
     
     if (!post || !post.published) {
       throw notFound();

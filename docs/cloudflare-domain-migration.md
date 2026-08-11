@@ -7,7 +7,7 @@ out of scope here.)
 
 Status as of 2026-06-19:
 
-- `contact-site` is a TanStack Start + Workers app (D1 `contact-site-db` + KV `CACHE`),
+- `contact-site` is a TanStack Start + Workers app (D1 `contact-site-db` + native rate limiting),
   deployed to the `contact-site` worker (`contact-site.sc-frederick.workers.dev`).
   `master` now equals the TanStack redesign.
 - `scoutwork.app` already uses Cloudflare nameservers (`cris/pearl.ns.cloudflare.com`) →

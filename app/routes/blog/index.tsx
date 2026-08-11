@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getBlogPostsFromDB } from "~/lib/server/db";
+import { getBlogPosts } from "~/lib/server/blog";
 import { PostList } from "~/components/blog/post-list";
 import type { BlogPost } from "~/types";
 
 export const Route = createFileRoute("/blog/")({
   component: BlogIndex,
   loader: async (): Promise<BlogPost[]> => {
-    const posts = await getBlogPostsFromDB(true);
-    return posts;
+    const result = await getBlogPosts();
+    return result.success ? result.data.items : [];
   },
 });
 

@@ -8,6 +8,7 @@ import { cn } from "~/lib/utils";
 // Minimal typing for the Turnstile script's global API.
 interface TurnstileRenderOptions {
   sitekey: string;
+  action?: string;
   callback?: (token: string) => void;
   "expired-callback"?: () => void;
   "error-callback"?: () => void;
@@ -261,6 +262,7 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
         }
         widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
           sitekey: siteKey,
+          action: "contact",
           theme: "auto",
           callback: (token) => setTurnstileToken(token),
           "expired-callback": () => setTurnstileToken(null),

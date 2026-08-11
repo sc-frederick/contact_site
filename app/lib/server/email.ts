@@ -12,8 +12,6 @@ import { env } from 'cloudflare:workers';
 import type { ContactFormData } from '~/types';
 
 export interface ContactNotificationInput extends ContactFormData {
-  ip_address?: string | null;
-  user_agent?: string | null;
   /** ISO timestamp of when the submission was recorded. */
   submittedAt?: string;
 }
@@ -55,14 +53,12 @@ export async function sendContactNotification(input: ContactNotificationInput): 
     `Email:   ${email}`,
     `Subject: ${subject}`,
     `Time:    ${submittedAt}`,
-    input.ip_address ? `IP:      ${input.ip_address}` : null,
     '',
     'Message:',
     message,
     '',
     `— Reply directly to this email to respond to ${name}.`,
   ]
-    .filter((line): line is string => line !== null)
     .join('\n');
 
   const htmlBody = `<!doctype html>

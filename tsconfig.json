@@ -13,6 +13,7 @@
   "include": [
     "app",
     "vite.config.ts",
+    "vitest.config.ts",
     "server.ts",
     "env.d.ts",
     "worker-configuration.d.ts"

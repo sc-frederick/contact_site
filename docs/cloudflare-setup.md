@@ -1,6 +1,6 @@
 # Cloudflare Workers Setup
 
-One-time setup to provision the D1 database and KV namespace, then wire their IDs into `wrangler.jsonc`.
+One-time setup to provision the D1 database and configure Worker bindings in `wrangler.jsonc`.
 
 ## Prerequisites
 
@@ -30,39 +30,7 @@ Copy the `database_id` value.
 
 ---
 
-## 2. Create the KV Namespace
-
-```bash
-npx wrangler kv namespace create CACHE
-```
-
-Output:
-
-```
-✅ Successfully created KV namespace 'contact-site-CACHE'
-Add the following to your configuration file:
-kv_namespaces = [
-  { binding = "CACHE", id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" }
-]
-```
-
-You also need a preview namespace for local dev:
-
-```bash
-npx wrangler kv namespace create CACHE --preview
-```
-
-Output:
-
-```
-{ binding = "CACHE", preview_id = "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy" }
-```
-
-Copy both `id` and `preview_id` values.
-
----
-
-## 3. Update `wrangler.jsonc`
+## 2. Update `wrangler.jsonc`
 
 Replace the placeholder values with your real IDs:
 
@@ -70,9 +38,9 @@ Replace the placeholder values with your real IDs:
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "contact-site",
-  "compatibility_date": "2024-12-01",
+  "compatibility_date": "2026-08-11",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry",
+  "main": "./server.ts",
   "d1_databases": [
     {
       "binding": "DB",
@@ -80,11 +48,16 @@ Replace the placeholder values with your real IDs:
       "database_id": "<paste database_id here>"
     }
   ],
-  "kv_namespaces": [
+  "ratelimits": [
     {
-      "binding": "CACHE",
-      "id": "<paste id here>",
-      "preview_id": "<paste preview_id here>"
+      "name": "CONTACT_RATE_LIMITER",
+      "namespace_id": "41001",
+      "simple": { "limit": 5, "period": 60 }
+    },
+    {
+      "name": "ANALYTICS_RATE_LIMITER",
+      "namespace_id": "41002",
+      "simple": { "limit": 120, "period": 60 }
     }
   ]
 }
@@ -94,7 +67,7 @@ Commit and push after updating — the next deploy will pick up the real binding
 
 ---
 
-## 4. Apply the Database Schema
+## 3. Apply the Database Schema
 
 Run against the **remote** (production) D1 database:
 
@@ -110,7 +83,7 @@ npx wrangler d1 execute contact-site-db --remote --command="SELECT name FROM sql
 
 ---
 
-## 5. (Optional) Seed with Sample Data
+## 4. (Optional) Seed with Sample Data
 
 ```bash
 npx wrangler d1 execute contact-site-db --remote --file=./db/seed.sql
@@ -120,9 +93,9 @@ npx wrangler d1 execute contact-site-db --remote --file=./db/seed.sql
 
 ---
 
-## 6. Local Development
+## 5. Local Development
 
-For local dev the database and KV run in-process — no remote resources needed.
+For local development, D1 and rate-limiting bindings are simulated in-process.
 
 Apply schema locally:
 
