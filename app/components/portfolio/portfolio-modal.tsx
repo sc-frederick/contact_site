@@ -36,7 +36,7 @@ export function PortfolioModal({ item, onClose }: PortfolioModalProps) {
         className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl border border-border bg-bg-surface p-6 md:p-8"
       >
         <div className="flex items-start justify-between gap-4 mb-6">
-          <h2 className="font-display text-3xl text-text-primary">{item.title}</h2>
+          <h2 className="type-section-title text-text-primary">{item.title}</h2>
           <button
             type="button"
             onClick={onClose}
@@ -47,17 +47,17 @@ export function PortfolioModal({ item, onClose }: PortfolioModalProps) {
           </button>
         </div>
 
-        <p className="font-body text-text-secondary leading-relaxed mb-6">
+        <p className="type-body text-text-secondary mb-6">
           {item.description}
         </p>
 
         <div className="mb-8">
-          <h3 className="font-display text-lg text-text-primary mb-3">Tech Stack</h3>
+          <h3 className="type-card-title text-text-primary mb-3">Tech Stack</h3>
           <div className="flex flex-wrap gap-2">
             {item.technologies.map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1 rounded-full text-xs font-body bg-bg-primary border border-border/50 text-text-tertiary"
+                className="type-meta px-3 py-1 rounded-full bg-bg-primary border border-border/50 text-text-tertiary"
               >
                 {tech}
               </span>
@@ -71,7 +71,7 @@ export function PortfolioModal({ item, onClose }: PortfolioModalProps) {
               href={item.project_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-body text-text-secondary hover:text-accent transition-colors duration-300"
+              className="type-meta inline-flex items-center gap-2 text-text-secondary hover:text-accent transition-colors duration-300"
             >
               <ExternalLink className="w-4 h-4" />
               <span>Live Demo</span>
@@ -82,7 +82,7 @@ export function PortfolioModal({ item, onClose }: PortfolioModalProps) {
               href={item.github_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-body text-text-secondary hover:text-accent transition-colors duration-300"
+              className="type-meta inline-flex items-center gap-2 text-text-secondary hover:text-accent transition-colors duration-300"
             >
               <Github className="w-4 h-4" />
               <span>Source</span>

@@ -82,7 +82,7 @@ function FormField({
     <div className="space-y-2">
       <label
         htmlFor={id}
-        className="block font-body text-sm text-text-secondary"
+        className="type-meta block text-text-secondary"
       >
         {label}
         {required && <span className="text-accent ml-1">*</span>}
@@ -98,7 +98,7 @@ function FormField({
         required={required}
         rows={isTextarea ? 5 : undefined}
         className={cn(
-          "w-full px-4 py-3 bg-bg-surface/50 border rounded-lg font-body text-text-primary",
+          "type-body w-full px-4 py-3 bg-bg-surface/50 border rounded-lg text-text-primary",
           "placeholder:text-text-tertiary/50",
           "focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent",
           "transition-all duration-300",
@@ -109,7 +109,7 @@ function FormField({
         )}
       />
       {error && (
-        <p className="flex items-center gap-1 text-xs text-red-400 font-body">
+        <p className="type-meta flex items-center gap-1 text-red-400">
           <AlertCircle className="w-3 h-3" />
           {error}
         </p>
@@ -126,10 +126,10 @@ function DirectContactInfo({ className }: DirectContactInfoProps) {
   return (
     <div className={cn("space-y-6", className)}>
       <div>
-        <h3 className="font-display text-xl text-text-primary mb-2">
+        <h3 className="type-card-title text-text-primary mb-2">
           Get in Touch
         </h3>
-        <p className="font-body text-text-secondary leading-relaxed">
+        <p className="type-body text-text-secondary">
           Have a project in mind or want to collaborate? Send me a message and I'll get back to you as soon as possible.
         </p>
       </div>
@@ -142,7 +142,7 @@ function DirectContactInfo({ className }: DirectContactInfoProps) {
             <Mail className="w-5 h-5 text-accent" />
           </div>
           <div className="flex-1">
-            <p className="font-body text-xs text-text-tertiary uppercase tracking-wider mb-1">
+            <p className="type-mono-meta text-text-tertiary uppercase tracking-wider mb-1">
               Email
             </p>
             <div className="space-y-1">
@@ -150,7 +150,7 @@ function DirectContactInfo({ className }: DirectContactInfoProps) {
                 <a
                   key={email.address}
                   href={`mailto:${email.address}`}
-                  className="block font-body text-sm text-text-primary hover:text-accent transition-colors duration-300"
+                  className="type-body block text-text-primary hover:text-accent transition-colors duration-300"
                 >
                   {email.address}
                 </a>
@@ -165,12 +165,12 @@ function DirectContactInfo({ className }: DirectContactInfoProps) {
             <Phone className="w-5 h-5 text-accent" />
           </div>
           <div className="flex-1">
-            <p className="font-body text-xs text-text-tertiary uppercase tracking-wider mb-1">
+            <p className="type-mono-meta text-text-tertiary uppercase tracking-wider mb-1">
               Phone
             </p>
             <a
               href={`tel:${contactData.phone.number.replace(/\s/g, "")}`}
-              className="font-body text-sm text-text-primary hover:text-accent transition-colors duration-300"
+              className="type-body text-text-primary hover:text-accent transition-colors duration-300"
             >
               {contactData.phone.number}
             </a>
@@ -183,10 +183,10 @@ function DirectContactInfo({ className }: DirectContactInfoProps) {
             <MapPin className="w-5 h-5 text-accent" />
           </div>
           <div className="flex-1">
-            <p className="font-body text-xs text-text-tertiary uppercase tracking-wider mb-1">
+            <p className="type-mono-meta text-text-tertiary uppercase tracking-wider mb-1">
               Location
             </p>
-            <p className="font-body text-sm text-text-primary">
+            <p className="type-body text-text-primary">
               {contactData.location}
             </p>
           </div>
@@ -212,16 +212,16 @@ function SuccessState({ onReset }: SuccessStateProps) {
         </div>
       </div>
       
-      <h3 className="font-display text-2xl text-text-primary mb-3">
+      <h3 className="type-section-title text-text-primary mb-3">
         Message Sent!
       </h3>
-      <p className="font-body text-text-secondary mb-8 max-w-sm mx-auto">
+      <p className="type-body text-text-secondary mb-8 max-w-sm mx-auto">
         Thank you for reaching out. I'll review your message and get back to you as soon as possible.
       </p>
       
       <button
         onClick={onReset}
-        className="font-body text-accent hover:text-accent-muted transition-colors duration-300 underline underline-offset-4"
+        className="type-body text-accent hover:text-accent-muted transition-colors duration-300 underline underline-offset-4"
       >
         Send another message
       </button>
@@ -415,10 +415,10 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <h3 className="font-display text-xl text-text-primary mb-2">
+              <h3 className="type-card-title text-text-primary mb-2">
                 Send a Message
               </h3>
-              <p className="font-body text-text-secondary text-sm">
+              <p className="type-body text-text-secondary">
                 Fill out the form below and I'll respond within 24 hours.
               </p>
             </div>
@@ -467,7 +467,7 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
                 maxLength={5000}
               />
               
-              <p className="text-xs text-text-tertiary font-body text-right">
+              <p className="type-meta text-text-tertiary text-right">
                 {formData.message.length}/5000 characters
               </p>
             </div>
@@ -475,7 +475,7 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
             {submitError && (
               <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                 <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
-                <p className="text-sm text-red-400 font-body">{submitError}</p>
+                <p className="type-meta text-red-400">{submitError}</p>
               </div>
             )}
 
@@ -486,7 +486,7 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
               type="submit"
               disabled={isSubmitting || !turnstileToken}
               className={cn(
-                "w-full flex items-center justify-center gap-2 px-6 py-4 rounded-lg font-body font-medium",
+                "type-body w-full flex items-center justify-center gap-2 px-6 py-4 rounded-lg font-medium",
                 "bg-accent text-bg-primary",
                 "hover:bg-accent-muted transition-all duration-300",
                 "focus:outline-none focus:ring-2 focus:ring-accent/50 focus:ring-offset-2 focus:ring-offset-bg-primary",

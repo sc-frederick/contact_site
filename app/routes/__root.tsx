@@ -33,13 +33,13 @@ function NotFound() {
   return (
     <div className="min-h-[calc(100vh-72px)] flex items-center justify-center px-6">
       <div className="text-center max-w-md">
-        <span className="font-mono text-sm text-accent uppercase tracking-wider block mb-4">
+        <span className="type-mono-meta text-accent uppercase tracking-wider block mb-4">
           404
         </span>
-        <h1 className="font-display text-4xl md:text-5xl text-text-primary mb-4">
+        <h1 className="type-page-title text-text-primary mb-4">
           Page not found
         </h1>
-        <p className="font-body text-text-secondary mb-8">
+        <p className="type-body text-text-secondary mb-8">
           The page you are looking for does not exist or has been moved.
         </p>
         <Link

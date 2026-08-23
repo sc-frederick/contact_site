@@ -36,12 +36,12 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
       />
 
       {/* Title */}
-      <h3 className="mb-3 font-display text-xl text-text-primary transition-colors duration-300 group-hover:text-accent">
+      <h3 className="type-card-title mb-3 text-text-primary transition-colors duration-300 group-hover:text-accent">
         {item.title}
       </h3>
 
       {/* Description */}
-      <p className="mb-4 line-clamp-3 font-body text-sm text-text-secondary">
+      <p className="type-body mb-4 line-clamp-3 text-text-secondary">
         {item.description}
       </p>
 
@@ -51,7 +51,7 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
           <span
             key={tech}
             className={cn(
-              "px-2.5 py-1 rounded-full text-xs font-body",
+              "type-meta px-2.5 py-1 rounded-full",
               "bg-bg-primary border border-border/50 text-text-tertiary",
               "group-hover:border-accent/30 group-hover:text-text-secondary",
               "transition-colors duration-300"
@@ -71,7 +71,7 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
               rel="noopener noreferrer"
               onClick={(event) => event.stopPropagation()}
               className={cn(
-                "flex items-center gap-1.5 text-sm font-body",
+                "type-meta flex items-center gap-1.5",
                 "text-text-secondary hover:text-accent",
                 "transition-colors duration-300"
               )}
@@ -88,7 +88,7 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
               rel="noopener noreferrer"
               onClick={(event) => event.stopPropagation()}
               className={cn(
-                "flex items-center gap-1.5 text-sm font-body",
+                "type-meta flex items-center gap-1.5",
                 "text-text-secondary hover:text-accent",
                 "transition-colors duration-300"
               )}

@@ -42,13 +42,13 @@ export function Timeline({ items, className }: TimelineProps) {
         >
           {/* Date column - desktop */}
           <div className="hidden md:flex flex-col items-end text-right pt-1">
-            <div className="font-mono text-xs text-text-tertiary whitespace-nowrap">
+            <div className="type-mono-meta text-text-tertiary whitespace-nowrap">
               {formatDate(item.startDate)}
             </div>
-            <div className="font-mono text-xs text-text-tertiary whitespace-nowrap">
+            <div className="type-mono-meta text-text-tertiary whitespace-nowrap">
               {formatDate(item.endDate)}
             </div>
-            <div className="font-mono text-[10px] text-accent mt-1 whitespace-nowrap">
+            <div className="type-mono-meta text-accent mt-1 whitespace-nowrap">
               {getDuration(item.startDate, item.endDate)}
             </div>
           </div>
@@ -63,19 +63,19 @@ export function Timeline({ items, className }: TimelineProps) {
           <div className="min-w-0 pb-8 border-b border-border/50 last:border-b-0 last:pb-0">
             {/* Mobile date */}
             <div className="md:hidden mb-2">
-              <span className="font-mono text-xs text-text-tertiary">
+              <span className="type-mono-meta text-text-tertiary">
                 {formatDate(item.startDate)} — {formatDate(item.endDate)}
               </span>
-              <span className="font-mono text-[10px] text-accent ml-2">
+              <span className="type-mono-meta text-accent ml-2">
                 ({getDuration(item.startDate, item.endDate)})
               </span>
             </div>
 
-            <h3 className="font-display text-xl text-text-primary mb-1">
+            <h3 className="type-card-title text-text-primary mb-1">
               {item.title}
             </h3>
-            <div className="font-body text-accent mb-1">{item.company}</div>
-            <div className="font-body text-sm text-text-tertiary mb-3">
+            <div className="type-body text-accent mb-1">{item.company}</div>
+            <div className="type-meta text-text-tertiary mb-3">
               {item.location}
             </div>
 
@@ -83,7 +83,7 @@ export function Timeline({ items, className }: TimelineProps) {
               {item.description.map((desc, i) => (
                 <li
                   key={i}
-                  className="font-body text-sm text-text-secondary leading-relaxed flex gap-2"
+                  className="type-body text-text-secondary flex gap-2"
                 >
                   <span className="text-accent mt-1.5">•</span>
                   <span>{desc}</span>
@@ -96,7 +96,7 @@ export function Timeline({ items, className }: TimelineProps) {
                 {item.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="px-2 py-1 rounded bg-bg-elevated text-text-tertiary font-mono text-xs"
+                    className="type-mono-meta px-2 py-1 rounded bg-bg-elevated text-text-tertiary"
                   >
                     {tech}
                   </span>

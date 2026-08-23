@@ -15,7 +15,7 @@ export function PortfolioGrid({ items, className }: PortfolioGridProps) {
   if (items.length === 0) {
     return (
       <div className={cn("text-center py-12", className)}>
-        <p className="font-body text-text-secondary">
+        <p className="type-body text-text-secondary">
           No portfolio items available yet.
         </p>
       </div>

@@ -15,7 +15,7 @@ function Contact() {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="font-display text-4xl md:text-5xl text-text-primary mb-4">
+          <h1 className="type-page-title text-text-primary mb-4">
             Get in Touch
           </h1>
 
@@ -28,7 +28,7 @@ function Contact() {
             <div className="h-px w-12 bg-gradient-to-l from-transparent via-border to-border" />
           </div>
 
-          <p className="font-body text-text-secondary max-w-2xl mx-auto">
+          <p className="type-lead text-text-secondary max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? Send me a message or reach out directly.
           </p>
         </div>

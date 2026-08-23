@@ -25,13 +25,13 @@ export function AboutHero({ className }: AboutHeroProps) {
             </h1>
 
             {/* Role */}
-            <p className="font-mono text-sm md:text-base text-accent tracking-wide mb-8">
+            <p className="type-kicker text-accent tracking-wide mb-8">
               MEP Engineer / IT Manager / Developer
             </p>
 
             {/* About Statement */}
             <div className="max-w-xl">
-              <p className="font-body text-lg md:text-xl text-text-secondary leading-relaxed mb-4">
+              <p className="type-lead text-text-secondary mb-4">
                 At{" "}
                 <span className="text-text-primary">
                   Advanced Engineering Consultants
@@ -39,7 +39,7 @@ export function AboutHero({ className }: AboutHeroProps) {
                 build internal software that cuts down the repetitive work around
                 drawings and project delivery.
               </p>
-              <p className="font-body text-base text-text-tertiary leading-relaxed">
+              <p className="type-body text-text-tertiary">
                 Outside work, I build web apps and test practical uses for AI. I
                 use this site to share the projects that survive those experiments.
               </p>
@@ -51,7 +51,7 @@ export function AboutHero({ className }: AboutHeroProps) {
                 href={contactData.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 font-body text-sm text-text-tertiary hover:text-accent transition-colors duration-300"
+                className="type-meta flex items-center gap-2 text-text-tertiary hover:text-accent transition-colors duration-300"
                 aria-label="GitHub"
               >
                 <Github className="w-5 h-5" />
@@ -61,7 +61,7 @@ export function AboutHero({ className }: AboutHeroProps) {
                 href={contactData.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 font-body text-sm text-text-tertiary hover:text-accent transition-colors duration-300"
+                className="type-meta flex items-center gap-2 text-text-tertiary hover:text-accent transition-colors duration-300"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
@@ -69,7 +69,7 @@ export function AboutHero({ className }: AboutHeroProps) {
               </a>
               <a
                 href={`mailto:${contactData.emails[0].address}`}
-                className="flex items-center gap-2 font-body text-sm text-text-tertiary hover:text-accent transition-colors duration-300"
+                className="type-meta flex items-center gap-2 text-text-tertiary hover:text-accent transition-colors duration-300"
               >
                 <Mail className="w-5 h-5" />
                 <span className="hidden sm:inline">Email</span>

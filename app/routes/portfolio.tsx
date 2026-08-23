@@ -33,7 +33,7 @@ function PortfolioContent() {
   if (!loaderData.success) {
     return (
       <div className="text-center py-12">
-        <p className="font-body text-text-secondary">
+        <p className="type-body text-text-secondary">
           Failed to load portfolio items. Please try again later.
         </p>
       </div>

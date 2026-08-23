@@ -13,7 +13,7 @@ function Resume() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="font-display text-4xl md:text-5xl text-text-primary mb-4">
+          <h1 className="type-page-title text-text-primary mb-4">
             Resume
           </h1>
 
@@ -26,18 +26,18 @@ function Resume() {
             <div className="h-px w-12 bg-gradient-to-l from-transparent via-border to-border" />
           </div>
 
-          <p className="font-display text-lg text-accent">{resumeData.name}</p>
-          <p className="font-body text-text-secondary">
+          <p className="type-card-title text-accent">{resumeData.name}</p>
+          <p className="type-body text-text-secondary">
             {resumeData.title}
           </p>
         </div>
 
         {/* Summary */}
         <div className="bg-bg-surface/50 rounded-xl border border-border p-6 md:p-8 mb-12">
-          <h2 className="font-display text-xl text-text-primary mb-4">
+          <h2 className="type-card-title text-text-primary mb-4">
             Professional Summary
           </h2>
-          <p className="font-body text-text-secondary leading-relaxed">
+          <p className="type-lead text-text-secondary">
             {resumeData.summary}
           </p>
         </div>
@@ -45,7 +45,7 @@ function Resume() {
         {/* Experience Section */}
         <section className="mb-12">
           <div className="flex items-center gap-4 mb-8">
-            <h2 className="font-display text-2xl text-text-primary">
+            <h2 className="type-section-title text-text-primary">
               Experience
             </h2>
             <div className="flex-1 h-px bg-gradient-to-r from-border via-border to-transparent" />
@@ -56,7 +56,7 @@ function Resume() {
         {/* Education Section */}
         <section className="mb-12">
           <div className="flex items-center gap-4 mb-8">
-            <h2 className="font-display text-2xl text-text-primary">
+            <h2 className="type-section-title text-text-primary">
               Education
             </h2>
             <div className="flex-1 h-px bg-gradient-to-r from-border via-border to-transparent" />
@@ -70,17 +70,17 @@ function Resume() {
               >
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
                   <div>
-                    <h3 className="font-display text-xl text-text-primary mb-1">
+                    <h3 className="type-card-title text-text-primary mb-1">
                       {edu.institution}
                     </h3>
-                    <div className="font-body text-accent">
+                    <div className="type-body text-accent">
                       {edu.degree} in {edu.field}
                     </div>
-                    <div className="font-body text-sm text-text-tertiary">
+                    <div className="type-meta text-text-tertiary">
                       {edu.location}
                     </div>
                   </div>
-                  <div className="font-mono text-sm text-text-tertiary md:text-right">
+                  <div className="type-mono-meta text-text-tertiary md:text-right">
                     {edu.startDate} — {edu.endDate}
                   </div>
                 </div>
@@ -92,7 +92,7 @@ function Resume() {
         {/* Skills Section */}
         <section>
           <div className="flex items-center gap-4 mb-8">
-            <h2 className="font-display text-2xl text-text-primary">
+            <h2 className="type-section-title text-text-primary">
               Skills
             </h2>
             <div className="flex-1 h-px bg-gradient-to-r from-border via-border to-transparent" />
