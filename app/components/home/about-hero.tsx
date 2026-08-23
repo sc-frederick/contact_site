@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import { contactData } from "~/lib/contact-data";
 import { cn } from "~/lib/utils";
 import profilePhoto from "../../../docs/ProfilePhoto.webp";
@@ -11,7 +11,7 @@ export function AboutHero({ className }: AboutHeroProps) {
   return (
     <section
       className={cn(
-        "relative min-h-[calc(100vh-72px)] flex items-center",
+        "relative flex flex-1 items-center",
         className
       )}
     >
@@ -20,10 +20,8 @@ export function AboutHero({ className }: AboutHeroProps) {
           {/* Text Content */}
           <div className="lg:col-span-7 order-2 lg:order-1">
             {/* Name */}
-            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-text-primary leading-[0.95] tracking-tight mb-6">
-              Stephen
-              <br />
-              <span className="text-accent">Frederick</span>
+            <h1 className="mb-6 whitespace-nowrap font-display text-[clamp(2.5rem,5.5vw,4.5rem)] leading-none tracking-tight text-text-primary">
+              Stephen Frederick
             </h1>
 
             {/* Role */}
@@ -34,16 +32,16 @@ export function AboutHero({ className }: AboutHeroProps) {
             {/* About Statement */}
             <div className="max-w-xl">
               <p className="font-body text-lg md:text-xl text-text-secondary leading-relaxed mb-4">
-                I work at the intersection of engineering operations and software
-                development. At{" "}
-                <span className="text-text-primary">Advanced Engineering Consultants</span>,
-                I design MEP systems, manage IT infrastructure, and build internal
-                tools that make complex workflows faster.
+                At{" "}
+                <span className="text-text-primary">
+                  Advanced Engineering Consultants
+                </span>, I design MEP systems and manage the company&apos;s IT. I also
+                build internal software that cuts down the repetitive work around
+                drawings and project delivery.
               </p>
               <p className="font-body text-base text-text-tertiary leading-relaxed">
-                Outside of client work, I develop full-stack applications, explore
-                AI-assisted automation, and experiment with new tooling. This site is
-                where I share both the engineering and the code behind it.
+                Outside work, I build web apps and test practical uses for AI. I
+                use this site to share the projects that survive those experiments.
               </p>
             </div>
 
@@ -81,32 +79,14 @@ export function AboutHero({ className }: AboutHeroProps) {
 
           {/* Profile Image */}
           <div className="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="relative">
-              {/* Decorative frame */}
-              <div className="absolute -inset-4 border border-accent/20 rounded-2xl" />
-              <div className="absolute -inset-8 border border-border/50 rounded-3xl" />
-
-              {/* Image container */}
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-2xl overflow-hidden border border-border bg-bg-surface">
-                <img
-                  src={profilePhoto}
-                  alt={`${contactData.name}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Decorative corner accent */}
-              <div className="absolute -bottom-3 -right-3 w-24 h-24 border-r-2 border-b-2 border-accent/40 rounded-br-2xl" />
+            <div className="h-64 w-64 overflow-hidden rounded-2xl sm:h-80 sm:w-80 md:h-96 md:w-96">
+              <img
+                src={profilePhoto}
+                alt={contactData.name}
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
-          <span className="font-body text-xs text-text-tertiary uppercase tracking-widest">
-            Scroll
-          </span>
-          <ArrowDown className="w-4 h-4 text-text-tertiary animate-bounce" />
         </div>
       </div>
     </section>

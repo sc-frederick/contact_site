@@ -60,11 +60,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-bg-primary text-text-primary font-body overflow-x-hidden">
+      <body className="flex min-h-screen flex-col overflow-x-hidden bg-bg-primary font-body text-text-primary">
         <ToastProvider>
           <NoiseOverlay />
           <Navbar />
-          <main className="min-h-screen pt-[72px]">
+          <main className="flex min-h-0 flex-1 flex-col pt-[72px]">
             {children}
           </main>
           <Footer />

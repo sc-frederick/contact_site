@@ -35,31 +35,6 @@ function Contact() {
 
         {/* Contact Form (two-column: info left, form right) */}
         <ContactForm siteKey={turnstileSiteKey} />
-
-        {/* Collaboration info */}
-        <div className="mt-12 bg-bg-surface/50 rounded-xl border border-border p-6 md:p-8">
-          <h2 className="font-display text-2xl text-text-primary mb-3">
-            Open to Collaboration On
-          </h2>
-          <ul className="font-body text-text-secondary space-y-1.5">
-            <li className="flex items-baseline gap-2">
-              <span className="text-accent leading-none">•</span>
-              <span>Fullstack web application development</span>
-            </li>
-            <li className="flex items-baseline gap-2">
-              <span className="text-accent leading-none">•</span>
-              <span>Developer tools and internal product tooling</span>
-            </li>
-            <li className="flex items-baseline gap-2">
-              <span className="text-accent leading-none">•</span>
-              <span>Automation workflows and integrations</span>
-            </li>
-            <li className="flex items-baseline gap-2">
-              <span className="text-accent leading-none">•</span>
-              <span>Website operations, performance, and SEO optimization</span>
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   );
