@@ -11,29 +11,20 @@ function Resume() {
   return (
     <div className="min-h-screen">
       <div className="mp-shell max-w-5xl">
-        <header className="mp-grid--mosaic mb-12">
-          <div className="mp-card mp-card--ink mp-on-ink mp-span-7 justify-between">
-            <p className="mp-eyebrow">Resume</p>
-            <h1 className="mp-display mp-on-ink">Stephen <span className="mp-italic">Frederick</span></h1>
-          </div>
-          <div className="mp-card mp-card--accent mp-on-violet mp-span-5 justify-end">
-            <p className="mp-title text-[var(--color-on-violet)]">{resumeData.name}</p>
-            <p className="mp-body">
-            {resumeData.title}
-            </p>
-          </div>
-        </header>
-
-        {/* Summary */}
-        <div className="mp-card mb-12">
+        <header className="mp-card mb-12">
           <p className="mp-eyebrow">Profile</p>
-          <h2 className="mp-title mb-2">
+          <h1 className="mp-display">
+            Stephen <span className="mp-italic">Frederick</span>
+          </h1>
+          <p className="mp-body mp-body--lg">{resumeData.title}</p>
+          <hr className="mp-divider" />
+          <h2 className="mp-title">
             Professional Summary
           </h2>
           <p className="mp-body mp-body--lg max-w-3xl">
             {resumeData.summary}
           </p>
-        </div>
+        </header>
 
         {/* Experience Section */}
         <section className="mb-12">

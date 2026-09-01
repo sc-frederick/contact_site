@@ -79,14 +79,10 @@ export function Timeline({ items, className }: TimelineProps) {
               {item.location}
             </div>
 
-            <ul className="space-y-2 mb-4">
+            <ul className="experience-list">
               {item.description.map((desc, i) => (
-                <li
-                  key={i}
-                  className="mp-body flex gap-2"
-                >
-                  <span className="mt-1.5 text-accent">•</span>
-                  <span>{desc}</span>
+                <li key={i} className="mp-body">
+                  {desc}
                 </li>
               ))}
             </ul>

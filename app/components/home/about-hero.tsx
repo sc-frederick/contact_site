@@ -15,12 +15,12 @@ export function AboutHero({ className }: AboutHeroProps) {
           <article className="mp-card mp-card--ink mp-on-ink mp-span-7 min-h-[440px] justify-between md:min-h-[520px]">
             <div>
               <p className="mp-eyebrow">MEP Engineer / IT Manager / Developer</p>
-              <h1 className="mp-display mp-display--xl mp-on-ink">
-                Stephen<br /><span className="mp-italic">Frederick</span>
+              <h1 className="home-hero-name mp-display mp-display--xl mp-on-ink">
+                Stephen <span className="mp-italic">Frederick</span>
               </h1>
             </div>
-            <div className="max-w-xl">
-              <p className="mp-body mp-body--lg mb-4">
+            <div className="home-hero-copy mp-stack">
+              <p className="mp-body mp-body--lg">
                 At{" "}
                 <strong className="mp-on-ink font-medium">
                   Advanced Engineering Consultants
@@ -63,7 +63,7 @@ export function AboutHero({ className }: AboutHeroProps) {
           </article>
 
           <article className="mp-feature-tile mp-span-5 min-h-[520px]">
-            <div className="mp-card__media m-6 mb-0 min-h-0 flex-1 border border-white/20">
+            <div className="home-hero-photo mp-card__media m-6 mb-0 min-h-0 flex-1 border border-white/20">
               <img
                 src={profilePhoto}
                 alt={contactData.name}

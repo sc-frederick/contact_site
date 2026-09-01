@@ -24,6 +24,68 @@
   display: none;
 }
 
+.site-nav-link {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--font-size-body-sm);
+  font-weight: 500;
+  transition: background var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+
+.site-nav-link:hover {
+  color: var(--text-primary);
+  background: var(--color-paper);
+}
+
+.site-nav-link[aria-current="page"] {
+  color: var(--color-on-violet);
+  background: var(--color-violet);
+}
+
+.site-nav-link[aria-current="page"]:hover {
+  color: var(--color-on-violet);
+  background: var(--color-violet-deep);
+}
+
+.home-hero-name {
+  white-space: nowrap;
+}
+
+.home-hero-copy {
+  max-width: 58ch;
+}
+
+.home-hero-copy .mp-body {
+  color: rgba(247, 241, 223, 0.86);
+  line-height: var(--leading-loose);
+}
+
+.home-hero-photo {
+  flex: none;
+  aspect-ratio: 1;
+}
+
+.experience-list {
+  margin: 0 0 var(--space-md);
+  padding-left: 1.2rem;
+}
+
+.experience-list li {
+  padding-left: var(--space-2xs);
+  list-style: disc;
+}
+
+.experience-list li + li {
+  margin-top: var(--space-xs);
+}
+
+.experience-list li::marker {
+  color: var(--color-violet);
+  font-size: 0.8em;
+}
+
 .portfolio-header {
   flex-direction: row;
   align-items: flex-end;
@@ -122,24 +184,6 @@
     border-bottom: var(--border-hairline);
   }
 
-  .site-nav-link {
-    padding: 8px 16px;
-    border-radius: var(--radius-pill);
-    color: var(--text-secondary);
-    font-size: var(--font-size-body-sm);
-    font-weight: 500;
-  }
-
-  .site-nav-link:hover {
-    color: var(--text-primary);
-    background: var(--color-cloud);
-  }
-
-  .site-nav-link[aria-current="page"] {
-    color: var(--color-on-ink);
-    background: var(--color-ink);
-  }
-
   .site-desktop-nav {
     display: flex;
   }
@@ -230,5 +274,11 @@
       flex-direction: column;
       align-items: flex-start;
     }
+  }
+}
+
+@media (max-width: 640px) {
+  .home-hero-name {
+    font-size: clamp(1.9rem, 9.5vw, 3.5rem);
   }
 }
