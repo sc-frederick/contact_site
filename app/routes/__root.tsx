@@ -3,7 +3,6 @@ import { createRootRoute, HeadContent, Link, Outlet, Scripts } from "@tanstack/r
 import appStyles from "~/styles.css?url";
 import { Navbar } from "~/components/layout/navbar";
 import { Footer } from "~/components/layout/footer";
-import { NoiseOverlay } from "~/components/ui/noise-overlay";
 import { ToastProvider } from "~/components/ui/toast";
 import { ArrowLeft } from "lucide-react";
 import * as React from "react";
@@ -21,7 +20,7 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&display=swap",
       },
     ],
   }),
@@ -31,22 +30,20 @@ export const Route = createRootRoute({
 
 function NotFound() {
   return (
-    <div className="min-h-[calc(100vh-72px)] flex items-center justify-center px-6">
-      <div className="text-center max-w-md">
-        <span className="type-mono-meta text-accent uppercase tracking-wider block mb-4">
-          404
-        </span>
-        <h1 className="type-page-title text-text-primary mb-4">
+    <div className="mp-shell flex min-h-[calc(100vh-72px)] items-center justify-center">
+      <div className="mp-card max-w-md text-center">
+        <p className="mp-eyebrow">Error 404</p>
+        <h1 className="mp-headline">
           Page not found
         </h1>
-        <p className="type-body text-text-secondary mb-8">
+        <p className="mp-body">
           The page you are looking for does not exist or has been moved.
         </p>
         <Link
           to="/"
-          className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-bg-surface border border-border text-text-primary font-body text-sm hover:border-accent hover:text-accent transition-all duration-300"
+          className="mp-btn self-center"
         >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
+          <ArrowLeft className="mp-icon" />
           Back to home
         </Link>
       </div>
@@ -56,15 +53,14 @@ function NotFound() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
-      <body className="flex min-h-screen flex-col overflow-x-hidden bg-bg-primary font-body text-text-primary">
+      <body className="flex min-h-screen flex-col overflow-x-hidden">
         <ToastProvider>
-          <NoiseOverlay />
           <Navbar />
-          <main className="flex min-h-0 flex-1 flex-col pt-[72px]">
+          <main className="flex min-h-0 flex-1 flex-col pt-[73px]">
             {children}
           </main>
           <Footer />

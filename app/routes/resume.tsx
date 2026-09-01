@@ -9,35 +9,28 @@ export const Route = createFileRoute("/resume")({
 
 function Resume() {
   return (
-    <div className="min-h-screen bg-bg-primary py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="type-page-title text-text-primary mb-4">
-            Resume
-          </h1>
-
-          {/* Decorative line */}
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent via-border to-border" />
-            <div className="w-2 h-2 rounded-full bg-accent" />
-            <div className="h-px w-24 bg-gradient-to-r from-border via-accent to-border" />
-            <div className="w-2 h-2 rounded-full bg-accent" />
-            <div className="h-px w-12 bg-gradient-to-l from-transparent via-border to-border" />
+    <div className="min-h-screen">
+      <div className="mp-shell max-w-5xl">
+        <header className="mp-grid--mosaic mb-12">
+          <div className="mp-card mp-card--ink mp-on-ink mp-span-7 justify-between">
+            <p className="mp-eyebrow">Resume</p>
+            <h1 className="mp-display mp-on-ink">Stephen <span className="mp-italic">Frederick</span></h1>
           </div>
-
-          <p className="type-card-title text-accent">{resumeData.name}</p>
-          <p className="type-body text-text-secondary">
+          <div className="mp-card mp-card--accent mp-on-violet mp-span-5 justify-end">
+            <p className="mp-title text-[var(--color-on-violet)]">{resumeData.name}</p>
+            <p className="mp-body">
             {resumeData.title}
-          </p>
-        </div>
+            </p>
+          </div>
+        </header>
 
         {/* Summary */}
-        <div className="bg-bg-surface/50 rounded-xl border border-border p-6 md:p-8 mb-12">
-          <h2 className="type-card-title text-text-primary mb-4">
+        <div className="mp-card mb-12">
+          <p className="mp-eyebrow">Profile</p>
+          <h2 className="mp-title mb-2">
             Professional Summary
           </h2>
-          <p className="type-lead text-text-secondary">
+          <p className="mp-body mp-body--lg max-w-3xl">
             {resumeData.summary}
           </p>
         </div>
@@ -45,10 +38,10 @@ function Resume() {
         {/* Experience Section */}
         <section className="mb-12">
           <div className="flex items-center gap-4 mb-8">
-            <h2 className="type-section-title text-text-primary">
+            <h2 className="mp-headline">
               Experience
             </h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-border via-border to-transparent" />
+            <div className="h-px flex-1 bg-border" />
           </div>
           <Timeline items={resumeData.experience} />
         </section>
@@ -56,31 +49,31 @@ function Resume() {
         {/* Education Section */}
         <section className="mb-12">
           <div className="flex items-center gap-4 mb-8">
-            <h2 className="type-section-title text-text-primary">
+            <h2 className="mp-headline">
               Education
             </h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-border via-border to-transparent" />
+            <div className="h-px flex-1 bg-border" />
           </div>
 
           <div className="space-y-6">
             {resumeData.education.map((edu) => (
               <div
                 key={edu.id}
-                className="bg-bg-surface/50 rounded-xl border border-border p-6"
+                className="mp-card mp-card--compact"
               >
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
                   <div>
-                    <h3 className="type-card-title text-text-primary mb-1">
+                    <h3 className="mp-title mb-1">
                       {edu.institution}
                     </h3>
-                    <div className="type-body text-accent">
+                    <div className="mp-body text-accent">
                       {edu.degree} in {edu.field}
                     </div>
-                    <div className="type-meta text-text-tertiary">
+                    <div className="mp-meta">
                       {edu.location}
                     </div>
                   </div>
-                  <div className="type-mono-meta text-text-tertiary md:text-right">
+                  <div className="mp-meta tabular-nums md:text-right">
                     {edu.startDate} — {edu.endDate}
                   </div>
                 </div>
@@ -92,12 +85,12 @@ function Resume() {
         {/* Skills Section */}
         <section>
           <div className="flex items-center gap-4 mb-8">
-            <h2 className="type-section-title text-text-primary">
+            <h2 className="mp-headline">
               Skills
             </h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-border via-border to-transparent" />
+            <div className="h-px flex-1 bg-border" />
           </div>
-          <div className="bg-bg-surface/50 rounded-xl border border-border p-6 md:p-8">
+          <div className="mp-card">
             <SkillsSection categories={resumeData.skills} />
           </div>
         </section>

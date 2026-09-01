@@ -14,8 +14,8 @@ export function PortfolioGrid({ items, className }: PortfolioGridProps) {
 
   if (items.length === 0) {
     return (
-      <div className={cn("text-center py-12", className)}>
-        <p className="type-body text-text-secondary">
+      <div className={cn("mp-card text-center", className)}>
+        <p className="mp-body">
           No portfolio items available yet.
         </p>
       </div>
@@ -31,7 +31,7 @@ export function PortfolioGrid({ items, className }: PortfolioGridProps) {
       <section
         aria-label="Projects"
         className={cn(
-          "grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3",
+          "mp-grid",
           className
         )}
       >

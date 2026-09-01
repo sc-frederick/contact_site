@@ -12,36 +12,20 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
   const hasLinks = Boolean(item.project_url || item.github_url);
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={() => onOpen?.(item)}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          onOpen?.(item);
-        }
-      }}
+    <article
       className={cn(
-        "group relative flex h-full flex-col bg-bg-surface/80 backdrop-blur-sm rounded-lg border border-border p-5 cursor-pointer",
-        "hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5",
-        "focus:outline-none focus:ring-2 focus:ring-accent/50",
-        "transition-all duration-300 ease-out",
+        "mp-card mp-span-4",
         className
       )}
     >
-      {/* Decorative accent line at top */}
-      <div
-        className="absolute top-0 left-1/2 h-0.5 w-16 -translate-x-1/2 bg-gradient-to-r from-transparent via-accent/50 to-transparent transition-all duration-300 group-hover:w-24 group-hover:via-accent"
-      />
-
-      {/* Title */}
-      <h3 className="type-card-title mb-3 text-text-primary transition-colors duration-300 group-hover:text-accent">
-        {item.title}
+      <h3 className="mp-title mb-1">
+        <button type="button" onClick={() => onOpen?.(item)} className="text-left hover:text-accent">
+          {item.title}
+        </button>
       </h3>
 
       {/* Description */}
-      <p className="type-body mb-4 line-clamp-3 text-text-secondary">
+      <p className="mp-body mb-2 line-clamp-3">
         {item.description}
       </p>
 
@@ -51,10 +35,7 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
           <span
             key={tech}
             className={cn(
-              "type-meta px-2.5 py-1 rounded-full",
-              "bg-bg-primary border border-border/50 text-text-tertiary",
-              "group-hover:border-accent/30 group-hover:text-text-secondary",
-              "transition-colors duration-300"
+              "mp-chip"
             )}
           >
             {tech}
@@ -63,20 +44,17 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
       </div>
 
       {hasLinks && (
-        <div className="mt-auto flex items-center gap-3 pt-4 border-t border-border/50">
+        <div className="mp-card__footer border-t border-border pt-4">
           {item.project_url && (
             <a
               href={item.project_url}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(event) => event.stopPropagation()}
               className={cn(
-                "type-meta flex items-center gap-1.5",
-                "text-text-secondary hover:text-accent",
-                "transition-colors duration-300"
+                "mp-btn mp-btn--ghost mp-btn--sm"
               )}
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="mp-icon mp-icon--sm" />
               <span>Live Demo</span>
             </a>
           )}
@@ -86,19 +64,16 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
               href={item.github_url}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(event) => event.stopPropagation()}
               className={cn(
-                "type-meta flex items-center gap-1.5",
-                "text-text-secondary hover:text-accent",
-                "transition-colors duration-300"
+                "mp-btn mp-btn--ghost mp-btn--sm"
               )}
             >
-              <Github className="w-4 h-4" />
+              <Github className="mp-icon mp-icon--sm" />
               <span>Source</span>
             </a>
           )}
         </div>
       )}
-    </div>
+    </article>
   );
 }

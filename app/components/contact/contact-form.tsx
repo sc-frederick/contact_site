@@ -79,13 +79,10 @@ function FormField({
   const InputComponent = isTextarea ? "textarea" : "input";
 
   return (
-    <div className="space-y-2">
-      <label
-        htmlFor={id}
-        className="type-meta block text-text-secondary"
-      >
+    <div className={cn("mp-field", error && "mp-field--error")}>
+      <label htmlFor={id} className="mp-field__label">
         {label}
-        {required && <span className="text-accent ml-1">*</span>}
+        {required && <span aria-hidden="true"> *</span>}
       </label>
       <InputComponent
         id={id}
@@ -98,19 +95,14 @@ function FormField({
         required={required}
         rows={isTextarea ? 5 : undefined}
         className={cn(
-          "type-body w-full px-4 py-3 bg-bg-surface/50 border rounded-lg text-text-primary",
-          "placeholder:text-text-tertiary/50",
-          "focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent",
-          "transition-all duration-300",
-          "disabled:opacity-50 disabled:cursor-not-allowed",
-          error
-            ? "border-red-500/50 focus:ring-red-500/30 focus:border-red-500"
-            : "border-border hover:border-border/80"
+          isTextarea ? "mp-textarea" : "mp-input"
         )}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${id}-error` : undefined}
       />
       {error && (
-        <p className="type-meta flex items-center gap-1 text-red-400">
-          <AlertCircle className="w-3 h-3" />
+        <p id={`${id}-error`} className="mp-field__error">
+          <AlertCircle className="mp-icon mp-icon--sm" />
           {error}
         </p>
       )}
@@ -124,33 +116,34 @@ interface DirectContactInfoProps {
 
 function DirectContactInfo({ className }: DirectContactInfoProps) {
   return (
-    <div className={cn("space-y-6", className)}>
+    <aside className={cn("mp-card mp-card--ink mp-on-ink", className)}>
       <div>
-        <h3 className="type-card-title text-text-primary mb-2">
+        <p className="mp-eyebrow">Direct details</p>
+        <h2 className="mp-headline mp-on-ink mb-3">
           Get in Touch
-        </h3>
-        <p className="type-body text-text-secondary">
+        </h2>
+        <p className="mp-body">
           Have a project in mind or want to collaborate? Send me a message and I'll get back to you as soon as possible.
         </p>
       </div>
 
       {/* Contact Info Cards */}
-      <div className="space-y-4">
+      <div>
         {/* Email */}
-        <div className="flex items-start gap-4 p-4 bg-bg-surface/50 rounded-lg border border-border hover:border-accent/30 transition-all duration-300">
-          <div className="p-2 bg-accent/10 rounded-lg">
-            <Mail className="w-5 h-5 text-accent" />
+        <div className="contact-row">
+          <div className="contact-row__icon">
+            <Mail className="mp-icon" />
           </div>
           <div className="flex-1">
-            <p className="type-mono-meta text-text-tertiary uppercase tracking-wider mb-1">
+            <p className="mp-eyebrow mb-1">
               Email
             </p>
-            <div className="space-y-1">
+            <div className="mp-stack gap-1">
               {contactData.emails.map((email) => (
                 <a
                   key={email.address}
                   href={`mailto:${email.address}`}
-                  className="type-body block text-text-primary hover:text-accent transition-colors duration-300"
+                  className="mp-body mp-on-ink hover:underline"
                 >
                   {email.address}
                 </a>
@@ -160,17 +153,17 @@ function DirectContactInfo({ className }: DirectContactInfoProps) {
         </div>
 
         {/* Phone */}
-        <div className="flex items-start gap-4 p-4 bg-bg-surface/50 rounded-lg border border-border hover:border-accent/30 transition-all duration-300">
-          <div className="p-2 bg-accent/10 rounded-lg">
-            <Phone className="w-5 h-5 text-accent" />
+        <div className="contact-row">
+          <div className="contact-row__icon">
+            <Phone className="mp-icon" />
           </div>
           <div className="flex-1">
-            <p className="type-mono-meta text-text-tertiary uppercase tracking-wider mb-1">
+            <p className="mp-eyebrow mb-1">
               Phone
             </p>
             <a
               href={`tel:${contactData.phone.number.replace(/\s/g, "")}`}
-              className="type-body text-text-primary hover:text-accent transition-colors duration-300"
+              className="mp-body mp-on-ink hover:underline"
             >
               {contactData.phone.number}
             </a>
@@ -178,21 +171,21 @@ function DirectContactInfo({ className }: DirectContactInfoProps) {
         </div>
 
         {/* Location */}
-        <div className="flex items-start gap-4 p-4 bg-bg-surface/50 rounded-lg border border-border hover:border-accent/30 transition-all duration-300">
-          <div className="p-2 bg-accent/10 rounded-lg">
-            <MapPin className="w-5 h-5 text-accent" />
+        <div className="contact-row">
+          <div className="contact-row__icon">
+            <MapPin className="mp-icon" />
           </div>
           <div className="flex-1">
-            <p className="type-mono-meta text-text-tertiary uppercase tracking-wider mb-1">
+            <p className="mp-eyebrow mb-1">
               Location
             </p>
-            <p className="type-body text-text-primary">
+            <p className="mp-body mp-on-ink">
               {contactData.location}
             </p>
           </div>
         </div>
       </div>
-    </div>
+    </aside>
   );
 }
 
@@ -202,26 +195,19 @@ interface SuccessStateProps {
 
 function SuccessState({ onReset }: SuccessStateProps) {
   return (
-    <div className="text-center py-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="mb-6 relative">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-24 h-24 bg-accent/10 rounded-full animate-pulse" />
-        </div>
-        <div className="relative p-4 bg-accent/20 rounded-full inline-block">
-          <CheckCircle className="w-12 h-12 text-accent" />
-        </div>
-      </div>
+    <div className="py-12 text-center">
+      <CheckCircle className="mx-auto mb-6 h-12 w-12 text-[var(--color-success)]" />
       
-      <h3 className="type-section-title text-text-primary mb-3">
+      <h3 className="mp-headline mb-3">
         Message Sent!
       </h3>
-      <p className="type-body text-text-secondary mb-8 max-w-sm mx-auto">
+      <p className="mp-body mx-auto mb-8 max-w-sm">
         Thank you for reaching out. I'll review your message and get back to you as soon as possible.
       </p>
       
       <button
         onClick={onReset}
-        className="type-body text-accent hover:text-accent-muted transition-colors duration-300 underline underline-offset-4"
+        className="mp-btn mp-btn--secondary"
       >
         Send another message
       </button>
@@ -244,6 +230,7 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [challengeStatus, setChallengeStatus] = useState<"loading" | "ready" | "error">("loading");
 
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
@@ -253,6 +240,7 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
   // mount / return-to-form and tear down on hide.
   useEffect(() => {
     if (isSuccess) return;
+    setChallengeStatus("loading");
     let cancelled = false;
 
     loadTurnstileScript()
@@ -263,15 +251,22 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
         widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
           sitekey: siteKey,
           action: "contact",
-          theme: "auto",
+          theme: "light",
           callback: (token) => setTurnstileToken(token),
           "expired-callback": () => setTurnstileToken(null),
-          "error-callback": () => setTurnstileToken(null),
-          "timeout-callback": () => setTurnstileToken(null),
+          "error-callback": () => {
+            setTurnstileToken(null);
+            setChallengeStatus("error");
+          },
+          "timeout-callback": () => {
+            setTurnstileToken(null);
+            setChallengeStatus("error");
+          },
         });
+        setChallengeStatus("ready");
       })
       .catch(() => {
-        // Script failed to load; submit stays disabled (no token).
+        setChallengeStatus("error");
       });
 
     return () => {
@@ -404,26 +399,27 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
   };
 
   return (
-    <div className={cn("grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12", className)}>
+    <div className={cn("mp-grid", className)}>
       {/* Direct Contact Info - Left Side */}
-      <DirectContactInfo />
+      <DirectContactInfo className="mp-span-5" />
 
       {/* Contact Form - Right Side */}
-      <div className="bg-bg-surface/50 rounded-xl border border-border p-6 md:p-8">
+      <div className="mp-card mp-span-7">
         {isSuccess ? (
           <SuccessState onReset={handleReset} />
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="mp-stack mp-stack--lg">
             <div>
-              <h3 className="type-card-title text-text-primary mb-2">
+              <p className="mp-eyebrow">Project inquiry</p>
+              <h2 className="mp-headline mb-2">
                 Send a Message
-              </h3>
-              <p className="type-body text-text-secondary">
+              </h2>
+              <p className="mp-body">
                 Fill out the form below and I'll respond within 24 hours.
               </p>
             </div>
 
-            <div className="space-y-5">
+            <div className="mp-stack">
               <FormField
                 id="name"
                 label="Name"
@@ -467,41 +463,45 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
                 maxLength={5000}
               />
               
-              <p className="type-meta text-text-tertiary text-right">
+              <p className="mp-meta text-right tabular-nums">
                 {formData.message.length}/5000 characters
               </p>
             </div>
 
             {submitError && (
-              <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
-                <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
-                <p className="type-meta text-red-400">{submitError}</p>
+              <div className="mp-alert--error flex items-center gap-2" role="alert">
+                <AlertCircle className="mp-icon flex-shrink-0" />
+                <p className="mp-meta">{submitError}</p>
               </div>
             )}
 
             {/* Cloudflare Turnstile bot check */}
             <div ref={turnstileRef} className="min-h-[65px]" />
+            <p
+              className={cn("mp-status", challengeStatus === "error" && "mp-status--error")}
+              role="status"
+              aria-live="polite"
+            >
+              {challengeStatus === "loading" && "Loading the bot check..."}
+              {challengeStatus === "ready" && !turnstileToken && "Complete the bot check to enable Send Message."}
+              {challengeStatus === "error" && "The bot check could not load. Refresh the page to try again."}
+            </p>
 
             <button
               type="submit"
               disabled={isSubmitting || !turnstileToken}
               className={cn(
-                "type-body w-full flex items-center justify-center gap-2 px-6 py-4 rounded-lg font-medium",
-                "bg-accent text-bg-primary",
-                "hover:bg-accent-muted transition-all duration-300",
-                "focus:outline-none focus:ring-2 focus:ring-accent/50 focus:ring-offset-2 focus:ring-offset-bg-primary",
-                "disabled:opacity-50 disabled:cursor-not-allowed",
-                "shadow-lg shadow-accent/20 hover:shadow-accent/30"
+                "mp-btn mp-btn--accent w-full"
               )}
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <Loader2 className="mp-icon animate-spin" />
                   Sending...
                 </>
               ) : (
                 <>
-                  <Send className="w-5 h-5" />
+                  <Send className="mp-icon" />
                   Send Message
                 </>
               )}

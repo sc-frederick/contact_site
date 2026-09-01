@@ -7,8 +7,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <div className="flex flex-1 flex-col bg-bg-primary">
-      {/* Hero / About Section */}
+    <div className="flex flex-1 flex-col">
       <AboutHero />
     </div>
   );

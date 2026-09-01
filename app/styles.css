@@ -1,78 +1,234 @@
 @import "tailwindcss";
+@import "./css/system.css";
 
 @theme {
-  --color-bg-primary: #09090B;
-  --color-bg-surface: #18181B;
-  --color-bg-elevated: #27272A;
-  --color-accent: #C9A962;
-  --color-accent-muted: #A68B4B;
-  --color-text-primary: #FAFAFA;
-  --color-text-secondary: #A1A1AA;
-  --color-text-tertiary: #71717A;
-  --color-border: #27272A;
+  --color-bg-primary: var(--surface-page);
+  --color-bg-surface: var(--surface-card);
+  --color-bg-elevated: var(--color-stone);
+  --color-accent: var(--color-violet);
+  --color-accent-muted: var(--color-violet-deep);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-secondary);
+  --color-border: var(--color-stone);
+  --font-body: var(--font-ui);
+  --font-mono: var(--font-ui);
+}
 
-  --font-display: "Playfair Display", serif;
-  --font-body: "DM Sans", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+/* System primitives are unlayered, so responsive component overrides must be too. */
+.site-desktop-nav {
+  display: flex;
+}
+
+.site-mobile-menu-button {
+  display: none;
+}
+
+.portfolio-header {
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+@media (max-width: 767px) {
+  .site-desktop-nav {
+    display: none;
+  }
+
+  .site-mobile-menu-button {
+    display: inline-flex;
+  }
+
+  .portfolio-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-width: 320px;
+    caret-color: var(--color-violet);
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  * {
+    scrollbar-color: var(--color-muted-ink) var(--color-paper);
+  }
 }
 
 @layer components {
   .type-page-title {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 4.5vw, 3.75rem);
-    line-height: 1.05;
-    letter-spacing: -0.025em;
+    font-size: clamp(3rem, 7vw, var(--font-size-display-xl));
+    font-weight: 400;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-display);
   }
 
   .type-section-title {
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
-    line-height: 1.2;
+    font-size: clamp(2rem, 4vw, var(--font-size-headline-lg));
+    font-weight: 400;
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-display);
   }
 
   .type-card-title {
     font-family: var(--font-display);
-    font-size: 1.25rem;
-    line-height: 1.4;
+    font-size: var(--font-size-title-lg);
+    font-weight: 400;
+    line-height: var(--leading-snug);
   }
 
   .type-lead {
-    font-family: var(--font-body);
-    font-size: 1.125rem;
-    line-height: 1.625;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-lg);
+    line-height: var(--leading-normal);
   }
 
-  .type-kicker {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    line-height: 1.5;
+  .type-kicker,
+  .type-mono-meta {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-label-sm);
+    font-weight: 500;
+    line-height: var(--leading-normal);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
   }
 
   .type-body {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    line-height: 1.625;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-md);
+    line-height: var(--leading-normal);
   }
 
   .type-meta {
-    font-family: var(--font-body);
-    font-size: 0.875rem;
-    line-height: 1.5;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-sm);
+    line-height: var(--leading-normal);
   }
 
-  .type-mono-meta {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    line-height: 1.5;
+  .site-header {
+    background: color-mix(in srgb, var(--color-paper) 94%, transparent);
+    border-bottom: var(--border-hairline);
   }
 
-  @media (min-width: 48rem) {
-    .type-lead {
-      font-size: 1.25rem;
+  .site-nav-link {
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    color: var(--text-secondary);
+    font-size: var(--font-size-body-sm);
+    font-weight: 500;
+  }
+
+  .site-nav-link:hover {
+    color: var(--text-primary);
+    background: var(--color-cloud);
+  }
+
+  .site-nav-link[aria-current="page"] {
+    color: var(--color-on-ink);
+    background: var(--color-ink);
+  }
+
+  .site-desktop-nav {
+    display: flex;
+  }
+
+  .site-mobile-menu-button {
+    display: none;
+  }
+
+  .portfolio-header {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .contact-row {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+    border-bottom: 1px solid rgba(247, 241, 223, 0.18);
+  }
+
+  .contact-row:last-child {
+    border-bottom: 0;
+  }
+
+  .contact-row__icon {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    color: var(--color-ink);
+    background: var(--color-green);
+    border-radius: var(--radius-pill);
+  }
+
+  .mp-field--error .mp-input,
+  .mp-field--error .mp-textarea {
+    border-color: var(--color-danger);
+  }
+
+  .mp-field__error {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--color-danger);
+    font-size: var(--font-size-body-sm);
+  }
+
+  .mp-alert--error {
+    color: var(--color-danger);
+    background: color-mix(in srgb, var(--color-danger) 8%, var(--color-cloud));
+    border: 1px solid color-mix(in srgb, var(--color-danger) 35%, var(--color-stone));
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .mp-status {
+    min-height: 20px;
+    color: var(--text-secondary);
+    font-size: var(--font-size-body-sm);
+  }
+
+  .mp-status--error {
+    color: var(--color-danger);
+  }
+
+  .mp-skeleton {
+    background: linear-gradient(90deg, var(--color-stone), var(--color-cloud), var(--color-stone));
+    background-size: 200% 100%;
+    animation: skeleton-shift 1.4s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-shift {
+    to { background-position: -200% 0; }
+  }
+
+  @media (max-width: 767px) {
+    .site-desktop-nav {
+      display: none;
     }
 
-    .type-kicker {
-      font-size: 1rem;
+    .site-mobile-menu-button {
+      display: inline-flex;
+    }
+
+    .portfolio-header {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 }

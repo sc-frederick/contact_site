@@ -14,9 +14,15 @@ export const Route = createFileRoute("/portfolio")({
 
 function Portfolio() {
   return (
-    <div className="min-h-screen bg-bg-primary px-4 py-10 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="sr-only">Projects</h1>
+    <div className="min-h-screen">
+      <div className="mp-shell">
+        <header className="mp-card mp-card--ink mp-on-ink portfolio-header mb-8">
+          <div>
+            <p className="mp-eyebrow">Selected work</p>
+            <h1 className="mp-display mp-on-ink">Developer <span className="mp-italic">portfolio.</span></h1>
+          </div>
+          <p className="mp-body max-w-md">Practical software, internal tools, and experiments built to solve real workflow problems.</p>
+        </header>
 
         <Suspense fallback={<PortfolioLoading />}>
           <PortfolioContent />
@@ -32,8 +38,8 @@ function PortfolioContent() {
   // Check if the response was successful
   if (!loaderData.success) {
     return (
-      <div className="text-center py-12">
-        <p className="type-body text-text-secondary">
+      <div className="mp-card text-center">
+        <p className="mp-body">
           Failed to load portfolio items. Please try again later.
         </p>
       </div>
@@ -48,7 +54,7 @@ function PortfolioContent() {
 
 function PortfolioLoading() {
   return (
-    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+    <div className="mp-grid">
       {[...Array(9)].map((_, i) => (
         <PortfolioSkeletonCard key={i} />
       ))}
@@ -58,20 +64,20 @@ function PortfolioLoading() {
 
 function PortfolioSkeletonCard() {
   return (
-    <div className="rounded-lg border border-border/50 bg-bg-surface/50 p-5 animate-pulse">
-      <div className="h-5 bg-border/50 rounded w-3/4 mb-4" />
-      <div className="h-4 bg-border/50 rounded w-full mb-2" />
-      <div className="h-4 bg-border/50 rounded w-full mb-2" />
-      <div className="h-4 bg-border/50 rounded w-2/3 mb-4" />
+    <div className="mp-card mp-span-4 animate-pulse">
+      <div className="mp-skeleton mb-4 h-7 w-3/4 rounded" />
+      <div className="mp-skeleton mb-2 h-4 w-full rounded" />
+      <div className="mp-skeleton mb-2 h-4 w-full rounded" />
+      <div className="mp-skeleton mb-4 h-4 w-2/3 rounded" />
       <div className="flex gap-2 mb-5">
-        <div className="h-6 bg-border/50 rounded-full w-16" />
-        <div className="h-6 bg-border/50 rounded-full w-20" />
-        <div className="h-6 bg-border/50 rounded-full w-14" />
+        <div className="mp-skeleton h-6 w-16 rounded-full" />
+        <div className="mp-skeleton h-6 w-20 rounded-full" />
+        <div className="mp-skeleton h-6 w-14 rounded-full" />
       </div>
-      <div className="h-px bg-border/50 mb-4" />
+      <div className="mb-4 h-px bg-border" />
       <div className="flex gap-4">
-        <div className="h-4 bg-border/50 rounded w-20" />
-        <div className="h-4 bg-border/50 rounded w-20" />
+        <div className="mp-skeleton h-4 w-20 rounded" />
+        <div className="mp-skeleton h-4 w-20 rounded" />
       </div>
     </div>
   );

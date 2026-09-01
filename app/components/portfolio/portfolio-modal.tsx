@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ExternalLink, Github, X } from "lucide-react";
 import type { PortfolioItem } from "~/types";
 
@@ -8,56 +8,83 @@ interface PortfolioModalProps {
 }
 
 export function PortfolioModal({ item, onClose }: PortfolioModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
-    function onEsc(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
+    const previousFocus = document.activeElement as HTMLElement | null;
+    closeButtonRef.current?.focus();
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab" || !dialogRef.current) return;
+
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+        'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", onEsc);
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", onEsc);
+      document.removeEventListener("keydown", onKeyDown);
+      previousFocus?.focus();
     };
   }, [onClose]);
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/65 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#101010]/70 p-4"
       onClick={onClose}
     >
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={`${item.title} project details`}
         onClick={(event) => event.stopPropagation()}
-        className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl border border-border bg-bg-surface p-6 md:p-8"
+        className="mp-card max-h-[90vh] w-full max-w-3xl overflow-y-auto"
       >
         <div className="flex items-start justify-between gap-4 mb-6">
-          <h2 className="type-section-title text-text-primary">{item.title}</h2>
+          <h2 className="mp-headline">{item.title}</h2>
           <button
+            ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="inline-flex h-9 w-9 items-center justify-center rounded border border-border text-text-secondary hover:text-accent hover:border-accent/50 transition-colors duration-300"
+            className="mp-btn mp-btn--secondary mp-btn--icon"
             aria-label="Close project details"
           >
-            <X className="w-4 h-4" />
+            <X className="mp-icon" />
           </button>
         </div>
 
-        <p className="type-body text-text-secondary mb-6">
+        <p className="mp-body mb-6">
           {item.description}
         </p>
 
         <div className="mb-8">
-          <h3 className="type-card-title text-text-primary mb-3">Tech Stack</h3>
+          <h3 className="mp-title mb-3">Tech Stack</h3>
           <div className="flex flex-wrap gap-2">
             {item.technologies.map((tech) => (
               <span
                 key={tech}
-                className="type-meta px-3 py-1 rounded-full bg-bg-primary border border-border/50 text-text-tertiary"
+                className="mp-chip"
               >
                 {tech}
               </span>
@@ -65,15 +92,15 @@ export function PortfolioModal({ item, onClose }: PortfolioModalProps) {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 pt-4 border-t border-border/50">
+        <div className="mp-card__footer border-t border-border pt-4">
           {item.project_url && (
             <a
               href={item.project_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="type-meta inline-flex items-center gap-2 text-text-secondary hover:text-accent transition-colors duration-300"
+              className="mp-btn mp-btn--secondary mp-btn--sm"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="mp-icon mp-icon--sm" />
               <span>Live Demo</span>
             </a>
           )}
@@ -82,9 +109,9 @@ export function PortfolioModal({ item, onClose }: PortfolioModalProps) {
               href={item.github_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="type-meta inline-flex items-center gap-2 text-text-secondary hover:text-accent transition-colors duration-300"
+              className="mp-btn mp-btn--secondary mp-btn--sm"
             >
-              <Github className="w-4 h-4" />
+              <Github className="mp-icon mp-icon--sm" />
               <span>Source</span>
             </a>
           )}
