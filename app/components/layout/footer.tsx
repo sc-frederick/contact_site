@@ -38,12 +38,12 @@ export function Footer() {
             <Linkedin className="mp-icon" />
           </a>
           <a
-            href="https://maps.app.goo.gl/8BNGpYQypndip3L39"
+            href="https://www.google.com/maps/search/?api=1&query=Brooksville%2C+FL"
             target="_blank"
             rel="noopener noreferrer"
             className="mp-meta hover:text-accent"
           >
-            Tampa, FL
+            Brooksville, FL
           </a>
         </div>
       </div>
