@@ -14,7 +14,7 @@ export function AboutHero({ className }: AboutHeroProps) {
         <div className="mp-grid--mosaic">
           <article className="mp-card mp-card--ink mp-on-ink mp-span-7 min-h-[440px] justify-between md:min-h-[520px]">
             <div>
-              <p className="mp-eyebrow">MEP Engineer / IT Manager / Developer</p>
+              <p className="mp-eyebrow">MEP Engineer / Software Developer</p>
               <h1 className="home-hero-name mp-display mp-display--xl mp-on-ink">
                 Stephen <span className="mp-italic">Frederick</span>
               </h1>
@@ -25,12 +25,12 @@ export function AboutHero({ className }: AboutHeroProps) {
                 <strong className="mp-on-ink font-medium">
                   Advanced Engineering Consultants
                 </strong>, I design MEP systems and manage the company&apos;s IT. I also
-                build internal software that cuts down the repetitive work around
-                drawings and project delivery.
+                build internal software that reduces repetitive drawing and project
+                delivery work.
               </p>
               <p className="mp-body">
-                Outside work, I build web apps and test practical uses for AI. I
-                use this site to share the projects that survive those experiments.
+                Outside work, I build Forewit at Surfside Software, engineering
+                software for people and AI agents.
               </p>
             </div>
 
@@ -71,7 +71,7 @@ export function AboutHero({ className }: AboutHeroProps) {
               />
             </div>
             <div className="mp-feature-tile__body">
-              <p className="mp-eyebrow mp-on-violet">Tampa, Florida</p>
+              <p className="mp-eyebrow mp-on-violet">Brooksville, Florida</p>
               <h2 className="mp-feature-tile__title">Engineering systems. Building useful software.</h2>
             </div>
             <div className="mp-feature-tile__gradient" aria-hidden="true" />
