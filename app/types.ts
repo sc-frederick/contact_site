@@ -10,6 +10,8 @@ export interface PortfolioItem {
   github_url: string | null;
   technologies: string[];
   featured: boolean;
+  /** Renders the card as an ink tile so it reads as the lead project. */
+  highlighted?: boolean;
   display_order: number;
   created_at: string;
   updated_at: string;

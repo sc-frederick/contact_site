@@ -21,7 +21,7 @@ function Portfolio() {
             <p className="mp-eyebrow">Selected work</p>
             <h1 className="mp-display mp-on-ink">Developer <span className="mp-italic">portfolio.</span></h1>
           </div>
-          <p className="mp-body max-w-md">Practical software, internal tools, and experiments built to solve real workflow problems.</p>
+          <p className="mp-body max-w-md">Software, internal tools, and experiments that solve workflow problems.</p>
         </header>
 
         <Suspense fallback={<PortfolioLoading />}>

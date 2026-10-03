@@ -123,7 +123,7 @@ function DirectContactInfo({ className }: DirectContactInfoProps) {
           Get in Touch
         </h2>
         <p className="mp-body">
-          Have a project in mind or want to collaborate? Send me a message and I'll get back to you as soon as possible.
+          Send me a message about a project or collaboration. I will reply as soon as I can.
         </p>
       </div>
 
@@ -199,10 +199,10 @@ function SuccessState({ onReset }: SuccessStateProps) {
       <CheckCircle className="mx-auto mb-6 h-12 w-12 text-[var(--color-success)]" />
       
       <h3 className="mp-headline mb-3">
-        Message Sent!
+        Message sent
       </h3>
       <p className="mp-body mx-auto mb-8 max-w-sm">
-        Thank you for reaching out. I'll review your message and get back to you as soon as possible.
+        Thanks for your message. I will read it and reply as soon as I can.
       </p>
       
       <button
@@ -457,7 +457,7 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
                 value={formData.message}
                 onChange={(value) => handleChange("message", value)}
                 error={errors.message}
-                placeholder="Tell me about your project, question, or just say hello..."
+                placeholder="Tell me about your project or question"
                 required
                 isTextarea
                 maxLength={5000}

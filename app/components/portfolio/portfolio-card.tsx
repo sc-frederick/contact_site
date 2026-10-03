@@ -10,16 +10,25 @@ interface PortfolioCardProps {
 
 export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
   const hasLinks = Boolean(item.project_url || item.github_url);
+  const onInk = Boolean(item.highlighted);
 
   return (
     <article
       className={cn(
         "mp-card mp-span-4",
+        onInk && "mp-card--ink mp-on-ink",
         className
       )}
     >
       <h3 className="mp-title mb-1">
-        <button type="button" onClick={() => onOpen?.(item)} className="text-left hover:text-accent">
+        <button
+          type="button"
+          onClick={() => onOpen?.(item)}
+          className={cn(
+            "text-left",
+            onInk ? "text-[var(--text-inverted)] hover:text-[var(--color-green)]" : "hover:text-accent",
+          )}
+        >
           {item.title}
         </button>
       </h3>
@@ -44,14 +53,20 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
       </div>
 
       {hasLinks && (
-        <div className="mp-card__footer border-t border-border pt-4">
+        <div
+          className={cn(
+            "mp-card__footer border-t pt-4",
+            onInk ? "border-white/15" : "border-border",
+          )}
+        >
           {item.project_url && (
             <a
               href={item.project_url}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
-                "mp-btn mp-btn--ghost mp-btn--sm"
+                "mp-btn mp-btn--sm",
+                onInk ? "mp-btn--secondary" : "mp-btn--ghost"
               )}
             >
               <ExternalLink className="mp-icon mp-icon--sm" />
@@ -65,7 +80,8 @@ export function PortfolioCard({ item, onOpen, className }: PortfolioCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
-                "mp-btn mp-btn--ghost mp-btn--sm"
+                "mp-btn mp-btn--sm",
+                onInk ? "mp-btn--secondary" : "mp-btn--ghost"
               )}
             >
               <Github className="mp-icon mp-icon--sm" />

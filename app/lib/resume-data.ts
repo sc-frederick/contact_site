@@ -4,7 +4,7 @@ export interface Experience {
   id: number;
   company: string;
   title: string;
-  location: string;
+  location?: string;
   startDate: string;
   endDate: string | null;
   description: string[];
@@ -39,8 +39,18 @@ export const resumeData: ResumeData = {
   name: "Stephen Frederick",
   title: "MEP Staff Engineer | IT Manager | Web & SEO Operations",
   summary:
-    "Multi-disciplinary engineering professional at Advanced Engineering Consultants with over 4 years of experience across MEP design, IT operations, and website management. Lead engineering design and documentation, manage internal technology infrastructure and support, and oversee WordPress-based website maintenance and SEO improvements. Known for connecting technical operations with practical business needs through reliable systems, process improvements, and cross-functional execution.",
+    "Engineer at Advanced Engineering Consultants with over 4 years of experience in MEP design, IT operations, and website management. Lead engineering design and documentation, manage internal technology infrastructure and support, and oversee WordPress-based website maintenance and SEO improvements.",
   experience: [
+    {
+      id: 5,
+      company: "Corexis",
+      title: "Software Contributor",
+      startDate: "2026",
+      endDate: null,
+      description: [
+        "Building the Intelligent Irrigation MVP, irrigation design software that generates more efficient designs to save water and money. Currently rebuilding the engine around a hydraulics-to-layout feedback loop.",
+      ],
+    },
     {
       id: 1,
       company: "Advanced Engineering Consultants LLC",
@@ -100,10 +110,12 @@ export const resumeData: ResumeData = {
       description: [
         "Design MEP systems for commercial, residential, and institutional projects",
         "Cross-trained in structural and civil engineering disciplines",
-        "Develop internal automation tools and CAD plugins to streamline engineering workflows",
+        "Develop internal automation tools and CAD plugins for engineering workflows",
         "Perform engineering calculations, load analyses, and code compliance reviews",
         "Prepare construction documents and engineering drawings using AutoCAD and Revit",
         "Mentor junior engineers and interns on technical standards and software tools",
+        "Building internal software tools that automate engineering calculations and permit tracking",
+        "Directing AI coding agents to ship full-stack apps used in real engineering workflows",
       ],
       technologies: [
         "AutoCAD",
@@ -162,6 +174,8 @@ export const resumeData: ResumeData = {
       skills: [
         "TypeScript",
         "React 19",
+        "SvelteKit",
+        "Svelte 5",
         "TanStack (Start/Router)",
         "Next.js",
         "Effect-TS",
@@ -182,6 +196,7 @@ export const resumeData: ResumeData = {
         "Cloudflare Workers",
         "AI SDK",
         "MCP Protocol",
+        "AI Agents",
       ],
     },
     {

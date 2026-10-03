@@ -6,13 +6,20 @@ interface TimelineProps {
   className?: string;
 }
 
+// A bare four-digit year ("2026") means the month is not stated.
+function isYearOnly(dateStr: string | null): boolean {
+  return Boolean(dateStr && /^\d{4}$/.test(dateStr));
+}
+
 function formatDate(dateStr: string | null): string {
   if (!dateStr) return "Present";
+  if (isYearOnly(dateStr)) return dateStr;
   const date = new Date(dateStr);
   return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
 }
 
 function getDuration(startDate: string, endDate: string | null): string {
+  if (isYearOnly(startDate) || isYearOnly(endDate)) return "";
   const start = new Date(startDate);
   const end = endDate ? new Date(endDate) : new Date();
 
@@ -48,9 +55,11 @@ export function Timeline({ items, className }: TimelineProps) {
             <div className="mp-meta whitespace-nowrap tabular-nums">
               {formatDate(item.endDate)}
             </div>
-            <div className="mp-meta mt-1 whitespace-nowrap text-accent tabular-nums">
-              {getDuration(item.startDate, item.endDate)}
-            </div>
+            {getDuration(item.startDate, item.endDate) && (
+              <div className="mp-meta mt-1 whitespace-nowrap text-accent tabular-nums">
+                {getDuration(item.startDate, item.endDate)}
+              </div>
+            )}
           </div>
 
           {/* Timeline indicator - desktop */}
@@ -66,18 +75,22 @@ export function Timeline({ items, className }: TimelineProps) {
               <span className="mp-meta tabular-nums">
                 {formatDate(item.startDate)} — {formatDate(item.endDate)}
               </span>
-              <span className="mp-meta ml-2 text-accent tabular-nums">
-                ({getDuration(item.startDate, item.endDate)})
-              </span>
+              {getDuration(item.startDate, item.endDate) && (
+                <span className="mp-meta ml-2 text-accent tabular-nums">
+                  ({getDuration(item.startDate, item.endDate)})
+                </span>
+              )}
             </div>
 
             <h3 className="mp-title mb-1">
               {item.title}
             </h3>
-            <div className="mp-body mb-1 text-accent">{item.company}</div>
-            <div className="mp-meta mb-3">
-              {item.location}
+            <div className={cn("mp-body text-accent", item.location ? "mb-1" : "mb-3")}>
+              {item.company}
             </div>
+            {item.location && (
+              <div className="mp-meta mb-3">{item.location}</div>
+            )}
 
             <ul className="experience-list">
               {item.description.map((desc, i) => (

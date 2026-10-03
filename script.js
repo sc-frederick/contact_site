@@ -6,7 +6,7 @@ ORG:Advanced Engineering Consultants
 TITLE:Staff Engineer
 EMAIL:contact@sfrederick.dev
 URL:https://www.advanced-engineers.com
-ADR:;;Tampa, FL;;;
+ADR:;;Brooksville, FL;;;
 NOTE:Passionate about building elegant solutions to complex problems. Specializing in full-stack development and cloud architecture.
 END:VCARD`;
 
