@@ -1,49 +1,57 @@
 {
-  "name": "tanstack-redesign",
+  "name": "contact-site",
   "version": "1.0.0",
   "description": "A modern, responsive digital business card for Stephen Frederick, Staff Engineer at Advanced Engineering Consultants.",
   "type": "module",
   "packageManager": "pnpm@10.10.0",
   "scripts": {
-    "dev": "vite dev --port 3000",
-    "build": "vite build",
+    "dev": "cf dev",
+    "build": "cf build",
     "test": "vitest run --config vitest.config.ts",
-    "typecheck": "wrangler types && tsc --noEmit",
-    "preview": "vite preview",
-    "cf-typegen": "wrangler types",
-    "db:setup": "wrangler d1 execute contact-site-db --local --file=./db/schema.sql",
-    "db:seed": "wrangler d1 execute contact-site-db --local --file=./db/seed.sql",
-    "deploy": "wrangler deploy"
+    "lint": "oxlint src alchemy.run.ts vite.config.ts vitest.config.ts cloudflare.config.ts wrangler.config.ts tools/cloudflare-adapter.ts tools/seed-local-database.ts tools/local-cf.mjs",
+    "typecheck": "cf workers types && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && tsc --project tsconfig.infrastructure.json --noEmit",
+    "preview": "vite preview --port 3000",
+    "cf-typegen": "cf workers types",
+    "db:setup": "node tools/local-cf.mjs d1 migrations apply f3fb4f29-7bd9-468d-a716-13da94ef2718 --dir ./db/migrations --local --persist-to .cloudflare/state",
+    "db:seed": "node tools/seed-local-database.ts",
+    "infra:plan": "pnpm build && alchemy plan --stage prod --adopt --env-file .env --no-input",
+    "deploy": "pnpm build && alchemy deploy --stage prod --adopt --env-file .env",
+    "format": "prettier --write src alchemy.run.ts vite.config.ts vitest.config.ts cloudflare.config.ts wrangler.config.ts tools/cloudflare-adapter.ts tools/seed-local-database.ts tools/local-cf.mjs",
+    "format:check": "prettier --check src alchemy.run.ts vite.config.ts vitest.config.ts cloudflare.config.ts wrangler.config.ts tools/cloudflare-adapter.ts tools/seed-local-database.ts tools/local-cf.mjs",
+    "dev:app": "vite dev --port 3000",
+    "build:app": "vite build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tanstack/react-router": "^1.170.25",
-    "@tanstack/react-start": "^1.168.42",
-    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.460.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "sanitize-html": "^2.17.6",
+    "effect": "4.0.1",
+    "lucide-svelte": "0.460.0",
     "shaders": "^4.0.0",
-    "tailwind-merge": "^2.6.1",
-    "zod": "^4.4.3"
+    "tailwind-merge": "^2.6.1"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.51.3",
+    "@cloudflare/config": "0.23.0",
+    "@effect/platform-node": "4.0.1",
+    "@oxlint/plugins": "1.87.0",
+    "@sveltejs/adapter-cloudflare": "8.0.0",
+    "@sveltejs/kit": "3.0.1",
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.2.0",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
-    "@types/sanitize-html": "^2.16.1",
-    "@vitejs/plugin-react": "^6.0.5",
+    "alchemy": "2.0.0-beta.81",
+    "cf": "1.0.0-beta.12",
+    "oxlint": "1.87.0",
+    "prettier": "3.9.9",
+    "prettier-plugin-svelte": "4.1.1",
+    "svelte": "5.57.2",
+    "svelte-check": "^4.4.1",
     "tailwindcss": "^4.3.3",
-    "typescript": "^7.0.2",
+    "typescript": "^6.0.3",
     "vite": "^8.2.1",
     "vitest": "^4.1.10",
-    "wrangler": "^4.121.0"
+    "wrangler": "4.147.0"
   },
   "optionalDependencies": {
     "@emnapi/core": "1.11.3",
@@ -54,5 +62,11 @@
       "postcss": "8.5.26",
       "nanoid": "3.3.18"
     }
+  },
+  "imports": {
+    "#lib/*": "./src/lib/*"
+  },
+  "engines": {
+    "node": ">=24.0.0"
   }
 }

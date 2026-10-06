@@ -1,21 +1,31 @@
 {
+  "extends": "$app/tsconfig",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "moduleResolution": "Bundler",
-    "module": "ESNext",
-    "target": "ES2022",
+    "allowJs": false,
+    "checkJs": false,
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "paths": {
-      "~/*": ["./app/*"]
-    }
+    "moduleResolution": "Bundler",
+    "types": [
+      "$app/types",
+      "vite/client"
+    ],
+    "target": "ES2022"
   },
   "include": [
-    "app",
+    "src",
     "vite.config.ts",
     "vitest.config.ts",
-    "server.ts",
-    "env.d.ts",
-    "worker-configuration.d.ts"
+    "cloudflare.config.ts",
+    "wrangler.config.ts",
+    "tools/cloudflare-adapter.ts",
+    ".cloudflare/types/index.d.ts"
+  ],
+  "exclude": [
+    "src/service-worker"
   ]
 }

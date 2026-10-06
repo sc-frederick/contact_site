@@ -1,5 +1,9 @@
 # Domain consolidation runbook (Vercel → Cloudflare)
 
+This runbook records the June 2026 domain migration. The application now uses
+SvelteKit 3, Effect 4, and Alchemy. Current deployment instructions are in
+[Cloudflare setup](cloudflare-setup.md).
+
 Goal: consolidate the whole devstack onto Cloudflare — registrar + DNS + hosting in one
 account. This covers the two domains currently **registered at Vercel**:
 `scoutwork.app` and `sfrederick.dev`. (`aeccloud.io` is registered at a third party and is

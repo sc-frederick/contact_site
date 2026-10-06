@@ -4,11 +4,11 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   resolve: {
     alias: {
-      '~': fileURLToPath(new URL('./app', import.meta.url)),
+      '#lib': fileURLToPath(new URL('./src/lib', import.meta.url)),
     },
   },
   test: {
     environment: 'node',
-    include: ['app/**/*.test.ts'],
+    include: ['src/**/*.test.ts'],
   },
 });
