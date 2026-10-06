@@ -4,6 +4,8 @@ import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Loader2 } from "lu
 import { submitContactForm } from "~/lib/server/contact";
 import { contactData } from "~/lib/contact-data";
 import { cn } from "~/lib/utils";
+import { SignalArtwork } from "~/components/effects/print-artwork";
+import { useMotionPreferences } from "~/components/effects/motion-provider";
 
 // Minimal typing for the Turnstile script's global API.
 interface TurnstileRenderOptions {
@@ -112,11 +114,13 @@ function FormField({
 
 interface DirectContactInfoProps {
   className?: string;
+  sent: boolean;
 }
 
-function DirectContactInfo({ className }: DirectContactInfoProps) {
+function DirectContactInfo({ className, sent }: DirectContactInfoProps) {
+  const { motionAllowed } = useMotionPreferences();
   return (
-    <aside className={cn("mp-card mp-card--ink mp-on-ink", className)}>
+    <aside className={cn("mp-card mp-card--ink mp-on-ink contact-details", className)}>
       <div>
         <p className="mp-eyebrow">Direct details</p>
         <h2 className="mp-headline mp-on-ink mb-3">
@@ -185,6 +189,7 @@ function DirectContactInfo({ className }: DirectContactInfoProps) {
           </div>
         </div>
       </div>
+      <SignalArtwork sent={sent} motionAllowed={motionAllowed} />
     </aside>
   );
 }
@@ -401,7 +406,7 @@ export function ContactForm({ className, siteKey }: ContactFormProps) {
   return (
     <div className={cn("mp-grid", className)}>
       {/* Direct Contact Info - Left Side */}
-      <DirectContactInfo className="mp-span-5" />
+      <DirectContactInfo className="mp-span-5" sent={isSuccess} />
 
       {/* Contact Form - Right Side */}
       <div className="mp-card mp-span-7">

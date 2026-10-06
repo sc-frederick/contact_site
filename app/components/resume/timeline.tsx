@@ -1,5 +1,7 @@
 import { cn } from "~/lib/utils";
 import type { Experience } from "~/lib/resume-data";
+import { useEffect, useRef } from "react";
+import { useMotionPreferences } from "~/components/effects/motion-provider";
 
 interface TimelineProps {
   items: Experience[];
@@ -39,13 +41,59 @@ function getDuration(startDate: string, endDate: string | null): string {
   }
 }
 
+/** Show work history with a scroll-following marker in the date gutter. */
 export function Timeline({ items, className }: TimelineProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const trackerRef = useRef<HTMLDivElement>(null);
+  const { motionAllowed } = useMotionPreferences();
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const entries = Array.from(root.querySelectorAll<HTMLElement>(".timeline-entry"));
+    let frame = 0;
+    function update() {
+      frame = 0;
+      const target = window.innerHeight * 0.38;
+      const positions = entries.map((entry) => ({ entry, bounds: entry.getBoundingClientRect() }));
+      const covering = positions.find(({ bounds }) => bounds.top <= target && bounds.bottom >= target);
+      const closest = positions.reduce<(typeof positions)[number] | undefined>((nearest, position) => {
+        return !nearest || Math.abs(position.bounds.top - target) < Math.abs(nearest.bounds.top - target) ? position : nearest;
+      }, undefined);
+      const active = (covering ?? closest)?.entry;
+      for (const entry of entries) entry.dataset.active = String(entry === active);
+      const node = active?.querySelector<HTMLElement>(".timeline-node");
+      const tracker = trackerRef.current;
+      if (node && tracker && root) {
+        const bounds = root.getBoundingClientRect();
+        const marker = node.getBoundingClientRect();
+        tracker.style.setProperty("--timeline-x", `${marker.left - bounds.left + marker.width / 2 - 2}px`);
+        tracker.style.setProperty("--timeline-y", `${marker.top - bounds.top - 12}px`);
+        if (!tracker.dataset.positioned) {
+          // Commit the first position without sweeping across the date column.
+          tracker.getBoundingClientRect();
+          tracker.dataset.positioned = "true";
+        }
+      }
+    }
+    function schedule() { if (!frame) frame = window.requestAnimationFrame(update); }
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, [items]);
+
   return (
-    <div className={cn("space-y-8", className)}>
+    <div ref={rootRef} className={cn("timeline", className)} data-motion={motionAllowed}>
+      <div ref={trackerRef} className="timeline-tracker" aria-hidden="true" />
       {items.map((item) => (
         <div
           key={item.id}
-          className="grid grid-cols-1 md:grid-cols-[auto_1rem_1fr] md:gap-x-4"
+          className="timeline-entry grid grid-cols-1 md:grid-cols-[auto_1rem_1fr] md:gap-x-4"
         >
           {/* Date column - desktop */}
           <div className="hidden md:flex flex-col items-end text-right pt-1">
@@ -64,7 +112,7 @@ export function Timeline({ items, className }: TimelineProps) {
 
           {/* Timeline indicator - desktop */}
           <div className="hidden md:flex flex-col items-center">
-            <div className="mt-1.5 h-3 w-3 shrink-0 rounded-full bg-accent ring-2 ring-[var(--color-paper)]" />
+            <div className="timeline-node mt-1.5 h-3 w-3 shrink-0 rounded-full bg-accent ring-2 ring-[var(--color-paper)]" />
             <div className="w-px flex-1 bg-border" />
           </div>
 

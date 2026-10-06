@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./css/system.css";
+@import "./css/effects.css";
 
 @theme {
   --color-bg-primary: var(--surface-page);

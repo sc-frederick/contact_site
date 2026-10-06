@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { resumeData } from "~/lib/resume-data";
 import { Timeline } from "~/components/resume/timeline";
 import { SkillsSection } from "~/components/resume/skills-section";
+import { DraftArtwork } from "~/components/effects/print-artwork";
 
 export const Route = createFileRoute("/resume")({
   component: Resume,
@@ -11,12 +12,17 @@ function Resume() {
   return (
     <div className="min-h-screen">
       <div className="mp-shell max-w-5xl">
-        <header className="mp-card mb-12">
-          <p className="mp-eyebrow">Profile</p>
-          <h1 className="mp-display">
-            Stephen <span className="mp-italic">Frederick</span>
-          </h1>
-          <p className="mp-body mp-body--lg">{resumeData.title}</p>
+        <header className="mp-card resume-header mb-12">
+          <div className="resume-identity">
+            <div>
+              <p className="mp-eyebrow">Profile</p>
+              <h1 className="mp-display">
+                Stephen <span className="mp-italic">Frederick</span>
+              </h1>
+              <p className="mp-body mp-body--lg">{resumeData.title}</p>
+            </div>
+            <DraftArtwork />
+          </div>
           <hr className="mp-divider" />
           <h2 className="mp-title">
             Professional Summary

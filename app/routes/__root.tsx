@@ -6,6 +6,8 @@ import { Footer } from "~/components/layout/footer";
 import { ToastProvider } from "~/components/ui/toast";
 import { ArrowLeft } from "lucide-react";
 import * as React from "react";
+import { MotionProvider } from "~/components/effects/motion-provider";
+import { PixelTrail } from "~/components/effects/pixel-trail";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -58,13 +60,16 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="flex min-h-screen flex-col overflow-x-hidden">
-        <ToastProvider>
-          <Navbar />
-          <main className="flex min-h-0 flex-1 flex-col pt-[73px]">
-            {children}
-          </main>
-          <Footer />
-        </ToastProvider>
+        <MotionProvider>
+          <ToastProvider>
+            <PixelTrail />
+            <Navbar />
+            <main className="flex min-h-0 flex-1 flex-col pt-[73px]">
+              {children}
+            </main>
+            <Footer />
+          </ToastProvider>
+        </MotionProvider>
         <Scripts />
       </body>
     </html>

@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { getPortfolioItems } from "~/lib/server/portfolio";
 import type { PortfolioItem } from "~/types";
 import { PortfolioGrid } from "~/components/portfolio/portfolio-grid";
+import { InkArtwork } from "~/components/effects/print-artwork";
 
 export const Route = createFileRoute("/portfolio")({
   component: Portfolio,
@@ -22,6 +23,7 @@ function Portfolio() {
             <h1 className="mp-display mp-on-ink">Developer <span className="mp-italic">portfolio.</span></h1>
           </div>
           <p className="mp-body max-w-md">Software, internal tools, and experiments that solve workflow problems.</p>
+          <InkArtwork className="portfolio-ink-strip" />
         </header>
 
         <Suspense fallback={<PortfolioLoading />}>

@@ -2,6 +2,8 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import { contactData } from "~/lib/contact-data";
 import { cn } from "~/lib/utils";
 import profilePhoto from "../../../docs/ProfilePhoto.webp";
+import { PortraitReveal } from "~/components/effects/portrait-reveal";
+import { InkArtwork } from "~/components/effects/print-artwork";
 
 interface AboutHeroProps {
   className?: string;
@@ -64,17 +66,13 @@ export function AboutHero({ className }: AboutHeroProps) {
 
           <article className="mp-feature-tile mp-span-5 min-h-[520px]">
             <div className="home-hero-photo mp-card__media m-6 mb-0 min-h-0 flex-1 border border-white/20">
-              <img
-                src={profilePhoto}
-                alt={contactData.name}
-                className="h-full w-full object-cover"
-              />
+              <PortraitReveal src={profilePhoto} alt={contactData.name} />
             </div>
             <div className="mp-feature-tile__body">
               <p className="mp-eyebrow mp-on-violet">Brooksville, Florida</p>
               <h2 className="mp-feature-tile__title">Engineering systems. Building useful software.</h2>
             </div>
-            <div className="mp-feature-tile__gradient" aria-hidden="true" />
+            <InkArtwork className="home-ink-strip" />
           </article>
         </div>
       </div>

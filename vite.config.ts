@@ -9,6 +9,8 @@ export default defineConfig({
     port: 3000,
   },
   resolve: { tsconfigPaths: true },
+  // Discover lazy shader entries before the React runtime is prebundled.
+  optimizeDeps: { include: ["shaders/react", "shaders/std"] },
   plugins: [
     tailwindcss(),
     cloudflare({ viteEnvironment: { name: "ssr" }, inspectorPort: false }),

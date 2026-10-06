@@ -21,6 +21,7 @@ The router also provides a custom 404 page. There are no blog or admin routes.
 - React 19 and TypeScript
 - Vite 8 with the Cloudflare Vite plugin
 - Tailwind CSS 4
+- Shaders 4 for progressive WebGPU artwork
 - Cloudflare Workers, D1, Rate Limiting, Turnstile, and Email Sending
 - pnpm 10
 
@@ -91,6 +92,22 @@ loader.
 
 The analytics server functions write to D1, but the rendered app does not call
 them. Seeding D1 does not change the portfolio content shown by the current app.
+
+## Visual effects
+
+The home portrait has a dithered overlay with a pointer reveal, and the home and
+portfolio use animated violet and green ink strips. Project illustrations animate
+on hover or keyboard focus. The resume pairs a responsive drafting grid with a
+scroll-following timeline marker. Contact signal rings send one outgoing ripple
+after a successful submission. A short pixel trail follows the pointer in page
+margins.
+
+Effects live in `app/components/effects/` and `app/css/effects.css`. The GPU
+renderer loads lazily when artwork enters the viewport and releases its canvas
+when inactive or offscreen. Static SVG artwork and the original portrait render
+first and remain available without WebGPU. Reduced motion, document visibility,
+and the footer's Pause motion control govern animation. Pointer effects require
+a device with hover and a fine pointer.
 
 ## Commands
 

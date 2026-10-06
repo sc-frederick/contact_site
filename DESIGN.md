@@ -317,6 +317,19 @@ The signature element is the **Feature Tile** - an oversized editorial tile that
 
 The system uses **Lucide** (ISC license, https://lucide.dev/) as its single icon library. Lucide's clean outline weight matches the editorial mood without competing with the serif display type. Icons inherit `currentColor` and use the `.mp-icon` class to set an 18 × 18 px footprint inside chips, buttons, and inputs. Do not mix in icons from other libraries.
 
+### Motion and printed artwork
+
+Motion follows the print materials: dithered portrait ink, violet and green
+contours, project diagrams, a drafting grid, and contact signal rings. Keep
+artwork in dedicated regions so text, links, and form fields remain easy to use.
+Project diagrams animate on hover or keyboard focus; the timeline marks the
+experience currently being read. Cursor pixels stay in the page margins.
+
+Render static artwork first. WebGPU adds motion when available, with canvases
+active only while visible. Honor reduced motion and the footer's Pause motion
+control. Touch devices keep the artwork without cursor interactions. The
+contact ripple follows a confirmed successful submission and plays once.
+
 ## Do's and Don'ts
 
 **Do**
