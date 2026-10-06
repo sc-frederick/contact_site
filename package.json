@@ -19,7 +19,13 @@
     "format": "prettier --write src alchemy.run.ts vite.config.ts vitest.config.ts cloudflare.config.ts wrangler.config.ts tools/cloudflare-adapter.ts tools/seed-local-database.ts tools/local-cf.mjs",
     "format:check": "prettier --check src alchemy.run.ts vite.config.ts vitest.config.ts cloudflare.config.ts wrangler.config.ts tools/cloudflare-adapter.ts tools/seed-local-database.ts tools/local-cf.mjs",
     "dev:app": "vite dev --port 3000",
-    "build:app": "vite build"
+    "build:app": "vite build",
+    "cf": "cf",
+    "cf:build": "cf build",
+    "cf:dry-run": "pnpm infra:plan",
+    "cf:dev": "cf dev",
+    "cf:types": "cf workers types",
+    "cf:deploy": "pnpm deploy"
   },
   "keywords": [],
   "author": "",
