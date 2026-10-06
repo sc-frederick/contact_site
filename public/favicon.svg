@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <title>Surfside Software</title>
+  <desc>Horizon: a setting sun cut by a rolling swell on a midnight tile.</desc>
+  <defs>
+    <linearGradient id="sun" x1="0" y1="10" x2="0" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFD166"/>
+      <stop offset=".55" stop-color="#FF8A47"/>
+      <stop offset="1" stop-color="#FF4F5E"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#13224A"/>
+  <circle cx="32" cy="32" r="22" fill="url(#sun)"/>
+  <path d="M6 40C12 40 15 33 21.5 33S31 43 37.5 43 47 35 52 35 58 37 60 38" fill="none" stroke="#13224A" stroke-width="6"/>
+</svg>

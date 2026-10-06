@@ -95,7 +95,7 @@ them. Seeding D1 does not change the portfolio content shown by the current app.
 
 ## Visual effects
 
-The home portrait has a dithered overlay with a pointer reveal, and the home and
+The home portrait has an SVG dither filter with a pointer reveal, and the home and
 portfolio use animated violet and green ink strips. Project illustrations animate
 on hover or keyboard focus. The resume pairs a responsive drafting grid with a
 scroll-following timeline marker. Contact signal rings send one outgoing ripple
@@ -103,9 +103,14 @@ after a successful submission. A short pixel trail follows the pointer in page
 margins.
 
 Effects live in `app/components/effects/` and `app/css/effects.css`. The GPU
-renderer loads lazily when artwork enters the viewport and releases its canvas
-when inactive or offscreen. Static SVG artwork and the original portrait render
-first and remain available without WebGPU. Reduced motion, document visibility,
+renderer loads as artwork approaches the viewport, before project hover/focus.
+Once mounted, canvases stay mounted when scrolled offscreen; the renderer pauses
+them itself so returning to the artwork doesn't repeat GPU initialization.
+Inactive effects and paused motion release their canvases. Static SVG artwork
+remains available without WebGPU. The portrait's dither is in the server-rendered
+HTML, shares the original photo request, and needs no shader download or GPU
+initialization. Reduced motion and printing show the original photo.
+Reduced motion, document visibility,
 and the footer's Pause motion control govern animation. Pointer effects require
 a device with hover and a fine pointer.
 

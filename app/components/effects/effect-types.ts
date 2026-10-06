@@ -1,9 +1,8 @@
 /** Procedural visual identities used by the project cards. */
 export type ProjectPattern = "network" | "flow" | "scan" | "grid" | "orbits" | "wave";
 
-/** A canvas recipe; portrait recipes require a local image source. */
+/** A recipe for animated or pointer-responsive GPU artwork. */
 export type EffectArtwork =
-  | { readonly kind: "portrait"; readonly imageUrl: string }
   | { readonly kind: "field" | "draft" | "signal" }
   | { readonly kind: "project"; readonly pattern: ProjectPattern; readonly seed: number };
 

@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import type { PointerEvent } from "react";
-import { ShaderSurface } from "./shader-surface";
+import { PortraitDither } from "./portrait-dither";
 import { useMotionPreferences } from "./motion-provider";
 
-/** Keep the accessible photo in HTML while a dithered canvas opens beneath the pointer. */
+/** Reveal the accessible photo through a dithered print that is present before hydration. */
 export function PortraitReveal({ src, alt }: { readonly src: string; readonly alt: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const { motionAllowed, finePointer } = useMotionPreferences();
@@ -19,8 +19,8 @@ export function PortraitReveal({ src, alt }: { readonly src: string; readonly al
   }
   return (
     <div ref={ref} className="portrait-reveal" data-reveal={inside && motionAllowed && finePointer} onPointerMove={move} onPointerLeave={() => setInside(false)}>
-      <img src={src} alt={alt} className="h-full w-full object-cover" />
-      <ShaderSurface artwork={{ kind: "portrait", imageUrl: src }} className="portrait-print" />
+      <img src={src} alt={alt} fetchPriority="high" className="h-full w-full object-cover" />
+      <PortraitDither src={src} />
       {motionAllowed && finePointer && <span className="portrait-hint">Move to reveal</span>}
     </div>
   );

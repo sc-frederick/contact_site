@@ -11,7 +11,6 @@
   overflow: hidden;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .shader-surface[data-shader-status="ready"] { opacity: 1; }
@@ -52,8 +51,12 @@ button.motion-control:hover { color: var(--color-violet-deep); text-decoration: 
 }
 .portrait-reveal[data-reveal="true"] { --reveal-radius: 112px; }
 .portrait-print {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   mask-image: radial-gradient(circle at var(--reveal-x) var(--reveal-y), transparent calc(var(--reveal-radius) * 0.8), #000 var(--reveal-radius));
 }
+.portrait-filter { position: absolute; }
 .portrait-hint {
   position: absolute;
   bottom: 16px;
@@ -68,7 +71,7 @@ button.motion-control:hover { color: var(--color-violet-deep); text-decoration: 
   pointer-events: none;
   transition: opacity 180ms ease-out;
 }
-.portrait-reveal:has(.shader-surface[data-shader-status="ready"]):not([data-reveal="true"]) .portrait-hint { opacity: 1; }
+.portrait-reveal:not([data-reveal="true"]) .portrait-hint { opacity: 1; }
 
 .ink-artwork { position: relative; overflow: hidden; background: var(--color-violet); }
 .home-ink-strip { height: 88px; flex: none; margin-top: auto; }
@@ -169,9 +172,10 @@ button.motion-control:hover { color: var(--color-violet-deep); text-decoration: 
 @media (prefers-reduced-motion: reduce) {
   .shader-surface, .portrait-reveal, .portrait-hint, .timeline-node, .timeline-tracker { transition: none; }
   .pixel-trail { display: none; }
+  .portrait-print { display: none; }
 }
 
 @media print {
-  .pixel-trail, .motion-control, .shader-surface, .portrait-hint, .timeline-tracker { display: none; }
+  .pixel-trail, .motion-control, .shader-surface, .portrait-print, .portrait-hint, .timeline-tracker { display: none; }
   .print-artwork { print-color-adjust: exact; }
 }

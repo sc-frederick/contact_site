@@ -1,10 +1,8 @@
-import { Component, Suspense, lazy, useEffect, useRef, useState } from "react";
-import type { ErrorInfo, ReactNode } from "react";
+import { Component, useEffect, useRef, useState } from "react";
+import type { ComponentType, ErrorInfo, ReactNode } from "react";
 import { cn } from "~/lib/utils";
 import { useMotionPreferences } from "./motion-provider";
-import type { EffectArtwork } from "./effect-types";
-
-const LazyShaderScene = lazy(() => import("./shader-scenes").then((module) => ({ default: module.ShaderScene })));
+import type { EffectArtwork, ShaderSceneProps } from "./effect-types";
 
 type ShaderStatus = "loading" | "ready" | "unavailable";
 
@@ -36,13 +34,14 @@ interface ShaderSurfaceProps {
   readonly active?: boolean;
 }
 
-/** Lazily enhance a static artwork with a GPU canvas while visible and motion is allowed. */
+/** Prepare nearby artwork and let the renderer suspend its own offscreen canvas. */
 export function ShaderSurface({ artwork, className, active = true }: ShaderSurfaceProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { motionAllowed } = useMotionPreferences();
-  const [inView, setInView] = useState(false);
+  const [nearView, setNearView] = useState(false);
+  const [Scene, setScene] = useState<ComponentType<ShaderSceneProps> | null>(null);
   const [status, setStatus] = useState<ShaderStatus>("loading");
-  const enabled = motionAllowed && inView && active && status !== "unavailable";
+  const enabled = motionAllowed && nearView && active && status !== "unavailable";
 
   useEffect(() => {
     const element = ref.current;
@@ -51,10 +50,38 @@ export function ShaderSurface({ artwork, className, active = true }: ShaderSurfa
       setStatus("unavailable");
       return;
     }
-    const observer = new IntersectionObserver(([entry]) => setInView(Boolean(entry?.isIntersecting)), { threshold: 0.01 });
+    // Check synchronously so visible artwork doesn't wait for an observer delivery.
+    const rect = element.getBoundingClientRect();
+    if (rect.bottom >= -240 && rect.top <= window.innerHeight + 240) {
+      setNearView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry?.isIntersecting) return;
+      setNearView(true);
+      observer.disconnect();
+    }, { rootMargin: "240px" });
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!motionAllowed || !nearView || status === "unavailable" || Scene) return;
+    let cancelled = false;
+    // An explicit import avoids Suspense's fallback reveal delay. Warm the module
+    // for nearby project cards even before hover/focus activates their canvas.
+    void import("./shader-scenes").then((module) => {
+      if (!cancelled) setScene(() => module.ShaderScene);
+    }, (cause: unknown) => {
+      if (cancelled) return;
+      console.warn("Decorative shader unavailable", {
+        _tag: "ShaderModuleUnavailable",
+        message: cause instanceof Error ? cause.message : "Shader module could not load",
+      });
+      setStatus("unavailable");
+    });
+    return () => { cancelled = true; };
+  }, [motionAllowed, nearView, status, Scene]);
 
   useEffect(() => {
     if (!enabled && status === "ready") setStatus("loading");
@@ -62,11 +89,9 @@ export function ShaderSurface({ artwork, className, active = true }: ShaderSurfa
 
   return (
     <div ref={ref} aria-hidden="true" className={cn("shader-surface", className)} data-artwork={artwork.kind} data-shader-status={status === "unavailable" ? "unavailable" : enabled ? status : "static"}>
-      {enabled && (
+      {enabled && Scene && (
         <ShaderBoundary onUnavailable={() => setStatus("unavailable")}>
-          <Suspense fallback={null}>
-            <LazyShaderScene artwork={artwork} onReady={() => setStatus("ready")} onUnavailable={() => setStatus("unavailable")} />
-          </Suspense>
+          <Scene artwork={artwork} onReady={() => setStatus("ready")} onUnavailable={() => setStatus("unavailable")} />
         </ShaderBoundary>
       )}
     </div>
