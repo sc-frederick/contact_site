@@ -1,0 +1,9 @@
+repos/
+tools/oxlint/
+node_modules/
+.svelte-kit/
+.alchemy/
+.wrangler/
+.cloudflare/
+worker-configuration.d.ts
+pnpm-lock.yaml

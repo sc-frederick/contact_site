@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "types": [
+      "node"
+    ],
+    "allowImportingTsExtensions": true
+  },
+  "include": [
+    "alchemy.run.ts",
+    "cloudflare.config.ts",
+    "wrangler.config.ts",
+    "tools/cloudflare-adapter.ts",
+    "tools/seed-local-database.ts"
+  ]
+}

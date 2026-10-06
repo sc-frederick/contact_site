@@ -1,0 +1,6 @@
+{
+  "typescript.preferences.autoImportFileExcludePatterns": ["repos/**", "tools/oxlint/anti-slop/**"],
+  "javascript.preferences.autoImportFileExcludePatterns": ["repos/**", "tools/oxlint/anti-slop/**"],
+  "files.watcherExclude": { "**/repos/**": true },
+  "search.exclude": { "repos/**": true, "tools/oxlint/anti-slop/**": true }
+}
