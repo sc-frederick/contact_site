@@ -25,7 +25,7 @@ export default defineConfig({
     env: {
       CONTACT_FROM_EMAIL: bindings.text('contact@sfrederick.dev'),
       CONTACT_FROM_NAME: bindings.text('sfrederick.dev contact form'),
-      CONTACT_TO_EMAIL: bindings.text('sfred.mail@gmail.com'),
+      CONTACT_TO_EMAIL: bindings.text('sfred.mail+portfolio@gmail.com'),
       TURNSTILE_SITE_KEY: bindings.text('0x4AAAAAADnzUOVvXoGJmmGf'),
       TURNSTILE_SECRET_KEY: bindings.secret(),
       DB: bindings.d1({
@@ -33,7 +33,7 @@ export default defineConfig({
         id: 'f3fb4f29-7bd9-468d-a716-13da94ef2718',
       }),
       SEND_EMAIL: bindings.sendEmail({
-        allowedDestinationAddresses: ['sfred.mail@gmail.com'],
+        allowedDestinationAddresses: ['sfred.mail+portfolio@gmail.com'],
         allowedSenderAddresses: ['contact@sfrederick.dev'],
       }),
       CONTACT_RATE_LIMITER: bindings.rateLimit({

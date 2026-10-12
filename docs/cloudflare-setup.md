@@ -13,7 +13,7 @@ The stack keeps these existing resource identities:
 - Custom domains: `sfrederick.dev` and `www.sfrederick.dev`
 - Contact limiter: namespace `41001`, 5 requests per 60 seconds
 - Analytics limiter: namespace `41002`, 120 requests per 60 seconds
-- Email sender: `contact@sfrederick.dev`; destination: `sfred.mail@gmail.com`
+- Email sender: `contact@sfrederick.dev`; destination: `sfred.mail+portfolio@gmail.com`
 
 Connect the correct account using an Alchemy profile:
 
