@@ -16,7 +16,7 @@ export default Stack(
     });
 
     const email = yield* Cloudflare.Email.SendEmail('SEND_EMAIL', {
-      allowedDestinationAddresses: ['sfred.mail@gmail.com'],
+      allowedDestinationAddresses: ['sfred.mail+portfolio@gmail.com'],
       allowedSenderAddresses: ['contact@sfrederick.dev'],
     });
 
@@ -51,7 +51,7 @@ export default Stack(
         }),
         CONTACT_FROM_EMAIL: 'contact@sfrederick.dev',
         CONTACT_FROM_NAME: 'sfrederick.dev contact form',
-        CONTACT_TO_EMAIL: 'sfred.mail@gmail.com',
+        CONTACT_TO_EMAIL: 'sfred.mail+portfolio@gmail.com',
         TURNSTILE_SITE_KEY: '0x4AAAAAADnzUOVvXoGJmmGf',
         TURNSTILE_SECRET_KEY: secret,
       },
