@@ -3,27 +3,6 @@
   import Github from 'lucide-svelte/icons/github';
   import type { PortfolioItem } from '#lib/types.ts';
   import { cn } from '#lib/utils.ts';
-  import ProjectArtwork from '../effects/ProjectArtwork.svelte';
-  import type { ProjectPattern } from '../effects/effect-types';
-
-  /** Patterns keyed by the repository portfolio identifier. */
-  interface ProjectPatterns {
-    readonly [id: number]: ProjectPattern | undefined;
-  }
-
-  const projectPatterns: ProjectPatterns = {
-    1: 'network',
-    2: 'flow',
-    3: 'orbits',
-    4: 'scan',
-    5: 'network',
-    6: 'wave',
-    7: 'scan',
-    8: 'orbits',
-    9: 'grid',
-    10: 'grid',
-    11: 'wave',
-  };
 
   let {
     item,
@@ -38,10 +17,6 @@
   let hasLinks = $derived(Boolean(item.project_url || item.github_url));
 
   let onInk = $derived(Boolean(item.highlighted));
-
-  let hovered = $state(false);
-
-  let focused = $state(false);
 </script>
 
 <article
@@ -50,24 +25,7 @@
     onInk && 'mp-card--ink mp-on-ink',
     className,
   )}
-  onpointerenter={(event) => {
-    if (event.pointerType !== 'touch') hovered = true;
-  }}
-  onpointerleave={() => (hovered = false)}
-  onfocusin={() => (focused = true)}
-  onfocusout={(event) => {
-    if (
-      !(event.relatedTarget instanceof Node) ||
-      !event.currentTarget.contains(event.relatedTarget)
-    )
-      focused = false;
-  }}
 >
-  <ProjectArtwork
-    pattern={projectPatterns[item.id] ?? 'grid'}
-    seed={item.id}
-    active={hovered || focused}
-  />
   <h3 class="mp-title mb-1">
     <button
       type="button"
