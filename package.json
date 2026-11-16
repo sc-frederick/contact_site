@@ -26,7 +26,8 @@
     "cf:dev": "cf dev",
     "cf:types": "cf workers types",
     "cf:deploy": "pnpm deploy",
-    "ux:audit": "node tools/ux-audit.ts"
+    "ux:audit": "node tools/ux-audit.ts",
+    "ux:mobile": "docker run --rm --network host --user \"$(id -u):$(id -g)\" -e HOME=/tmp -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.65.1-noble node tools/ux-mobile.mjs"
   },
   "keywords": [],
   "author": "",

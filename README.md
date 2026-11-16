@@ -91,6 +91,7 @@ portrait.
 | `pnpm format` / `pnpm format:check` | Format / check application and infrastructure code |
 | `pnpm typecheck` | Generate bindings, check Svelte, and typecheck the Alchemy stack |
 | `pnpm test` | Vitest validation and contact workflow tests |
+| `pnpm ux:mobile` | With the build served on port 4320, run iPhone SE, iPhone 15 Pro, and landscape checks in WebKit through Docker |
 | `pnpm ux:audit` | After `pnpm build`, serve the worker locally and score every route at desktop and mobile sizes (see below) |
 | `pnpm cf-typegen` | `cf workers types`, generated in `.cloudflare/types/` |
 | `pnpm db:setup` / `pnpm db:seed` | Apply local migrations / optional seed through `cf` |

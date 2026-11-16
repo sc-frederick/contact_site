@@ -3,6 +3,13 @@ import '../.cloudflare/types/index.d.ts';
 export {};
 
 declare global {
+  namespace App {
+    /** Shallow-routing state: the project whose details dialog is open. */
+    interface PageState {
+      projectId?: number;
+    }
+  }
+
   interface Window {
     turnstile?: {
       render: (

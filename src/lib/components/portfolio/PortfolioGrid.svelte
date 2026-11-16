@@ -1,11 +1,17 @@
 <script lang="ts">
+  import { pushState } from '$app/navigation';
+  import { page } from '$app/state';
   import type { PortfolioItem, ProjectOwner } from '#lib/types.ts';
   import PortfolioCard from './PortfolioCard.svelte';
   import PortfolioModal from './PortfolioModal.svelte';
 
   let { items }: { items: readonly PortfolioItem[] } = $props();
 
-  let activeItem = $state.raw<PortfolioItem | null>(null);
+  // The open dialog lives in history state, so the browser or Android back
+  // gesture closes it instead of leaving the page.
+  let activeItem = $derived(
+    items.find((item) => item.id === page.state.projectId) ?? null,
+  );
 
   /** Projects are grouped by who they were built for, in this order. */
   const groups: readonly {
@@ -75,7 +81,7 @@
   }
 
   function open(item: PortfolioItem) {
-    activeItem = item;
+    pushState('', { projectId: item.id });
   }
 </script>
 
@@ -107,5 +113,8 @@
 {/each}
 {#if activeItem}<PortfolioModal
     item={activeItem}
-    onClose={() => (activeItem = null)}
+    onClose={() => {
+      // Back already cleared the state when the gesture closed the dialog.
+      if (page.state.projectId !== undefined) history.back();
+    }}
   />{/if}

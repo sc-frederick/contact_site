@@ -63,7 +63,9 @@ export function createPrintRenderer(
 ): PrintRenderer | WebGLUnavailable | ShaderCompileFailed {
   const gl = canvas.getContext('webgl2', {
     antialias: false,
-    alpha: false,
+    // The shaders paint every pixel opaque. A transparent context means a GPU
+    // that composites WebGL as black or empty still shows the SVG beneath.
+    alpha: true,
     depth: false,
     stencil: false,
     powerPreference: 'low-power',

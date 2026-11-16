@@ -299,9 +299,13 @@ button.motion-control:hover {
 .project-section__header a:hover {
   text-decoration-color: currentColor;
 }
+.project-card__links .mp-btn {
+  white-space: nowrap;
+}
 .project-card__links {
   position: relative;
   z-index: 1;
+  flex-wrap: wrap;
   justify-content: flex-start;
   margin-top: auto;
 }

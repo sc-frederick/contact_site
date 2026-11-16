@@ -478,7 +478,8 @@ a {
 .mp-select {
   width: 100%;
   font-family: var(--font-ui);
-  font-size: var(--font-size-body-md);
+  /* 16px or larger keeps iOS Safari from zooming the page on focus. */
+  font-size: var(--font-size-body-lg);
   color: var(--text-primary);
   background: var(--color-cloud);
   border: 1px solid var(--color-stone);
