@@ -25,7 +25,8 @@
     "cf:dry-run": "pnpm infra:plan",
     "cf:dev": "cf dev",
     "cf:types": "cf workers types",
-    "cf:deploy": "pnpm deploy"
+    "cf:deploy": "pnpm deploy",
+    "ux:audit": "node tools/ux-audit.ts"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +39,7 @@
     "tailwind-merge": "^2.6.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@cloudflare/config": "0.23.0",
     "@effect/platform-node": "4.0.1",
     "@oxlint/plugins": "1.87.0",
@@ -49,6 +51,7 @@
     "alchemy": "2.0.0-beta.81",
     "cf": "1.0.0-beta.12",
     "oxlint": "1.87.0",
+    "playwright": "^1.65.1",
     "prettier": "3.9.9",
     "prettier-plugin-svelte": "4.1.1",
     "svelte": "5.57.2",
