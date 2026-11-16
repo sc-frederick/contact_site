@@ -150,6 +150,34 @@ button.motion-control:hover {
 .project-card.mp-card--ink:hover .project-card__open {
   color: var(--color-green);
 }
+.project-card--compact {
+  gap: var(--space-sm);
+}
+.project-card--compact .mp-title {
+  font-size: var(--font-size-title-md);
+}
+.project-stack {
+  margin-top: auto;
+  padding-top: var(--space-xs);
+}
+.project-card--compact .project-card__links {
+  margin-top: 0;
+}
+/* Widen the last cards so an incomplete final row still fills the grid. */
+@media (min-width: 961px) {
+  .mp-grid > .project-card:last-child:nth-child(3n + 2),
+  .mp-grid > .project-card:nth-last-child(2):nth-child(3n + 1) {
+    grid-column: span 6;
+  }
+  .mp-grid > .project-card:last-child:nth-child(3n + 1) {
+    grid-column: span 12;
+  }
+}
+@media (min-width: 641px) and (max-width: 960px) {
+  .mp-grid > .project-card:last-child:nth-child(odd) {
+    grid-column: span 12;
+  }
+}
 .project-card__links {
   position: relative;
   z-index: 1;
@@ -167,15 +195,6 @@ button.motion-control:hover {
 .project-card .project-tech {
   margin-bottom: var(--space-xs);
 }
-.project-tech__more {
-  background: transparent;
-  color: var(--text-secondary);
-}
-.mp-card--ink .project-tech__more {
-  border-color: rgba(247, 241, 223, 0.25);
-  color: rgba(247, 241, 223, 0.7);
-}
-
 .project-status {
   display: inline-flex;
   align-items: center;
@@ -358,12 +377,15 @@ body:has(.project-dialog[open]) {
 }
 
 @media (max-width: 767px) {
+  .contact-form-card {
+    order: -1;
+  }
   .resume-identity {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-md);
   }
   .draft-artwork {
-    height: 112px;
+    display: none;
   }
   .timeline-tracker {
     display: none;

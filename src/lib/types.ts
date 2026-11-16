@@ -6,8 +6,13 @@ export type ProjectStatus =
 export interface PortfolioItem {
   readonly id: number;
   readonly title: string;
+  /** One complete sentence for the card, about 120 characters at most. */
+  readonly summary: string;
+  /** The full description shown in the project dialog. */
   readonly description: string;
   readonly status: ProjectStatus;
+  /** Flagship projects lead the portfolio and appear on the home page. */
+  readonly featured?: boolean;
   readonly project_url: string | null;
   readonly github_url: string | null;
   readonly technologies: readonly string[];

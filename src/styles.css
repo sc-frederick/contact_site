@@ -1,6 +1,6 @@
 @import 'tailwindcss' source(none);
 @source "./";
-@import './css/system.css';
+@import './css/system.css' layer(components);
 @import './css/effects.css';
 
 @theme {
@@ -65,12 +65,74 @@
   line-height: var(--leading-loose);
 }
 
+.home-work {
+  margin-top: var(--space-2xl);
+}
+
+.home-work ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-work__row {
+  display: grid;
+  grid-template-columns: minmax(0, 9rem) minmax(0, 1fr) auto;
+  gap: var(--space-md);
+  align-items: baseline;
+  padding-block: var(--space-sm);
+  border-top: 1px solid rgba(247, 241, 223, 0.16);
+  color: var(--color-on-ink);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.home-work li:last-child .home-work__row {
+  border-bottom: 1px solid rgba(247, 241, 223, 0.16);
+}
+
+.home-work__title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-title-md);
+  line-height: var(--leading-snug);
+}
+
+.home-work__summary {
+  color: rgba(247, 241, 223, 0.7);
+  font-size: var(--font-size-body-sm);
+  line-height: var(--leading-normal);
+}
+
+.home-work__arrow {
+  width: 16px;
+  height: 16px;
+  align-self: center;
+  color: rgba(247, 241, 223, 0.5);
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.home-work__row:hover .home-work__title,
+.home-work__row:focus-visible .home-work__title {
+  color: var(--color-green);
+}
+
+.home-work__row:hover .home-work__arrow {
+  color: var(--color-green);
+  transform: translate(2px, -2px);
+}
+
+.home-work__row:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring-inverted);
+  border-radius: var(--radius-sm);
+}
+
 .home-hero-photo {
   flex: none;
   aspect-ratio: 1;
 }
 
 .experience-list {
+  max-width: 68ch;
   margin: 0 0 var(--space-md);
   padding-left: 1.2rem;
 }
@@ -90,12 +152,33 @@
 }
 
 .portfolio-header {
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 @media (max-width: 767px) {
+  .home-hero-photo {
+    aspect-ratio: 4 / 3;
+  }
+
+  .home-work__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-2xs) var(--space-md);
+  }
+
+  .home-work__summary {
+    grid-row: 2;
+  }
+
+  .home-work__arrow {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .home-hero-photo img {
+    object-position: center 30%;
+  }
+
   .site-desktop-nav {
     display: none;
   }

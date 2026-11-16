@@ -3,10 +3,21 @@
   import Linkedin from 'lucide-svelte/icons/linkedin';
   import Mail from 'lucide-svelte/icons/mail';
   import XLogo from '../icons/XLogo.svelte';
+  import ArrowRight from 'lucide-svelte/icons/arrow-right';
+  import ArrowUpRight from 'lucide-svelte/icons/arrow-up-right';
   import { contactData } from '#lib/contact-data.ts';
+  import { portfolioItems } from '#lib/portfolio-data.ts';
   import profilePhoto from '../../assets/ProfilePhoto.webp';
   import PortraitReveal from '../effects/PortraitReveal.svelte';
   import InkArtwork from '../effects/InkArtwork.svelte';
+
+  const selectedWork = portfolioItems
+    .filter((item) => item.featured)
+    .flatMap((item) => {
+      const href = item.project_url ?? item.github_url;
+
+      return href ? [{ ...item, href }] : [];
+    });
 </script>
 
 <section class="flex flex-1 items-center">
@@ -36,7 +47,31 @@
           </div>
         </div>
 
+        <div class="home-work">
+          <h2 class="mp-eyebrow">Selected work</h2>
+          <ul>
+            {#each selectedWork as item (item.id)}
+              <li>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="home-work__row"
+                >
+                  <span class="home-work__title">{item.title}</span>
+                  <span class="home-work__summary">{item.summary}</span>
+                  <ArrowUpRight class="home-work__arrow" aria-hidden="true" />
+                  <span class="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+            {/each}
+          </ul>
+        </div>
+
         <div class="mp-row mt-8">
+          <a href="/portfolio" class="mp-btn mp-btn--accent">
+            All projects <ArrowRight class="mp-icon" aria-hidden="true" />
+          </a>
           <a
             href={contactData.github}
             target="_blank"
@@ -69,7 +104,7 @@
           </a>
           <a
             href={`mailto:${contactData.emails[0].address}`}
-            class="mp-btn mp-btn--accent mp-btn--icon"
+            class="mp-btn mp-btn--secondary mp-btn--icon"
             aria-label="Email"
             title="Email"
           >

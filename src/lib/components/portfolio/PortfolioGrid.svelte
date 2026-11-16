@@ -10,6 +10,14 @@
   let sorted = $derived(
     [...items].sort((a, b) => a.display_order - b.display_order),
   );
+
+  let featured = $derived(sorted.filter((item) => item.featured));
+
+  let more = $derived(sorted.filter((item) => !item.featured));
+
+  function open(item: PortfolioItem) {
+    activeItem = item;
+  }
 </script>
 
 {#if items.length === 0}
@@ -17,11 +25,28 @@
     <p class="mp-body">No portfolio items available yet.</p>
   </div>
 {:else}
-  <section aria-label="Projects" class="mp-grid">
-    {#each sorted as item (item.id)}<PortfolioCard
-        {item}
-        onOpen={(selectedItem) => (activeItem = selectedItem)}
-      />{/each}
+  <section aria-labelledby="featured-projects" class="mb-14">
+    <h2 id="featured-projects" class="mp-eyebrow mp-eyebrow--marker mb-5">
+      Featured
+    </h2>
+    <div class="mp-grid">
+      {#each featured as item (item.id)}<PortfolioCard
+          {item}
+          onOpen={open}
+        />{/each}
+    </div>
+  </section>
+  <section aria-labelledby="more-projects">
+    <h2 id="more-projects" class="mp-eyebrow mp-eyebrow--marker mb-5">
+      More projects
+    </h2>
+    <div class="mp-grid">
+      {#each more as item (item.id)}<PortfolioCard
+          {item}
+          onOpen={open}
+          compact
+        />{/each}
+    </div>
   </section>
 {/if}
 {#if activeItem}<PortfolioModal

@@ -229,6 +229,7 @@ a {
 }
 
 .mp-eyebrow {
+  text-wrap: balance;
   font-family: var(--font-ui);
   font-size: var(--font-size-label-sm);
   font-weight: 500;

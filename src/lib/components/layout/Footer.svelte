@@ -3,6 +3,7 @@
   import Linkedin from 'lucide-svelte/icons/linkedin';
   import Mail from 'lucide-svelte/icons/mail';
   import XLogo from '../icons/XLogo.svelte';
+  import { page } from '$app/state';
   import { contactData } from '#lib/contact-data.ts';
   import MotionControl from '../effects/MotionControl.svelte';
 </script>
@@ -19,10 +20,14 @@
       <MotionControl />
     </div>
 
-    <a href="/contact" class="mp-btn mp-btn--accent justify-self-center">
-      <Mail class="mp-icon" />
-      Get in touch
-    </a>
+    {#if page.url.pathname === '/contact'}
+      <span aria-hidden="true"></span>
+    {:else}
+      <a href="/contact" class="mp-btn mp-btn--accent justify-self-center">
+        <Mail class="mp-icon" />
+        Get in touch
+      </a>
+    {/if}
 
     <div class="flex items-center justify-center gap-4 md:justify-self-end">
       <a

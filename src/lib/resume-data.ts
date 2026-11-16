@@ -40,7 +40,7 @@ export interface ResumeData {
 /** Existing resume content, preserved through the framework port. */
 export const resumeData: ResumeData = {
   name: 'Stephen Frederick',
-  title: 'MEP Staff Engineer | IT Manager | Web & SEO Operations',
+  title: 'MEP engineer · builds engineering software',
   summary:
     'MEP engineer at Advanced Engineering Consultants with over 5 years of experience in MEP design, cross-trained in structural and civil work. Also run the firm’s IT and website, and build software that automates engineering calculations, drawing review, and permit tracking, increasingly by directing AI coding agents.',
   experience: [
@@ -143,12 +143,10 @@ export const resumeData: ResumeData = {
       description: [
         'Design MEP systems for commercial, residential, and institutional projects',
         'Cross-trained in structural and civil engineering disciplines',
-        'Develop internal automation tools and CAD plugins for engineering workflows',
         'Perform engineering calculations, load analyses, and code compliance reviews',
         'Prepare construction documents and engineering drawings using AutoCAD and Revit',
         'Mentor junior engineers and interns on technical standards and software tools',
-        'Building internal software tools that automate engineering calculations and permit tracking',
-        'Directing AI coding agents to ship full-stack apps used in real engineering workflows',
+        'Build internal software, often by directing AI coding agents, that automates engineering calculations, drawing review, and permit tracking',
       ],
       technologies: [
         'AutoCAD',
@@ -196,7 +194,6 @@ export const resumeData: ResumeData = {
         'Engineering Drawings',
         'Civil Engineering Drafting',
         'Report Writing',
-        'Critical Thinking',
         'AutoCAD',
         'Revit',
         'RightSuite Universal',
@@ -239,13 +236,7 @@ export const resumeData: ResumeData = {
     },
     {
       name: 'Other',
-      skills: [
-        'Network Administration',
-        'Network Security',
-        'IT',
-        'Peer Mentoring',
-        'Adobe Photoshop',
-      ],
+      skills: ['Network Administration', 'Network Security', 'Adobe Photoshop'],
     },
   ],
 };

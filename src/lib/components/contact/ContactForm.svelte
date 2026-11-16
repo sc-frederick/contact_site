@@ -194,7 +194,7 @@
 
 <div class="mp-grid">
   <DirectContactInfo sent={success} />
-  <div class="mp-card mp-span-7">
+  <div class="mp-card mp-span-7 contact-form-card">
     {#if success}
       <div class="py-12 text-center">
         <CheckCircle
@@ -212,7 +212,7 @@
       <form onsubmit={submit} class="mp-stack mp-stack--lg">
         <div>
           <p class="mp-eyebrow">Project inquiry</p>
-          <h2 class="mp-headline mb-2">Send a Message</h2>
+          <h2 class="mp-headline mb-2">Send a message</h2>
           <p class="mp-body">
             Fill out the form below and I'll respond within 24 hours.
           </p>
@@ -288,7 +288,7 @@
         >
           {#if submitting}<Loader2
               class="mp-icon animate-spin"
-            />Sending...{:else}<Send class="mp-icon" />Send Message{/if}
+            />Sending...{:else}<Send class="mp-icon" />Send message{/if}
         </button>
       </form>
     {/if}

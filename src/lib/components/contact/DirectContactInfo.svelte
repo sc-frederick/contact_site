@@ -13,14 +13,7 @@
 </script>
 
 <aside class="mp-card mp-card--ink mp-on-ink contact-details mp-span-5">
-  <div>
-    <p class="mp-eyebrow">Direct details</p>
-    <h2 class="mp-headline mp-on-ink mb-3">Get in Touch</h2>
-    <p class="mp-body">
-      Send me a message about a project or collaboration. I will reply as soon
-      as I can.
-    </p>
-  </div>
+  <p class="mp-eyebrow">Direct details</p>
 
   <div>
     <div class="contact-row">

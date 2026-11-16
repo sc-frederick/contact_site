@@ -8,29 +8,29 @@
   let {
     item,
     onOpen,
+    compact = false,
   }: {
     item: PortfolioItem;
     onOpen: (item: PortfolioItem) => void;
+    /** Secondary projects use a denser card with a one-line stack. */
+    compact?: boolean;
   } = $props();
 
   /** Cards show the leading technologies; the dialog lists all of them. */
-  const visibleTechnologies = 4;
+  const visibleTechnologies = 3;
 
   let onInk = $derived(Boolean(item.highlighted));
-
-  let hiddenCount = $derived(
-    Math.max(0, item.technologies.length - visibleTechnologies),
-  );
 </script>
 
 <article
   class={cn(
     'mp-card mp-card--interactive mp-span-4 project-card',
+    compact && 'mp-card--compact project-card--compact',
     onInk && 'mp-card--ink mp-on-ink',
   )}
 >
   <p class="project-status" data-status={item.status}>{item.status}</p>
-  <h2 class="mp-title">
+  <h3 class="mp-title">
     <button
       type="button"
       onclick={() => onOpen(item)}
@@ -39,22 +39,25 @@
     >
       {item.title}
     </button>
-  </h2>
+  </h3>
 
-  <p class="mp-body line-clamp-3">
-    {item.description}
+  <p class="mp-body">
+    {item.summary}
   </p>
 
-  <ul class="project-tech" aria-label="Technologies">
-    {#each item.technologies.slice(0, visibleTechnologies) as tech (tech)}
-      <li class="mp-chip">{tech}</li>
-    {/each}
-    {#if hiddenCount > 0}
-      <li class="mp-chip project-tech__more">
-        +{hiddenCount}<span class="sr-only"> more</span>
-      </li>
-    {/if}
-  </ul>
+  {#if compact}
+    <p class="mp-meta project-stack">
+      <span class="sr-only">Built with </span>{item.technologies
+        .slice(0, visibleTechnologies)
+        .join(' · ')}
+    </p>
+  {:else}
+    <ul class="project-tech" aria-label="Technologies">
+      {#each item.technologies.slice(0, visibleTechnologies) as tech (tech)}
+        <li class="mp-chip">{tech}</li>
+      {/each}
+    </ul>
+  {/if}
 
   {#if item.project_url || item.github_url}
     <div
