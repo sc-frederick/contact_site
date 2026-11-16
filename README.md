@@ -67,10 +67,6 @@ addresses, and user agents are not retained with submissions. Failed delivery is
 reported honestly after storage. Application policy uses Effect services; the
 Cloudflare adapters supply the actual bindings per request.
 
-`POST /api/analytics` preserves the optional D1 analytics capability. The rendered
-site does not call it. Metadata remains bounded, and IP/user agent columns remain
-empty.
-
 `src/hooks.server.ts` preserves the HTTPS redirect and response security headers.
 Effects live in `src/lib/components/effects/` and `src/css/effects.css`. A small
 WebGL2 renderer (`print-renderer.ts`) draws the GLSL scenes in `print-shaders.ts`
@@ -125,7 +121,7 @@ pnpm ux:audit --url https://sfrederick.dev --label production
 ## Infrastructure and deployment
 
 `alchemy.run.ts` owns the production Worker `contact-site`, the existing
-`contact-site-db` D1 database, rate limiters, email binding, variables, and both
+`contact-site-db` D1 database, contact rate limiter, email binding, variables, and both
 custom domains (`sfrederick.dev` and `www.sfrederick.dev`). It bundles the native
 Cloudflare adapter output with its static assets. `static/.assetsignore` prevents
 the Worker source and configuration files from being served as public assets.
@@ -149,11 +145,32 @@ pnpm exec cf auth login
 pnpm exec cf auth whoami
 ```
 
-Configure Alchemy's Cloudflare profile independently of cf:
+Configure Alchemy's Cloudflare profile independently of cf. On omabook and
+omabox it uses a stored, non-expiring account API token, so deploys don't need a
+fresh login:
 
 ```bash
 pnpm exec alchemy profile edit --add Cloudflare
+pnpm exec alchemy profile show
 ```
+
+### Deploys on push
+
+Workers Builds deploys `master` on every push. Its build command, `npm run
+build`, runs `cf build`, which writes `.cloudflare/adapter/wrangler.json` from
+`cloudflare.config.ts`. The deploy command must use that file:
+
+```
+npx wrangler deploy --config .cloudflare/adapter/wrangler.json
+```
+
+A bare `npx wrangler deploy` reads `wrangler.config.ts`, which has no bindings,
+and ships a Worker without D1, email, rate limiting, or variables. That broke the
+contact form on 2026-11-16. The Turnstile secret is a Worker secret and carries
+over between versions.
+
+Keep the bindings in `cloudflare.config.ts` and `alchemy.run.ts` identical;
+`src/lib/deploy-config.test.ts` checks that both declare what the app reads.
 
 The existing widget's secret was retrieved through the authenticated cf CLI,
 validated with Siteverify, and stored as `TURNSTILE_SECRET_KEY` in the ignored

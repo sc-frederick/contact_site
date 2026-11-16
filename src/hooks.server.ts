@@ -1,14 +1,16 @@
 import type { Handle } from '@sveltejs/kit/hooks';
 
+// Cloudflare injects the Web Analytics beacon from static.cloudflareinsights.com
+// and it reports to cloudflareinsights.com.
 const contentSecurityPolicyDirectives = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com",
   "script-src-attr 'none'",
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self'",
   "img-src 'self' data:",
   'frame-src https://challenges.cloudflare.com',
-  "connect-src 'self' https://challenges.cloudflare.com",
+  "connect-src 'self' https://challenges.cloudflare.com https://cloudflareinsights.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
