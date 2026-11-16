@@ -30,8 +30,8 @@
             project delivery work.
           </p>
           <p class="mp-body">
-            Outside work, I build Forewit at Surfside Software, engineering
-            software for people and AI agents.
+            Outside work, I build engineering software for people and AI agents
+            at Surfside Software.
           </p>
         </div>
 

@@ -4,7 +4,7 @@ import type { PortfolioItem } from '#lib/types.ts';
 export const portfolioItems: PortfolioItem[] = [
   {
     id: 1,
-    title: 'Forewit',
+    title: 'Surfside Software',
     description:
       'Engineering software for people and AI agents. Starting with MEP tools that replace scattered Excel workflows with shared project data and agent-usable calculation logic.',
     image_url: '',
