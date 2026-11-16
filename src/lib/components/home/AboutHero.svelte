@@ -41,31 +41,39 @@
             href={contactData.github}
             target="_blank"
             rel="noopener noreferrer"
-            class="mp-btn mp-btn--secondary mp-btn--sm"
+            class="mp-btn mp-btn--secondary mp-btn--icon"
+            aria-label="GitHub"
+            title="GitHub"
           >
-            <Github class="mp-icon" /> GitHub
+            <Github class="mp-icon" aria-hidden="true" />
           </a>
           <a
             href={contactData.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            class="mp-btn mp-btn--secondary mp-btn--sm"
+            class="mp-btn mp-btn--secondary mp-btn--icon"
+            aria-label="LinkedIn"
+            title="LinkedIn"
           >
-            <Linkedin class="mp-icon" /> LinkedIn
+            <Linkedin class="mp-icon" aria-hidden="true" />
           </a>
           <a
             href={contactData.x}
             target="_blank"
             rel="noopener noreferrer"
-            class="mp-btn mp-btn--secondary mp-btn--sm"
+            class="mp-btn mp-btn--secondary mp-btn--icon"
+            aria-label="X"
+            title="X"
           >
-            <XLogo class="mp-icon" /> X
+            <XLogo class="mp-icon" />
           </a>
           <a
             href={`mailto:${contactData.emails[0].address}`}
-            class="mp-btn mp-btn--accent mp-btn--sm"
+            class="mp-btn mp-btn--accent mp-btn--icon"
+            aria-label="Email"
+            title="Email"
           >
-            <Mail class="mp-icon" /> Email
+            <Mail class="mp-icon" aria-hidden="true" />
           </a>
         </div>
       </article>
