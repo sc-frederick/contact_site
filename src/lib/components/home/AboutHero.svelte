@@ -27,17 +27,18 @@
         class="mp-card mp-card--ink mp-on-ink mp-span-7 min-h-[440px] justify-between md:min-h-[520px]"
       >
         <div>
-          <p class="mp-eyebrow">MEP Engineer / Software Developer</p>
           <h1 class="home-hero-name mp-display mp-display--xl mp-on-ink">
             Stephen <span class="mp-italic">Frederick</span>
           </h1>
-          <div class="home-hero-copy mt-8">
+          <p class="home-hero-tagline">
+            An MEP engineer who builds the software engineers use.
+          </p>
+          <div class="home-hero-copy mt-6">
             <p class="mp-body mp-body--lg">
               I build engineering software for people and AI agents at
               <strong class="mp-on-ink font-medium">Surfside Software</strong>.
               By day I&apos;m an MEP engineer at Advanced Engineering
-              Consultants, where I also run IT and write the internal tools that
-              cut repetitive drawing and project delivery work.
+              Consultants, where I also run IT.
             </p>
           </div>
         </div>
@@ -116,9 +117,9 @@
         </div>
         <div class="mp-feature-tile__body">
           <p class="mp-eyebrow mp-on-violet">Brooksville, Florida</p>
-          <h2 class="mp-feature-tile__title">
-            An MEP engineer who builds the software engineers use.
-          </h2>
+          <p class="mp-feature-tile__title">
+            Engineering software for people and AI agents.
+          </p>
         </div>
         <InkArtwork class="home-ink-strip" />
       </article>

@@ -178,9 +178,11 @@
         </ul>
 
         {#if item.technologies && item.technologies.length > 0}
-          <p class="mp-meta">
-            <span class="sr-only">Tools: </span>{item.technologies.join(' · ')}
-          </p>
+          <ul class="mp-meta stack-line" aria-label="Tools">
+            {#each item.technologies as tech (tech)}
+              <li>{tech}</li>
+            {/each}
+          </ul>
         {/if}
       </div>
     </div>

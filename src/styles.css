@@ -43,17 +43,27 @@
 }
 
 .site-nav-link[aria-current='page'] {
-  color: var(--color-on-violet);
-  background: var(--color-violet);
+  color: var(--color-on-ink);
+  background: var(--color-ink);
 }
 
 .site-nav-link[aria-current='page']:hover {
-  color: var(--color-on-violet);
-  background: var(--color-violet-deep);
+  color: var(--color-on-ink);
+  background: var(--color-ink-soft);
 }
 
 .home-hero-name {
   white-space: nowrap;
+}
+
+.home-hero-tagline {
+  margin: var(--space-sm) 0 0;
+  max-width: 22ch;
+  font-family: var(--font-display);
+  font-size: var(--font-size-headline-md);
+  line-height: var(--leading-snug);
+  color: var(--color-on-ink);
+  text-wrap: balance;
 }
 
 .home-hero-copy {

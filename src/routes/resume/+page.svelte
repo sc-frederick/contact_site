@@ -19,7 +19,7 @@
 </svelte:head>
 
 <div class="min-h-screen">
-  <div class="mp-shell max-w-5xl">
+  <div class="mp-shell">
     <header class="mp-card resume-header mb-12">
       <div class="resume-identity">
         <div>

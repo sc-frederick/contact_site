@@ -76,6 +76,12 @@ button.motion-control:hover {
     #000 var(--reveal-radius)
   );
 }
+/* Without hover there is no reveal, so touch devices see the photograph. */
+@media (hover: none) {
+  .portrait-print {
+    display: none;
+  }
+}
 .portrait-filter {
   position: absolute;
 }
@@ -163,6 +169,21 @@ button.motion-control:hover {
   gap: var(--space-md);
   margin-top: auto;
   padding-top: var(--space-xs);
+}
+/* A dot-separated list whose separators never end a line. */
+.stack-line {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.stack-line li {
+  white-space: nowrap;
+}
+.stack-line li + li::before {
+  content: '·';
+  margin-inline: 0.45em;
 }
 .project-card__inline-link {
   position: relative;
@@ -363,11 +384,12 @@ body:has(.project-dialog[open]) {
 
 .contact-details {
   overflow: hidden;
+  align-self: start;
 }
 .signal-artwork {
   position: relative;
-  flex: 1;
-  min-height: 240px;
+  flex: none;
+  height: 240px;
   width: calc(100% + var(--space-xl) * 2);
   margin: var(--space-md) calc(var(--space-xl) * -1) calc(var(--space-xl) * -1);
   overflow: hidden;

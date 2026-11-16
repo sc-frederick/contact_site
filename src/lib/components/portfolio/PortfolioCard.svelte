@@ -48,11 +48,11 @@
 
   {#if compact}
     <div class="project-card__base">
-      <p class="mp-meta">
-        <span class="sr-only">Built with </span>{item.technologies
-          .slice(0, visibleTechnologies)
-          .join(' · ')}
-      </p>
+      <ul class="mp-meta stack-line" aria-label="Built with">
+        {#each item.technologies.slice(0, visibleTechnologies) as tech (tech)}
+          <li>{tech}</li>
+        {/each}
+      </ul>
       {#if item.project_url}
         <a
           href={item.project_url}

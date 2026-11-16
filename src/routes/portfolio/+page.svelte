@@ -6,9 +6,10 @@
   let { data }: PageProps = $props();
 
   let counts = $derived({
-    live: data.items.filter((item) => item.status === 'Live').length,
-    openSource: data.items.filter((item) => item.status === 'Open source')
-      .length,
+    public: data.items.filter(
+      (item) => item.status === 'Live' || item.status === 'Open source',
+    ).length,
+    internal: data.items.filter((item) => item.status === 'Internal').length,
   });
 </script>
 
@@ -44,12 +45,12 @@
           <dd>{data.items.length}</dd>
         </div>
         <div>
-          <dt class="mp-eyebrow">Live</dt>
-          <dd>{counts.live}</dd>
+          <dt class="mp-eyebrow">Public</dt>
+          <dd>{counts.public}</dd>
         </div>
         <div>
-          <dt class="mp-eyebrow">Open source</dt>
-          <dd>{counts.openSource}</dd>
+          <dt class="mp-eyebrow">Internal tools</dt>
+          <dd>{counts.internal}</dd>
         </div>
       </dl>
       <InkArtwork class="portfolio-ink-strip" />
