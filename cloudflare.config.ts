@@ -43,13 +43,6 @@ export default defineConfig({
           period: 60,
         },
       }),
-      ANALYTICS_RATE_LIMITER: bindings.rateLimit({
-        namespace: '41002',
-        simple: {
-          limit: 120,
-          period: 60,
-        },
-      }),
       ASSETS: bindings.assets(),
     },
   },

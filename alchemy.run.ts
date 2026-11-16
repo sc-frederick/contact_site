@@ -45,10 +45,6 @@ export default Stack(
           namespaceId: '41001',
           simple: { limit: 5, period: 60 },
         }),
-        ANALYTICS_RATE_LIMITER: Cloudflare.RateLimit('ANALYTICS_RATE_LIMITER', {
-          namespaceId: '41002',
-          simple: { limit: 120, period: 60 },
-        }),
         CONTACT_FROM_EMAIL: 'contact@sfrederick.dev',
         CONTACT_FROM_NAME: 'sfrederick.dev contact form',
         CONTACT_TO_EMAIL: 'sfred.mail+portfolio@gmail.com',
