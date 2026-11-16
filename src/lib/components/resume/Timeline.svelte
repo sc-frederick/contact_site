@@ -169,13 +169,40 @@
           <div class="mp-meta mb-3">{item.location}</div>
         {/if}
 
-        <ul class="experience-list">
-          {#each item.description as desc (desc)}
-            <li class="mp-body">
-              {desc}
-            </li>
-          {/each}
-        </ul>
+        {#if item.description.length > 0}
+          <ul class="experience-list">
+            {#each item.description as desc (desc)}
+              <li class="mp-body">
+                {desc}
+              </li>
+            {/each}
+          </ul>
+        {/if}
+
+        {#if item.projects && item.projects.length > 0}
+          {#if item.projectsHeading}
+            <p class="mp-eyebrow role-projects__heading">
+              {item.projectsHeading}
+            </p>
+          {/if}
+          <dl class="role-projects">
+            {#each item.projects as project (project.name)}
+              <div>
+                <dt class="role-projects__name">{project.name}</dt>
+                <dd>
+                  <p class="mp-body">{project.detail}</p>
+                  {#if project.stack.length > 0}
+                    <ul class="mp-meta stack-line" aria-label="Built with">
+                      {#each project.stack as tech (tech)}
+                        <li>{tech}</li>
+                      {/each}
+                    </ul>
+                  {/if}
+                </dd>
+              </div>
+            {/each}
+          </dl>
+        {/if}
 
         {#if item.technologies && item.technologies.length > 0}
           <ul class="mp-meta stack-line" aria-label="Tools">

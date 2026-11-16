@@ -3,18 +3,18 @@
 </script>
 
 <svelte:head>
-  <title>Stephen Frederick · MEP engineer and software developer</title>
+  <title>Stephen Frederick · MEP designer and software developer</title>
   <meta
     name="description"
-    content="MEP engineer at Advanced Engineering Consultants who builds engineering software for people and AI agents at Surfside Software."
+    content="MEP designer at Advanced Engineering Consultants who builds engineering software for people and AI agents at Surfside Software."
   />
   <meta
     property="og:title"
-    content="Stephen Frederick · MEP engineer and software developer"
+    content="Stephen Frederick · MEP designer and software developer"
   />
   <meta
     property="og:description"
-    content="MEP engineer at Advanced Engineering Consultants who builds engineering software for people and AI agents at Surfside Software."
+    content="MEP designer at Advanced Engineering Consultants who builds engineering software for people and AI agents at Surfside Software."
   />
 </svelte:head>
 

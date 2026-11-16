@@ -3,18 +3,19 @@
   import Timeline from '#lib/components/resume/Timeline.svelte';
   import SkillsSection from '#lib/components/resume/SkillsSection.svelte';
   import DraftArtwork from '#lib/components/effects/DraftArtwork.svelte';
+  import Download from 'lucide-svelte/icons/download';
 </script>
 
 <svelte:head>
   <title>Resume · Stephen Frederick</title>
   <meta
     name="description"
-    content="Experience, education, and skills of Stephen Frederick, MEP engineer and software developer in Florida."
+    content="Experience, education, and skills of Stephen Frederick, MEP designer and software developer in Florida."
   />
   <meta property="og:title" content="Resume · Stephen Frederick" />
   <meta
     property="og:description"
-    content="Experience, education, and skills of Stephen Frederick, MEP engineer and software developer in Florida."
+    content="Experience, education, and skills of Stephen Frederick, MEP designer and software developer in Florida."
   />
 </svelte:head>
 
@@ -28,11 +29,20 @@
             Stephen <span class="mp-italic">Frederick</span>
           </h1>
           <p class="mp-body mp-body--lg">{resumeData.title}</p>
+          <p class="mp-meta mt-2">{resumeData.availability}</p>
+          <a
+            href="/Stephen_Frederick_Resume.pdf"
+            download
+            class="mp-btn mp-btn--sm mt-5"
+          >
+            <Download class="mp-icon mp-icon--sm" aria-hidden="true" />
+            Download PDF
+          </a>
         </div>
         <DraftArtwork />
       </div>
       <hr class="mp-divider" />
-      <h2 class="mp-title">Professional Summary</h2>
+      <h2 class="mp-title">Summary</h2>
       <p class="mp-body mp-body--lg max-w-3xl">
         {resumeData.summary}
       </p>

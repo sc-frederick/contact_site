@@ -31,13 +31,13 @@
             Stephen <span class="mp-italic">Frederick</span>
           </h1>
           <p class="home-hero-tagline">
-            An MEP engineer who builds the software engineers use.
+            An MEP designer who builds the software engineers use.
           </p>
           <div class="home-hero-copy mt-6">
             <p class="mp-body mp-body--lg">
               I build engineering software for people and AI agents at
               <strong class="mp-on-ink font-medium">Surfside Software</strong>.
-              By day I&apos;m an MEP engineer at Advanced Engineering
+              By day I&apos;m an MEP designer at Advanced Engineering
               Consultants, where I also run IT.
             </p>
           </div>

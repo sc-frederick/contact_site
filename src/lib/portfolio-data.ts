@@ -18,9 +18,9 @@ export const portfolioItems: readonly PortfolioItem[] = [
     id: 1,
     title: 'Surfside Software',
     summary:
-      'Engineering software for people and AI agents, starting with Forewit for electrical panel schedules over MCP.',
+      'Forewit, a shared workspace for panel schedules and riser diagrams that engineers and AI agents use through MCP.',
     description:
-      'Engineering software for people and AI agents. Forewit keeps electrical panel schedules and feeder calculations in shared project data that engineers and their agents use through a remote MCP server.',
+      'Engineering tools for people and AI agents. Forewit is a shared workspace for electrical panel schedules and riser diagrams: engineers use the web app, and AI agents connect through MCP to the same project data and calculation logic. The demo includes voltage drop, fault current, and load calculations, which stay marked in progress until their table data is checked against the code book.',
     image: {
       src: forewitPanel,
       srcSmall: forewitPanelSmall,
@@ -51,7 +51,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
     summary:
       'A desktop app that gives a drawing set a second review before submittal, with code citations on every finding.',
     description:
-      'Desktop app that gives an engineering drawing set a second review before submittal. It runs completeness, code, coordination, and prior-comment passes on each sheet with Florida code citations, uses SAM 3.1 to count devices and zoom to each finding, and exports an HTML report.',
+      "A desktop app, in development, that reviews a drawing set before submittal. It checks each sheet for completeness, Florida code requirements, coordination between disciplines, and responses to prior comments, and cites the code section behind each finding. It uses Meta's SAM 3.1 model to find and count devices and fixtures on the drawings. The first version was built during the Meta AI Developer Hackathon sprint.",
     image: {
       src: secondSet,
       srcSmall: secondSetSmall,
@@ -79,9 +79,9 @@ export const portfolioItems: readonly PortfolioItem[] = [
     id: 13,
     title: 'tsdraft',
     summary:
-      'Write 2D CAD drawings in TypeScript and export DXF for CAD or SVG for previews.',
+      '2D CAD drawings as TypeScript, published on npm. Writes DXF and SVG with layers, blocks, dimensions, and title blocks.',
     description:
-      'Write 2D CAD drawings in TypeScript and export DXF for CAD programs or SVG for previews. Includes sheet formats, title blocks from a drafting standard, plot styles, and a lint command that checks a drawing against its standard.',
+      'A TypeScript library for writing 2D CAD drawings as code. The open-source core writes DXF and SVG, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks. An unreleased add-on writes DWG files that AutoCAD opens and plots, using its own writer and no Autodesk or ODA libraries. A demo builds a 15-sheet residential permit set from one house model and exports it as DWG, DXF, and PDF.',
     image: {
       src: tsdraftDrawing,
       srcSmall: tsdraftDrawingSmall,
@@ -151,43 +151,41 @@ export const portfolioItems: readonly PortfolioItem[] = [
     id: 5,
     title: 'AEC Project Lighthouse',
     summary:
-      'The project management app Advanced Engineering runs on, live at aeccloud.io.',
+      "The firm's project management app, rebuilt as a multi-tenant app on Cloudflare with real-time updates and an MCP endpoint.",
     description:
-      'Project management app for Advanced Engineering Consultants, with real-time project data, Gantt schedules, markdown notes, and email notifications. A rebuild on SvelteKit, Effect, and Cloudflare D1 is under way.',
+      "Advanced Engineering's project management app, rebuilt as a multi-tenant app on Cloudflare at aeccloud.io. Each organization's data lives in a separate Durable Object database, and changes reach members in real time. It supports passkey sign-in, checks permit status on public county portals, and has an MCP endpoint that lets an AI agent make any change its user could make, within that user's role.",
     status: 'Live',
     project_url: 'https://www.aeccloud.io',
     github_url: null,
     technologies: [
-      'React 19',
-      'TanStack Start',
-      'TypeScript',
-      'Convex',
+      'SvelteKit',
+      'Effect',
       'Cloudflare Workers',
-      'Tailwind CSS 4',
-      'Vitest',
+      'Durable Objects',
+      'D1',
+      'R2',
       'Playwright',
     ],
     display_order: 6,
   },
   {
     id: 4,
-    title: 'Moke Agent',
+    title: 'Moke',
     summary:
-      'Discipline-specific AI agents review permit drawings and write an evidence-backed report.',
+      "AI quality control for permit drawing sets. Since June 2026 it has reviewed sets for 19 of the firm's projects.",
     description:
-      'Desktop app for reviewing PDF permit drawings. A lead agent coordinates discipline subagents on OpenCode to review each sheet, then produces an offline HTML report with coverage, sources, and evidence.',
+      "Reviews permit drawing sets for quality control. A lead agent hands each discipline to its own subagent, and the result is an HTML report with the coverage, sources, and evidence behind each finding and a checkbox for each correction. Since June 2026 it has reviewed drawing sets for 19 of Advanced Engineering's projects. It runs as a desktop app, a CLI, and a hosted SvelteKit app on Cloudflare.",
     status: 'Internal',
     project_url: null,
     github_url: null,
     technologies: [
+      'TypeScript',
       'Electron',
       'Svelte 5',
-      'SvelteKit',
-      'TypeScript',
       'Effect',
       'OpenCode',
       'SQLite',
-      'pdf.js',
+      'Cloudflare D1 and R2',
     ],
     display_order: 7,
   },
@@ -246,27 +244,6 @@ export const portfolioItems: readonly PortfolioItem[] = [
     display_order: 10,
   },
   {
-    id: 7,
-    title: 'Moke Script',
-    summary:
-      'A CLI and web app that reviews or diffs PDF plansets into an HTML report.',
-    description:
-      'AI-powered planset review and comparison tool for construction drawings. Ships as a desktop CLI for Windows, macOS, and Linux that reviews or diffs PDF plansets into an HTML report, plus a hosted SvelteKit web app on Cloudflare with review jobs, auth, and D1/R2 storage.',
-    status: 'Internal',
-    project_url: null,
-    github_url: null,
-    technologies: [
-      'SvelteKit',
-      'TypeScript',
-      'Cloudflare Workers',
-      'D1',
-      'R2',
-      'Codex CLI',
-      'pdf-to-img',
-    ],
-    display_order: 11,
-  },
-  {
     id: 9,
     title: 'BricsCAD / AutoCAD MCP Server',
     summary:
@@ -277,7 +254,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
     project_url: null,
     github_url: null,
     technologies: ['Python 3.12', 'FastMCP', 'PyRx', 'Windows COM', 'BricsCAD'],
-    display_order: 12,
+    display_order: 11,
   },
   {
     id: 10,
@@ -297,7 +274,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'Dexie',
       'Dropbox SDK',
     ],
-    display_order: 13,
+    display_order: 12,
   },
   {
     id: 11,
@@ -318,6 +295,6 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'D1',
       'Durable Objects',
     ],
-    display_order: 14,
+    display_order: 13,
   },
 ];
