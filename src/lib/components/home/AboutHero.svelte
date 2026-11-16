@@ -2,6 +2,7 @@
   import Github from 'lucide-svelte/icons/github';
   import Linkedin from 'lucide-svelte/icons/linkedin';
   import Mail from 'lucide-svelte/icons/mail';
+  import XLogo from '../icons/XLogo.svelte';
   import { contactData } from '#lib/contact-data.ts';
   import profilePhoto from '../../assets/ProfilePhoto.webp';
   import PortraitReveal from '../effects/PortraitReveal.svelte';
@@ -41,7 +42,6 @@
             target="_blank"
             rel="noopener noreferrer"
             class="mp-btn mp-btn--secondary mp-btn--sm"
-            aria-label="GitHub"
           >
             <Github class="mp-icon" /> GitHub
           </a>
@@ -50,9 +50,16 @@
             target="_blank"
             rel="noopener noreferrer"
             class="mp-btn mp-btn--secondary mp-btn--sm"
-            aria-label="LinkedIn"
           >
             <Linkedin class="mp-icon" /> LinkedIn
+          </a>
+          <a
+            href={contactData.x}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mp-btn mp-btn--secondary mp-btn--sm"
+          >
+            <XLogo class="mp-icon" /> X
           </a>
           <a
             href={`mailto:${contactData.emails[0].address}`}

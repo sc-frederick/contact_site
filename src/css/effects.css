@@ -310,6 +310,15 @@ body:has(.project-dialog[open]) {
   min-height: 44px;
 }
 
+.contact-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .contact-details {
   overflow: hidden;
 }

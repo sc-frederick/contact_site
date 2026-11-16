@@ -9,6 +9,7 @@ export interface ContactInfo {
   websites: { label: string; url: string }[];
   github: string;
   linkedin: string;
+  x: string;
   services: string[];
 }
 
@@ -26,6 +27,7 @@ export const contactData: ContactInfo = {
   ],
   github: 'https://github.com/sc-frederick',
   linkedin: 'https://www.linkedin.com/in/stephencfrederick/',
+  x: 'https://x.com/scfred',
   services: [
     'Civil Engineering',
     'Structural Engineering',

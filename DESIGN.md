@@ -315,7 +315,7 @@ The signature element is the **Feature Tile** - an oversized editorial tile that
 
 ### Icons
 
-The system uses **Lucide** (ISC license, https://lucide.dev/) as its single icon library. Lucide's clean outline weight matches the editorial mood without competing with the serif display type. Icons inherit `currentColor` and use the `.mp-icon` class to set an 18 × 18 px footprint inside chips, buttons, and inputs. Do not mix in icons from other libraries.
+The system uses **Lucide** (ISC license, https://lucide.dev/) as its single icon library. Lucide's clean outline weight matches the editorial mood without competing with the serif display type. Icons inherit `currentColor` and use the `.mp-icon` class to set an 18 × 18 px footprint inside chips, buttons, and inputs. Do not mix in icons from other libraries. The one exception is the X logo (`src/lib/components/icons/XLogo.svelte`), because Lucide has only the retired Twitter bird.
 
 ### Motion and printed artwork
 

@@ -2,6 +2,7 @@
   import Github from 'lucide-svelte/icons/github';
   import Linkedin from 'lucide-svelte/icons/linkedin';
   import Mail from 'lucide-svelte/icons/mail';
+  import XLogo from '../icons/XLogo.svelte';
   import { contactData } from '#lib/contact-data.ts';
   import MotionControl from '../effects/MotionControl.svelte';
 </script>
@@ -41,6 +42,15 @@
         aria-label="LinkedIn"
       >
         <Linkedin class="mp-icon" />
+      </a>
+      <a
+        href={contactData.x}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mp-btn mp-btn--ghost mp-btn--icon"
+        aria-label="X"
+      >
+        <XLogo class="mp-icon" />
       </a>
       <a
         href="https://www.google.com/maps/search/?api=1&query=Brooksville%2C+FL"

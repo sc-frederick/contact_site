@@ -2,6 +2,7 @@
   import Mail from 'lucide-svelte/icons/mail';
   import Phone from 'lucide-svelte/icons/phone';
   import MapPin from 'lucide-svelte/icons/map-pin';
+  import AtSign from 'lucide-svelte/icons/at-sign';
   import { contactData } from '#lib/contact-data.ts';
   import SignalArtwork from '../effects/SignalArtwork.svelte';
 
@@ -62,6 +63,27 @@
         <p class="mp-body mp-on-ink">
           {contactData.location}
         </p>
+      </div>
+    </div>
+    <div class="contact-row">
+      <div class="contact-row__icon">
+        <AtSign class="mp-icon" />
+      </div>
+      <div class="flex-1">
+        <p class="mp-eyebrow mb-1">Elsewhere</p>
+        <ul class="contact-socials">
+          {#each [{ label: 'GitHub', href: contactData.github }, { label: 'LinkedIn', href: contactData.linkedin }, { label: 'X', href: contactData.x }] as social (social.label)}
+            <li>
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mp-body mp-on-ink contact-link hover:underline"
+                >{social.label}</a
+              >
+            </li>
+          {/each}
+        </ul>
       </div>
     </div>
   </div>
