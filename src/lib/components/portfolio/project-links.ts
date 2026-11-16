@@ -1,4 +1,4 @@
-/** Names a project's primary link by where it leads. */
+/** Names a project's primary link by where it leads, such as its hostname. */
 export function projectLinkLabel(url: string): string {
   const host = new URL(url).hostname.replace(/^www\./, '');
 
@@ -6,5 +6,5 @@ export function projectLinkLabel(url: string): string {
 
   if (host === 'github.com') return 'GitHub';
 
-  return 'Visit site';
+  return host;
 }

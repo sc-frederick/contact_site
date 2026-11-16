@@ -1,6 +1,9 @@
 /** Where a project stands, shown as a label on its card. */
-export type ProjectStatus =
-  'Live' | 'Open source' | 'In development' | 'Internal';
+export type ProjectStatus = 'Live' | 'In development' | 'Internal';
+
+/** Who the project was built for; the portfolio groups projects by owner. */
+export type ProjectOwner =
+  'Surfside Software' | 'Advanced Engineering Consultants' | 'Other';
 
 /** A real screenshot or drawing of a project, at two widths. */
 export interface ProjectImage {
@@ -21,8 +24,7 @@ export interface PortfolioItem {
   readonly description: string;
   readonly status: ProjectStatus;
   readonly image?: ProjectImage;
-  /** Flagship projects lead the portfolio and appear on the home page. */
-  readonly featured?: boolean;
+  readonly owner: ProjectOwner;
   readonly project_url: string | null;
   readonly github_url: string | null;
   readonly technologies: readonly string[];

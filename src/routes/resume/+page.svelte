@@ -24,7 +24,6 @@
     <header class="mp-card resume-header mb-12">
       <div class="resume-identity">
         <div>
-          <p class="mp-eyebrow">Profile</p>
           <h1 class="mp-display">
             Stephen <span class="mp-italic">Frederick</span>
           </h1>
@@ -42,7 +41,7 @@
         <DraftArtwork />
       </div>
       <hr class="mp-divider" />
-      <h2 class="mp-title">Summary</h2>
+      <h2 class="sr-only">Summary</h2>
       <p class="mp-body mp-body--lg max-w-3xl">
         {resumeData.summary}
       </p>
@@ -72,7 +71,7 @@
                 <h3 class="mp-title mb-1">
                   {edu.institution}
                 </h3>
-                <div class="mp-body text-accent">
+                <div class="mp-body font-medium text-text-primary">
                   {edu.degree} in {edu.field}
                 </div>
                 <div class="mp-meta">

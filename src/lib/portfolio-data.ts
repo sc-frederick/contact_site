@@ -16,11 +16,11 @@ import tsdraftDrawingSmall from '#lib/assets/projects/tsdraft-a101-720.webp';
 export const portfolioItems: readonly PortfolioItem[] = [
   {
     id: 1,
-    title: 'Surfside Software',
+    title: 'Forewit',
     summary:
-      'Forewit, a shared workspace for panel schedules and riser diagrams that engineers and AI agents use through MCP.',
+      'A shared workspace for electrical panel schedules and riser diagrams that engineers and AI agents use through MCP.',
     description:
-      'Engineering tools for people and AI agents. Forewit is a shared workspace for electrical panel schedules and riser diagrams: engineers use the web app, and AI agents connect through MCP to the same project data and calculation logic. The demo includes voltage drop, fault current, and load calculations, which stay marked in progress until their table data is checked against the code book.',
+      'Surfside Software’s first product: a shared workspace for electrical panel schedules and riser diagrams. Engineers use the web app, and AI agents connect through MCP to the same project data and calculation logic. The demo includes voltage drop, fault current, and load calculations, which stay marked in progress until their table data is checked against the code book.',
     image: {
       src: forewitPanel,
       srcSmall: forewitPanelSmall,
@@ -29,6 +29,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
       alt: 'Forewit demo: panel schedule H-1 with circuits, breaker sizes, voltage drop, and an issues sidebar',
     },
     status: 'In development',
+    owner: 'Surfside Software',
     project_url: 'https://surfside-software.com',
     github_url: 'https://github.com/Surfside-Software',
     technologies: [
@@ -42,7 +43,6 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'MCP',
     ],
     highlighted: true,
-    featured: true,
     display_order: 1,
   },
   {
@@ -59,7 +59,8 @@ export const portfolioItems: readonly PortfolioItem[] = [
       height: 788,
       alt: 'Second Set workbench: a finished review of a five-sheet grading set with its list of findings',
     },
-    status: 'Open source',
+    status: 'In development',
+    owner: 'Surfside Software',
     project_url: null,
     github_url: 'https://github.com/Surfside-Software/second-set',
     technologies: [
@@ -72,7 +73,6 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'SQLite',
       'pdf.js',
     ],
-    featured: true,
     display_order: 2,
   },
   {
@@ -89,11 +89,11 @@ export const portfolioItems: readonly PortfolioItem[] = [
       height: 933,
       alt: 'tsdraft example: sheet A-101, a first floor plan with dimensions, notes, and a title block',
     },
-    status: 'Open source',
+    status: 'Live',
+    owner: 'Surfside Software',
     project_url: 'https://www.npmjs.com/package/tsdraft',
     github_url: 'https://github.com/Surfside-Software/tsdraft',
     technologies: ['TypeScript', 'DXF', 'SVG', 'Node.js'],
-    featured: true,
     display_order: 3,
   },
   {
@@ -111,6 +111,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
       alt: 'Permit Monitor: permits grouped by project with status, required action, and last verified check',
     },
     status: 'Internal',
+    owner: 'Advanced Engineering Consultants',
     project_url: null,
     github_url: null,
     technologies: [
@@ -121,29 +122,27 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'SQLite',
       'TypeSafe AI',
     ],
-    featured: true,
     display_order: 4,
   },
   {
-    id: 2,
-    title: 'Intelligent Irrigation',
+    id: 4,
+    title: 'Moke',
     summary:
-      'Irrigation design software for Corexis that generates layouts that use less water.',
+      "AI quality control for permit drawing sets. Since June 2026 it has reviewed sets for 19 of the firm's projects.",
     description:
-      'Irrigation design software for Corexis that generates more efficient designs to save water and money. The app is moving from Rails to SvelteKit on Cloudflare, with a native Python and Rust hydraulics engine built on EPANET.',
-    status: 'In development',
+      "Reviews permit drawing sets for quality control. A lead agent hands each discipline to its own subagent, and the result is an HTML report with the coverage, sources, and evidence behind each finding and a checkbox for each correction. Since June 2026 it has reviewed drawing sets for 19 of Advanced Engineering's projects. It runs as a desktop app, a CLI, and a hosted SvelteKit app on Cloudflare.",
+    status: 'Internal',
+    owner: 'Advanced Engineering Consultants',
     project_url: null,
     github_url: null,
     technologies: [
       'TypeScript',
-      'SvelteKit',
+      'Electron',
+      'Svelte 5',
       'Effect',
-      'Cloudflare Workers',
-      'D1',
-      'R2',
-      'Python',
-      'Rust',
-      'EPANET',
+      'OpenCode',
+      'SQLite',
+      'Cloudflare D1 and R2',
     ],
     display_order: 5,
   },
@@ -155,6 +154,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
     description:
       "Advanced Engineering's project management app, rebuilt as a multi-tenant app on Cloudflare at aeccloud.io. Each organization's data lives in a separate Durable Object database, and changes reach members in real time. It supports passkey sign-in, checks permit status on public county portals, and has an MCP endpoint that lets an AI agent make any change its user could make, within that user's role.",
     status: 'Live',
+    owner: 'Advanced Engineering Consultants',
     project_url: 'https://www.aeccloud.io',
     github_url: null,
     technologies: [
@@ -169,25 +169,98 @@ export const portfolioItems: readonly PortfolioItem[] = [
     display_order: 6,
   },
   {
-    id: 4,
-    title: 'Moke',
+    id: 14,
+    title: 'AEC Plan Search',
     summary:
-      "AI quality control for permit drawing sets. Since June 2026 it has reviewed sets for 19 of the firm's projects.",
+      'Search every project drawing for a construction detail and jump to the source page.',
     description:
-      "Reviews permit drawing sets for quality control. A lead agent hands each discipline to its own subagent, and the result is an HTML report with the coverage, sources, and evidence behind each finding and a checkbox for each correction. Since June 2026 it has reviewed drawing sets for 19 of Advanced Engineering's projects. It runs as a desktop app, a CLI, and a hosted SvelteKit app on Cloudflare.",
+      'Windows desktop search across a firm’s project drawings for construction details. It previews the matching page, opens the source PDF or the project’s Dropbox folder, and keeps the shared index in Cloudflare D1. Updates install from a signed release feed.',
     status: 'Internal',
+    owner: 'Advanced Engineering Consultants',
+    project_url: null,
+    github_url: null,
+    technologies: [
+      'Electron',
+      'Bun',
+      'TypeScript',
+      'Cloudflare Workers',
+      'D1',
+      'Dropbox',
+    ],
+    display_order: 7,
+  },
+  {
+    id: 6,
+    title: 'AI Tooling for AEC Engineers',
+    summary:
+      'Agent skills that draft inspection reports, research codes, and check energy compliance, taught to staff.',
+    description:
+      'Agent skills and workflows for an engineering firm: drafting inspection reports from field notes and photos, researching Florida building codes, generating COMcheck energy compliance inputs, and reviewing permit drawings. Taught to staff in an AI seminar with live demos of site visit reports, client intake, and email drafting.',
+    status: 'Internal',
+    owner: 'Advanced Engineering Consultants',
+    project_url: null,
+    github_url: null,
+    technologies: ['Agent Skills', 'Claude Code', 'Codex', 'T3 Code', 'MCP'],
+    display_order: 8,
+  },
+  {
+    id: 9,
+    title: 'BricsCAD / AutoCAD MCP Server',
+    summary:
+      'Lets an AI agent draft in a running BricsCAD session, with each job rolled back on failure.',
+    description:
+      'Code-mode MCP integration for AI-assisted drafting in BricsCAD alongside an isolated AutoCAD connector. A Python stdio server attaches to the running CAD session over Windows COM, serializes spool jobs, executes generated PyRx code inside BricsCAD, and returns structured results with transaction rollback.',
+    status: 'Internal',
+    owner: 'Advanced Engineering Consultants',
+    project_url: null,
+    github_url: null,
+    technologies: ['Python 3.12', 'FastMCP', 'PyRx', 'Windows COM', 'BricsCAD'],
+    display_order: 9,
+  },
+  {
+    id: 10,
+    title: 'Snip-it',
+    summary:
+      'A Chrome extension that clips and indexes building code excerpts during research.',
+    description:
+      'Chrome extension for capturing excerpts from building, fire, and electrical codes during code research. Clips and organizes citations, indexes them with fuzzy search, and syncs to Dropbox so references can be found again later.',
+    status: 'Internal',
+    owner: 'Advanced Engineering Consultants',
+    project_url: null,
+    github_url: null,
+    technologies: [
+      'WXT',
+      'Svelte 5',
+      'TypeScript',
+      'MiniSearch',
+      'Dexie',
+      'Dropbox SDK',
+    ],
+    display_order: 10,
+  },
+  {
+    id: 2,
+    title: 'Intelligent Irrigation',
+    summary:
+      'Irrigation design software for Corexis that generates layouts that use less water.',
+    description:
+      'Irrigation design software for Corexis that generates more efficient designs to save water and money. The app is moving from Rails to SvelteKit on Cloudflare, with a native Python and Rust hydraulics engine built on EPANET.',
+    status: 'In development',
+    owner: 'Other',
     project_url: null,
     github_url: null,
     technologies: [
       'TypeScript',
-      'Electron',
-      'Svelte 5',
+      'SvelteKit',
       'Effect',
-      'OpenCode',
-      'SQLite',
-      'Cloudflare D1 and R2',
+      'Cloudflare Workers',
+      'D1',
+      'R2',
+      'Python',
+      'Rust',
+      'EPANET',
     ],
-    display_order: 7,
+    display_order: 11,
   },
   {
     id: 8,
@@ -196,6 +269,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
     description:
       'AI-powered job search and recruiting platform with chat-based matching. Aggregates listings through SerpApi, runs chat on Cloudflare Workers AI, stores data in D1 with résumé uploads in R2, and gates access with magic-link email sign-in.',
     status: 'Live',
+    owner: 'Other',
     project_url: 'https://scoutwork.app',
     github_url: null,
     technologies: [
@@ -208,72 +282,6 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'Workers AI',
       'SerpApi',
     ],
-    display_order: 8,
-  },
-  {
-    id: 6,
-    title: 'AI Tooling for AEC Engineers',
-    summary:
-      'Agent skills that draft inspection reports, research codes, and check energy compliance, taught to staff.',
-    description:
-      'Agent skills and workflows for an engineering firm: drafting inspection reports from field notes and photos, researching Florida building codes, generating COMcheck energy compliance inputs, and reviewing permit drawings. Taught to staff in an AI seminar with live demos of site visit reports, client intake, and email drafting.',
-    status: 'Internal',
-    project_url: null,
-    github_url: null,
-    technologies: ['Agent Skills', 'Claude Code', 'Codex', 'T3 Code', 'MCP'],
-    display_order: 9,
-  },
-  {
-    id: 14,
-    title: 'AEC Plan Search',
-    summary:
-      'Search every project drawing for a construction detail and jump to the source page.',
-    description:
-      'Windows desktop search across a firm’s project drawings for construction details. It previews the matching page, opens the source PDF or the project’s Dropbox folder, and keeps the shared index in Cloudflare D1. Updates install from a signed release feed.',
-    status: 'Internal',
-    project_url: null,
-    github_url: null,
-    technologies: [
-      'Electron',
-      'Bun',
-      'TypeScript',
-      'Cloudflare Workers',
-      'D1',
-      'Dropbox',
-    ],
-    display_order: 10,
-  },
-  {
-    id: 9,
-    title: 'BricsCAD / AutoCAD MCP Server',
-    summary:
-      'Lets an AI agent draft in a running BricsCAD session, with each job rolled back on failure.',
-    description:
-      'Code-mode MCP integration for AI-assisted drafting in BricsCAD alongside an isolated AutoCAD connector. A Python stdio server attaches to the running CAD session over Windows COM, serializes spool jobs, executes generated PyRx code inside BricsCAD, and returns structured results with transaction rollback.',
-    status: 'Internal',
-    project_url: null,
-    github_url: null,
-    technologies: ['Python 3.12', 'FastMCP', 'PyRx', 'Windows COM', 'BricsCAD'],
-    display_order: 11,
-  },
-  {
-    id: 10,
-    title: 'Snip-it',
-    summary:
-      'A Chrome extension that clips and indexes building code excerpts during research.',
-    description:
-      'Chrome extension for capturing excerpts from building, fire, and electrical codes during code research. Clips and organizes citations, indexes them with fuzzy search, and syncs to Dropbox so references can be found again later.',
-    status: 'Internal',
-    project_url: null,
-    github_url: null,
-    technologies: [
-      'WXT',
-      'Svelte 5',
-      'TypeScript',
-      'MiniSearch',
-      'Dexie',
-      'Dropbox SDK',
-    ],
     display_order: 12,
   },
   {
@@ -284,6 +292,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
     description:
       'Two Cloudflare Workers that fix links shared to an Android phone. One rewrites Apple Maps links in incoming texts as Google Maps links; the other turns Apple Music links into Spotify links through Odesli, with a Spotify search fallback and a D1 cache.',
     status: 'Internal',
+    owner: 'Other',
     project_url: null,
     github_url: null,
     technologies: [

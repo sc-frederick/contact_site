@@ -165,7 +165,8 @@
         Effect.catch(() =>
           Effect.succeed({
             success: false as const,
-            error: 'An unexpected error occurred. Please try again later.',
+            error:
+              'The message didn’t send. Email contact@sfrederick.dev instead.',
           }),
         ),
       ),
@@ -202,7 +203,7 @@
         />
         <h3 class="mp-headline mb-3">Message sent</h3>
         <p class="mp-body mx-auto mb-8 max-w-sm">
-          Thanks for your message. I will read it and reply as soon as I can.
+          Thanks. I’ll reply by email.
         </p>
         <button onclick={reset} class="mp-btn mp-btn--secondary"
           >Send another message</button
@@ -211,11 +212,7 @@
     {:else}
       <form onsubmit={submit} class="mp-stack mp-stack--lg">
         <div>
-          <p class="mp-eyebrow">Project inquiry</p>
-          <h2 class="mp-headline mb-2">Send a message</h2>
-          <p class="mp-body">
-            Fill out the form below and I'll respond within 24 hours.
-          </p>
+          <h2 class="mp-headline">Send a message</h2>
         </div>
         <div class="mp-stack">
           <FormField
@@ -224,7 +221,6 @@
             value={formData.name}
             onChange={(value) => change('name', value)}
             error={errors.name}
-            placeholder="Your full name"
             required
           />
           <FormField
@@ -252,14 +248,15 @@
             value={formData.message}
             onChange={(value) => change('message', value)}
             error={errors.message}
-            placeholder="Tell me about your project or inquiry..."
             isTextarea
             required
             maxLength={5000}
           />
-          <p class="mp-meta text-right">
-            {formData.message.length}/5000 characters
-          </p>
+          {#if formData.message.length > 4000}
+            <p class="mp-meta text-right">
+              {formData.message.length}/5000 characters
+            </p>
+          {/if}
         </div>
         {#if submitError}<div
             class="mp-alert--error flex items-center gap-2"
@@ -277,9 +274,9 @@
           role="status"
           aria-live="polite"
         >
-          {#if challengeStatus === 'loading'}Loading the bot check...{:else if challengeStatus === 'ready' && !token}Complete
-            the bot check to enable Send Message.{:else if challengeStatus === 'error'}The
-            bot check could not load. Refresh the page to try again.{/if}
+          {#if challengeStatus === 'loading'}Loading the bot check…{:else if challengeStatus === 'ready' && !token}Complete
+            the bot check to send.{:else if challengeStatus === 'error'}The bot
+            check could not load. Refresh the page to try again.{/if}
         </p>
         <button
           type="submit"
@@ -288,7 +285,7 @@
         >
           {#if submitting}<Loader2
               class="mp-icon animate-spin"
-            />Sending...{:else}<Send class="mp-icon" />Send message{/if}
+            />Sending…{:else}<Send class="mp-icon" />Send message{/if}
         </button>
       </form>
     {/if}

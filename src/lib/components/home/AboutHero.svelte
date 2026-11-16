@@ -12,7 +12,7 @@
   import InkArtwork from '../effects/InkArtwork.svelte';
 
   const selectedWork = portfolioItems
-    .filter((item) => item.featured)
+    .filter((item) => item.owner === 'Surfside Software')
     .flatMap((item) => {
       const href = item.project_url ?? item.github_url;
 
@@ -31,20 +31,21 @@
             Stephen <span class="mp-italic">Frederick</span>
           </h1>
           <p class="home-hero-tagline">
-            An MEP designer who builds the software engineers use.
+            MEP designer who builds software for engineers.
           </p>
           <div class="home-hero-copy mt-6">
             <p class="mp-body mp-body--lg">
-              I build engineering software for people and AI agents at
+              I design MEP systems and run IT at Advanced Engineering
+              Consultants, where everyone in the office uses the internal tools
+              I build. On my own time I build engineering software for people
+              and AI agents at
               <strong class="mp-on-ink font-medium">Surfside Software</strong>.
-              By day I&apos;m an MEP designer at Advanced Engineering
-              Consultants, where I also run IT.
             </p>
           </div>
         </div>
 
         <div class="home-work">
-          <h2 class="mp-eyebrow">Selected work</h2>
+          <h2 class="mp-eyebrow">Surfside Software</h2>
           <ul>
             {#each selectedWork as item (item.id)}
               <li>
@@ -114,12 +115,6 @@
           class="home-hero-photo mp-card__media m-6 mb-0 min-h-0 flex-1 border border-white/20"
         >
           <PortraitReveal src={profilePhoto} alt={contactData.name} />
-        </div>
-        <div class="mp-feature-tile__body">
-          <p class="mp-eyebrow mp-on-violet">Brooksville, Florida</p>
-          <p class="mp-feature-tile__title">
-            Engineering software for people and AI agents.
-          </p>
         </div>
         <InkArtwork class="home-ink-strip" />
       </article>

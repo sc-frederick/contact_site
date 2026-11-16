@@ -133,7 +133,7 @@
           {formatDate(item.endDate)}
         </div>
         {#if getDuration(item.startDate, item.endDate)}
-          <div class="mp-meta mt-1 whitespace-nowrap text-accent tabular-nums">
+          <div class="mp-meta mt-1 whitespace-nowrap tabular-nums">
             {getDuration(item.startDate, item.endDate)}
           </div>
         {/if}
@@ -153,7 +153,7 @@
           <span class="mp-meta tabular-nums">
             {formatDate(item.startDate)} — {formatDate(item.endDate)}
           </span>{#if getDuration(item.startDate, item.endDate)}
-            <span class="mp-meta ml-2 text-accent tabular-nums">
+            <span class="mp-meta ml-2 tabular-nums">
               ({getDuration(item.startDate, item.endDate)})
             </span>
           {/if}
@@ -162,7 +162,12 @@
         <h3 class="mp-title mb-1">
           {item.title}
         </h3>
-        <div class={cn('mp-body text-accent', item.location ? 'mb-1' : 'mb-3')}>
+        <div
+          class={cn(
+            'mp-body font-medium text-text-primary',
+            item.location ? 'mb-1' : 'mb-3',
+          )}
+        >
           {item.company}
         </div>
         {#if item.location}
@@ -181,7 +186,7 @@
 
         {#if item.projects && item.projects.length > 0}
           {#if item.projectsHeading}
-            <p class="mp-eyebrow role-projects__heading">
+            <p class="mp-title mp-title--md role-projects__heading">
               {item.projectsHeading}
             </p>
           {/if}

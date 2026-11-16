@@ -68,8 +68,7 @@
   </p>
 
   <div>
-    <h3 class="mp-eyebrow mb-3">Built with</h3>
-    <ul class="project-tech">
+    <ul class="project-tech" aria-label="Built with">
       {#each item.technologies as tech (tech)}
         <li class="mp-chip">{tech}</li>
       {/each}
@@ -104,8 +103,6 @@
       {/if}
     </div>
   {:else}
-    <p class="mp-meta border-t border-border pt-4">
-      Private repository. Happy to walk through it on a call.
-    </p>
+    <p class="mp-meta border-t border-border pt-4">Private repository.</p>
   {/if}
 </dialog>

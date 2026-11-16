@@ -44,7 +44,4 @@
     class="h-full w-full object-cover"
   />
   <PortraitDither {src} />
-  {#if motion.motionAllowed && motion.finePointer}<span class="portrait-hint"
-      >Move to reveal</span
-    >{/if}
 </div>

@@ -2,7 +2,6 @@
   import Mail from 'lucide-svelte/icons/mail';
   import Phone from 'lucide-svelte/icons/phone';
   import MapPin from 'lucide-svelte/icons/map-pin';
-  import AtSign from 'lucide-svelte/icons/at-sign';
   import Github from 'lucide-svelte/icons/github';
   import Linkedin from 'lucide-svelte/icons/linkedin';
   import XLogo from '../icons/XLogo.svelte';
@@ -13,8 +12,6 @@
 </script>
 
 <aside class="mp-card mp-card--ink mp-on-ink contact-details mp-span-5">
-  <p class="mp-eyebrow">Direct details</p>
-
   <div>
     <div class="contact-row">
       <div class="contact-row__icon">
@@ -62,11 +59,9 @@
       </div>
     </div>
     <div class="contact-row">
-      <div class="contact-row__icon">
-        <AtSign class="mp-icon" />
-      </div>
+      <span aria-hidden="true"></span>
       <div class="flex-1">
-        <p class="mp-eyebrow mb-1">Elsewhere</p>
+        <p class="sr-only">Profiles</p>
         <ul class="contact-socials">
           <li>
             <a

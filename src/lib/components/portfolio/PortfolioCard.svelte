@@ -10,11 +10,14 @@
     item,
     onOpen,
     compact = false,
+    span = 4,
   }: {
     item: PortfolioItem;
     onOpen: (item: PortfolioItem) => void;
     /** Secondary projects use a denser card with a one-line stack. */
     compact?: boolean;
+    /** Grid columns out of twelve on wide screens. */
+    span?: number;
   } = $props();
 
   /** Cards show the leading technologies; the dialog lists all of them. */
@@ -24,9 +27,11 @@
 </script>
 
 <article
+  style:--project-span={span}
   class={cn(
     'mp-card mp-card--interactive project-card',
-    compact ? 'mp-span-4 mp-card--compact project-card--compact' : 'mp-span-6',
+    compact && 'mp-card--compact project-card--compact',
+    compact && item.image && span === 8 && 'project-card--wide',
     onInk && 'mp-card--ink mp-on-ink',
   )}
 >
@@ -35,9 +40,7 @@
       class="project-card__media"
       src={item.image.srcSmall}
       srcset={`${item.image.srcSmall} 720w, ${item.image.src} 1400w`}
-      sizes={compact
-        ? '(max-width: 640px) 100vw, (max-width: 960px) 50vw, 400px'
-        : '(max-width: 960px) 100vw, 600px'}
+      sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 400px"
       width={item.image.width}
       height={item.image.height}
       alt={item.image.alt}

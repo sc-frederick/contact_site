@@ -116,7 +116,7 @@ export const resumeData: ResumeData = {
           stack: ['Electron', 'TypeScript', 'Playwright', 'Zod', 'SQLite'],
         },
         {
-          name: 'Also',
+          name: 'Other tools',
           detail:
             'A desktop search for project drawings and reviewed details, a Chrome extension that clips and searches building, fire, and electrical code citations, a COMcheck energy report generator, a phishing checker for staff, and a shared library of agent skills for engineering work.',
           stack: [],
@@ -227,7 +227,7 @@ export const resumeData: ResumeData = {
       ],
     },
     {
-      name: 'AI and agents',
+      name: 'AI tooling',
       skills: [
         'T3 Code',
         'Claude',

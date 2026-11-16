@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PortfolioItem } from '#lib/types.ts';
+  import type { PortfolioItem, ProjectOwner } from '#lib/types.ts';
   import PortfolioCard from './PortfolioCard.svelte';
   import PortfolioModal from './PortfolioModal.svelte';
 
@@ -7,48 +7,104 @@
 
   let activeItem = $state.raw<PortfolioItem | null>(null);
 
-  let sorted = $derived(
-    [...items].sort((a, b) => a.display_order - b.display_order),
+  /** Projects are grouped by who they were built for, in this order. */
+  const groups: readonly {
+    readonly owner: ProjectOwner;
+    readonly heading: string;
+    readonly note?: string;
+    readonly href?: string;
+    readonly compact: boolean;
+  }[] = [
+    {
+      owner: 'Surfside Software',
+      heading: 'Surfside Software',
+      note: 'My company: engineering software for people and AI agents.',
+      href: 'https://surfside-software.com',
+      compact: false,
+    },
+    {
+      owner: 'Advanced Engineering Consultants',
+      heading: 'Advanced Engineering Consultants',
+      note: 'Internal tools the whole office uses on live projects.',
+      compact: true,
+    },
+    { owner: 'Other', heading: 'Other work', compact: true },
+  ];
+
+  let sections = $derived(
+    groups
+      .map((group) => ({
+        ...group,
+        id: `projects-${group.owner.toLowerCase().replaceAll(' ', '-')}`,
+        items: items
+          .filter((item) => item.owner === group.owner)
+          .toSorted((a, b) => a.display_order - b.display_order),
+      }))
+      .map((section) => ({
+        ...section,
+        spans: section.compact
+          ? compactSpans(section.items)
+          : section.items.map(() => 4),
+      })),
   );
 
-  let featured = $derived(sorted.filter((item) => item.featured));
+  /**
+   * Column spans for a compact section: a card with a screenshot takes eight
+   * columns beside a four-column card, the rest run three to a row, and a
+   * short final row stretches to fill the width.
+   */
+  function compactSpans(list: readonly PortfolioItem[]): number[] {
+    const spans: number[] = [];
+    let index = 0;
 
-  let more = $derived(sorted.filter((item) => !item.featured));
+    while (index < list.length) {
+      const remaining = list.length - index;
+
+      if (list[index]?.image && remaining >= 2) {
+        spans.push(8, 4);
+        index += 2;
+      } else {
+        const row = remaining === 4 ? 2 : Math.min(3, remaining);
+
+        spans.push(...Array.from({ length: row }, () => 12 / row));
+        index += row;
+      }
+    }
+
+    return spans;
+  }
 
   function open(item: PortfolioItem) {
     activeItem = item;
   }
 </script>
 
-{#if items.length === 0}
-  <div class="mp-card text-center">
-    <p class="mp-body">No portfolio items available yet.</p>
-  </div>
-{:else}
-  <section aria-labelledby="featured-projects" class="mb-14">
-    <h2 id="featured-projects" class="mp-eyebrow mp-eyebrow--marker mb-5">
-      Featured
-    </h2>
-    <div class="mp-grid">
-      {#each featured as item (item.id)}<PortfolioCard
-          {item}
-          onOpen={open}
-        />{/each}
-    </div>
-  </section>
-  <section aria-labelledby="more-projects">
-    <h2 id="more-projects" class="mp-eyebrow mp-eyebrow--marker mb-5">
-      More projects
-    </h2>
-    <div class="mp-grid">
-      {#each more as item (item.id)}<PortfolioCard
-          {item}
-          onOpen={open}
-          compact
-        />{/each}
-    </div>
-  </section>
-{/if}
+{#each sections as section (section.owner)}
+  {#if section.items.length > 0}
+    <section aria-labelledby={section.id} class="project-section">
+      <header class="project-section__header">
+        <h2 id={section.id} class="mp-title">
+          {#if section.href}
+            <a href={section.href} target="_blank" rel="noopener noreferrer"
+              >{section.heading}</a
+            >
+          {:else}
+            {section.heading}
+          {/if}
+        </h2>
+        {#if section.note}<p class="mp-meta">{section.note}</p>{/if}
+      </header>
+      <div class="mp-grid">
+        {#each section.items as item, index (item.id)}<PortfolioCard
+            {item}
+            onOpen={open}
+            compact={section.compact}
+            span={section.spans[index] ?? 4}
+          />{/each}
+      </div>
+    </section>
+  {/if}
+{/each}
 {#if activeItem}<PortfolioModal
     item={activeItem}
     onClose={() => (activeItem = null)}
