@@ -178,13 +178,9 @@
         </ul>
 
         {#if item.technologies && item.technologies.length > 0}
-          <div class="flex flex-wrap gap-2">
-            {#each item.technologies as tech (tech)}
-              <span class="mp-chip">
-                {tech}
-              </span>
-            {/each}
-          </div>
+          <p class="mp-meta">
+            <span class="sr-only">Tools: </span>{item.technologies.join(' · ')}
+          </p>
         {/if}
       </div>
     </div>

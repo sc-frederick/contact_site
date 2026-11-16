@@ -8,9 +8,9 @@
   import MotionControl from '../effects/MotionControl.svelte';
 </script>
 
-<footer class="border-t border-border bg-bg-surface px-6 py-8">
+<footer class="border-t border-border bg-bg-surface py-8">
   <div
-    class="mx-auto grid max-w-[1240px] items-center gap-6 text-center md:grid-cols-3 md:text-left"
+    class="site-shell grid items-center gap-6 text-center md:grid-cols-3 md:text-left"
   >
     <div class="flex flex-col items-center gap-2 md:items-start">
       <p class="mp-meta">

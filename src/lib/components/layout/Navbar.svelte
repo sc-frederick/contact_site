@@ -66,13 +66,10 @@
 
 <svelte:document onmousedown={outside} onkeydown={keydown} />
 <nav class="site-header fixed inset-x-0 top-0 z-40">
-  <div
-    class="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-3.5"
-  >
+  <div class="site-shell flex items-center justify-between py-3.5">
     <a href="/" class="flex items-center gap-3"
       ><span class="mp-card__monogram" aria-hidden="true">SF</span><span
-        class="sr-only font-display text-xl sm:not-sr-only"
-        >Stephen Frederick</span
+        class="font-display text-lg sm:text-xl">Stephen Frederick</span
       ></a
     >
     <div class="mp-tabs site-desktop-nav" aria-label="Primary navigation">

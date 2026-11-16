@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ArrowUpRight from 'lucide-svelte/icons/arrow-up-right';
   import ExternalLink from 'lucide-svelte/icons/external-link';
   import Github from 'lucide-svelte/icons/github';
   import type { PortfolioItem } from '#lib/types.ts';
@@ -46,57 +47,66 @@
   </p>
 
   {#if compact}
-    <p class="mp-meta project-stack">
-      <span class="sr-only">Built with </span>{item.technologies
-        .slice(0, visibleTechnologies)
-        .join(' · ')}
-    </p>
+    <div class="project-card__base">
+      <p class="mp-meta">
+        <span class="sr-only">Built with </span>{item.technologies
+          .slice(0, visibleTechnologies)
+          .join(' · ')}
+      </p>
+      {#if item.project_url}
+        <a
+          href={item.project_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="project-card__inline-link"
+        >
+          {projectLinkLabel(item.project_url)}<ArrowUpRight
+            class="mp-icon mp-icon--sm"
+            aria-hidden="true"
+          /><span class="sr-only"> for {item.title} (opens in a new tab)</span>
+        </a>
+      {/if}
+    </div>
   {:else}
     <ul class="project-tech" aria-label="Technologies">
       {#each item.technologies.slice(0, visibleTechnologies) as tech (tech)}
         <li class="mp-chip">{tech}</li>
       {/each}
     </ul>
-  {/if}
 
-  {#if item.project_url || item.github_url}
-    <div
-      class={cn(
-        'mp-card__footer project-card__links border-t pt-4',
-        onInk ? 'border-white/15' : 'border-border',
-      )}
-    >
-      {#if item.project_url}
-        <a
-          href={item.project_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class={cn(
-            'mp-btn mp-btn--sm',
-            onInk ? 'mp-btn--secondary' : 'mp-btn--ghost',
-          )}
-        >
-          <ExternalLink class="mp-icon mp-icon--sm" aria-hidden="true" />
-          <span>{projectLinkLabel(item.project_url)}</span>
-          <span class="sr-only">for {item.title} (opens in a new tab)</span>
-        </a>
-      {/if}
+    {#if item.project_url || item.github_url}
+      <div
+        class={cn(
+          'mp-card__footer project-card__links border-t pt-4',
+          onInk ? 'border-white/15' : 'border-border',
+        )}
+      >
+        {#if item.project_url}
+          <a
+            href={item.project_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mp-btn mp-btn--secondary mp-btn--sm"
+          >
+            <ExternalLink class="mp-icon mp-icon--sm" aria-hidden="true" />
+            <span>{projectLinkLabel(item.project_url)}</span>
+            <span class="sr-only">for {item.title} (opens in a new tab)</span>
+          </a>
+        {/if}
 
-      {#if item.github_url}
-        <a
-          href={item.github_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class={cn(
-            'mp-btn mp-btn--sm',
-            onInk ? 'mp-btn--secondary' : 'mp-btn--ghost',
-          )}
-        >
-          <Github class="mp-icon mp-icon--sm" aria-hidden="true" />
-          <span>Source</span>
-          <span class="sr-only">for {item.title} (opens in a new tab)</span>
-        </a>
-      {/if}
-    </div>
+        {#if item.github_url}
+          <a
+            href={item.github_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mp-btn mp-btn--secondary mp-btn--sm"
+          >
+            <Github class="mp-icon mp-icon--sm" aria-hidden="true" />
+            <span>Source</span>
+            <span class="sr-only">for {item.title} (opens in a new tab)</span>
+          </a>
+        {/if}
+      </div>
+    {/if}
   {/if}
 </article>

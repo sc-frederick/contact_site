@@ -31,18 +31,13 @@
           <h1 class="home-hero-name mp-display mp-display--xl mp-on-ink">
             Stephen <span class="mp-italic">Frederick</span>
           </h1>
-          <div class="home-hero-copy mp-stack mt-8">
+          <div class="home-hero-copy mt-8">
             <p class="mp-body mp-body--lg">
-              At
-              <strong class="mp-on-ink font-medium">
-                Advanced Engineering Consultants
-              </strong>, I design MEP systems and manage the company&apos;s IT.
-              I also build internal software that reduces repetitive drawing and
-              project delivery work.
-            </p>
-            <p class="mp-body">
-              Outside work, I build engineering software for people and AI
-              agents at Surfside Software.
+              I build engineering software for people and AI agents at
+              <strong class="mp-on-ink font-medium">Surfside Software</strong>.
+              By day I&apos;m an MEP engineer at Advanced Engineering
+              Consultants, where I also run IT and write the internal tools that
+              cut repetitive drawing and project delivery work.
             </p>
           </div>
         </div>
@@ -68,7 +63,7 @@
           </ul>
         </div>
 
-        <div class="mp-row mt-8">
+        <div class="mp-row home-actions mt-8">
           <a href="/portfolio" class="mp-btn mp-btn--accent">
             All projects <ArrowRight class="mp-icon" aria-hidden="true" />
           </a>
@@ -122,7 +117,7 @@
         <div class="mp-feature-tile__body">
           <p class="mp-eyebrow mp-on-violet">Brooksville, Florida</p>
           <h2 class="mp-feature-tile__title">
-            Engineering systems. Building useful software.
+            An MEP engineer who builds the software engineers use.
           </h2>
         </div>
         <InkArtwork class="home-ink-strip" />

@@ -27,21 +27,31 @@
 
 <div class="min-h-screen">
   <div class="mp-shell">
-    <header class="mp-card mp-card--ink mp-on-ink portfolio-header mb-12">
-      <div>
+    <header class="mp-card mp-card--ink mp-on-ink portfolio-header mb-10">
+      <div class="portfolio-header__intro">
         <p class="mp-eyebrow">Selected work</p>
-        <h1 class="mp-display mp-on-ink">
+        <h1 class="mp-display mp-on-ink mb-4">
           Developer <span class="mp-italic">portfolio.</span>
         </h1>
+        <p class="mp-body mp-body--lg max-w-[48ch]">
+          Tools I&apos;ve shipped for MEP design, drawing review, permits, and
+          the odd workflow problem.
+        </p>
       </div>
-      <p class="mp-body mp-body--lg max-w-[52ch]">
-        Tools I&apos;ve shipped for MEP design, drawing review, permits, and the
-        odd workflow problem.
-      </p>
-      <p class="mp-meta">
-        {data.items.length} projects · {counts.live} live · {counts.openSource}
-        open source
-      </p>
+      <dl class="portfolio-stats">
+        <div>
+          <dt class="mp-eyebrow">Projects</dt>
+          <dd>{data.items.length}</dd>
+        </div>
+        <div>
+          <dt class="mp-eyebrow">Live</dt>
+          <dd>{counts.live}</dd>
+        </div>
+        <div>
+          <dt class="mp-eyebrow">Open source</dt>
+          <dd>{counts.openSource}</dd>
+        </div>
+      </dl>
       <InkArtwork class="portfolio-ink-strip" />
     </header>
     <PortfolioGrid items={data.items} />

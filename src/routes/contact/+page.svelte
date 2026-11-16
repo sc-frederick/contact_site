@@ -26,8 +26,12 @@
         Let&apos;s make something <span class="mp-italic">useful.</span>
       </h1>
       <p class="mp-body mp-body--lg max-w-2xl">
-        Have a project in mind or want to collaborate? Send me a message or
-        reach out directly.
+        Have a project in mind or want to collaborate? Use the form, or email
+        <a
+          href="mailto:contact@sfrederick.dev"
+          class="text-accent underline underline-offset-4 hover:text-accent-muted"
+          >contact@sfrederick.dev</a
+        >.
       </p>
     </header>
 
