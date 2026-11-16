@@ -214,7 +214,7 @@ button.motion-control:hover {
 .stack-line li {
   white-space: nowrap;
 }
-.stack-line li + li::before {
+.stack-line li:not(:last-child)::after {
   content: '·';
   margin-inline: 0.45em;
 }
@@ -375,6 +375,9 @@ body:has(.project-dialog[open]) {
   }
 }
 
+.resume-page > * {
+  max-width: 880px;
+}
 .resume-identity {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 280px;
@@ -386,11 +389,6 @@ body:has(.project-dialog[open]) {
 }
 .resume-identity .mp-display {
   margin-bottom: var(--space-md);
-}
-.draft-artwork {
-  position: relative;
-  height: 180px;
-  overflow: hidden;
 }
 
 .role-projects__heading {
@@ -449,7 +447,7 @@ body:has(.project-dialog[open]) {
 .timeline-entry[data-active='true'] .timeline-node {
   background: var(--color-violet);
 }
-.timeline-entry[data-active='true'] .mp-title {
+.timeline-entry[data-active='true'] h3.mp-title {
   color: var(--color-violet-deep);
 }
 
@@ -529,9 +527,6 @@ body:has(.project-dialog[open]) {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-md);
   }
-  .draft-artwork {
-    display: none;
-  }
   .timeline-tracker {
     display: none;
   }
@@ -542,8 +537,7 @@ body:has(.project-dialog[open]) {
     height: 64px;
   }
   .signal-artwork {
-    flex: none;
-    min-height: 120px;
+    display: none;
   }
 }
 

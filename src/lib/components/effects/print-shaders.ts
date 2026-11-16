@@ -9,7 +9,7 @@
  */
 
 /** The artwork recipes a shader surface can render. */
-export type PrintScene = 'field' | 'draft' | 'signal';
+export type PrintScene = 'field' | 'signal';
 
 const prelude = /* glsl */ `#version 300 es
 precision highp float;
@@ -79,46 +79,6 @@ void main() {
 }
 `;
 
-/**
- * A drafting sheet: dot grid, major lines, and a compass circle whose center
- * leans toward the pointer while a dashed radius sweeps slowly.
- */
-const draft = /* glsl */ `${prelude}
-void main() {
-  vec2 uv = uvFromFrag();
-  float aspect = u_resolution.x / u_resolution.y;
-  vec2 p = uv * vec2(aspect, 1.0);
-  vec2 delta = (uv - u_pointer) * vec2(aspect, 1.0);
-  float lens = exp(-dot(delta, delta) * 14.0) * u_pointerStrength;
-  vec2 q = p + delta * lens * 0.18;
-
-  vec2 cells = q * 15.0;
-  vec2 cell = fract(cells) - 0.5;
-  float dotMark = 1.0 - smoothstep(0.035, 0.07, length(cell));
-  vec2 major = (fract(cells / 5.0 + 0.5) - 0.5) / 3.0;
-  float grid = max(line(major.x, 0.0), line(major.y, 0.0));
-
-  vec2 home = vec2(aspect * 0.583, 0.5);
-  vec2 target = vec2(u_pointer.x * aspect, u_pointer.y);
-  vec2 center = mix(home, target, 0.22 * u_pointerStrength);
-  vec2 r = p - center;
-  float d = length(r);
-  float ring = line(d - 0.29, 0.002);
-  float inner = line(d - 0.09, 0.0015) * step(0.5, fract(atan(r.y, r.x) * 3.0));
-  float cross = max(line(r.y, 0.0), line(r.x, 0.0)) * (1.0 - smoothstep(0.32, 0.5, d));
-
-  float angle = u_time * 0.25;
-  vec2 dir = vec2(cos(angle), sin(angle));
-  float along = dot(r, dir);
-  float sweep = line(dot(r, vec2(-dir.y, dir.x)), 0.0)
-    * step(0.0, along) * step(along, 0.29)
-    * step(0.4, fract(along * 40.0));
-
-  float strength = max(max(dotMark * 0.4, grid * 0.18), max(ring * 0.7, max(cross * 0.35, max(inner * 0.5, sweep * 0.6))));
-  outColor = vec4(mix(PAPER, VIOLET, strength), 1.0);
-}
-`;
-
 /** Dithered green signal rings radiating through ink, nudged by the pointer. */
 const signal = /* glsl */ `${prelude}
 void main() {
@@ -140,6 +100,5 @@ void main() {
 /** Fragment shader source keyed by artwork kind. */
 export const printPrograms: Readonly<Record<PrintScene, string>> = {
   field,
-  draft,
   signal,
 };

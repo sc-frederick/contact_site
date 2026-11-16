@@ -2,7 +2,6 @@
   import { resumeData } from '#lib/resume-data.ts';
   import Timeline from '#lib/components/resume/Timeline.svelte';
   import SkillsSection from '#lib/components/resume/SkillsSection.svelte';
-  import DraftArtwork from '#lib/components/effects/DraftArtwork.svelte';
   import Download from 'lucide-svelte/icons/download';
 </script>
 
@@ -20,7 +19,7 @@
 </svelte:head>
 
 <div class="min-h-screen">
-  <div class="mp-shell">
+  <div class="mp-shell resume-page">
     <header class="mp-card resume-header mb-12">
       <div class="resume-identity">
         <div>
@@ -38,7 +37,6 @@
             Download PDF
           </a>
         </div>
-        <DraftArtwork />
       </div>
       <hr class="mp-divider" />
       <h2 class="sr-only">Summary</h2>

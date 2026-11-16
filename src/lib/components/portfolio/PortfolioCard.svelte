@@ -48,7 +48,9 @@
       decoding="async"
     />
   {/if}
-  <p class="project-status" data-status={item.status}>{item.status}</p>
+  {#if item.status !== 'Internal'}
+    <p class="project-status" data-status={item.status}>{item.status}</p>
+  {/if}
   <h3 class="mp-title">
     <button
       type="button"

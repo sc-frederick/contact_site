@@ -210,10 +210,11 @@
         >
       </div>
     {:else}
-      <form onsubmit={submit} class="mp-stack mp-stack--lg">
-        <div>
-          <h2 class="mp-headline">Send a message</h2>
-        </div>
+      <form
+        onsubmit={submit}
+        class="mp-stack mp-stack--lg"
+        aria-label="Send a message"
+      >
         <div class="mp-stack">
           <FormField
             id="name"
@@ -230,7 +231,6 @@
             value={formData.email}
             onChange={(value) => change('email', value)}
             error={errors.email}
-            placeholder="your.email@example.com"
             required
           />
           <FormField
@@ -239,7 +239,6 @@
             value={formData.subject}
             onChange={(value) => change('subject', value)}
             error={errors.subject}
-            placeholder="What's this about?"
             maxLength={200}
           />
           <FormField

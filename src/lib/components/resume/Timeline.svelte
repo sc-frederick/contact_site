@@ -12,6 +12,11 @@
     return Boolean(dateStr && /^\d{4}$/.test(dateStr));
   }
 
+  /** A role at the same employer as the role above it skips the company line. */
+  function sameCompanyAsPrevious(index: number): boolean {
+    return index > 0 && items[index - 1]?.company === items[index]?.company;
+  }
+
   function formatDate(dateStr: string | null): string {
     if (!dateStr) return 'Present';
 
@@ -121,13 +126,13 @@
 
 <div {@attach track} class="timeline" data-motion={motion.motionAllowed}>
   <div class="timeline-tracker" aria-hidden="true"></div>
-  {#each items as item (item.id)}
+  {#each items as item, index (item.id)}
     <div
       class="timeline-entry grid grid-cols-1 md:grid-cols-[auto_1rem_1fr] md:gap-x-4"
     >
       <div class="hidden md:flex flex-col items-end text-right pt-1">
         <div class="mp-meta whitespace-nowrap tabular-nums">
-          {formatDate(item.startDate)}
+          {formatDate(item.startDate)} —
         </div>
         <div class="mp-meta whitespace-nowrap tabular-nums">
           {formatDate(item.endDate)}
@@ -162,16 +167,20 @@
         <h3 class="mp-title mb-1">
           {item.title}
         </h3>
-        <div
-          class={cn(
-            'mp-body font-medium text-text-primary',
-            item.location ? 'mb-1' : 'mb-3',
-          )}
-        >
-          {item.company}
-        </div>
-        {#if item.location}
-          <div class="mp-meta mb-3">{item.location}</div>
+        {#if sameCompanyAsPrevious(index)}
+          <div class="mb-3"></div>
+        {:else}
+          <div
+            class={cn(
+              'mp-body font-medium text-text-primary',
+              item.location ? 'mb-1' : 'mb-3',
+            )}
+          >
+            {item.company}
+          </div>
+          {#if item.location}
+            <div class="mp-meta mb-3">{item.location}</div>
+          {/if}
         {/if}
 
         {#if item.description.length > 0}

@@ -110,7 +110,7 @@
         </div>
       </article>
 
-      <article class="mp-feature-tile mp-span-5 min-h-[520px]">
+      <article class="mp-feature-tile mp-span-5 md:min-h-[520px]">
         <div
           class="home-hero-photo mp-card__media m-6 mb-0 min-h-0 flex-1 border border-white/20"
         >
