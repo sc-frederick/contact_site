@@ -45,6 +45,26 @@ export const resumeData: ResumeData = {
     'MEP engineer at Advanced Engineering Consultants with over 5 years of experience in MEP design, cross-trained in structural and civil work. Also run the firm’s IT and website, and build software that automates engineering calculations, drawing review, and permit tracking, increasingly by directing AI coding agents.',
   experience: [
     {
+      id: 6,
+      company: 'Surfside Software',
+      title: 'Founder',
+      startDate: '2026',
+      endDate: null,
+      description: [
+        'Building engineering software for people and AI agents. Forewit keeps electrical panel schedules and feeder calculations in shared project data that engineers and their agents use through a remote MCP server.',
+        'Shipping open-source tools: Second Set, a desktop app for reviewing engineering drawing sets before submittal, and tsdraft, a TypeScript library for writing 2D CAD drawings that export to DXF and SVG.',
+      ],
+      technologies: [
+        'TypeScript',
+        'SvelteKit',
+        'Effect',
+        'Electron',
+        'Cloudflare Workers',
+        'D1',
+        'MCP',
+      ],
+    },
+    {
       id: 5,
       company: 'Corexis',
       title: 'Software Contributor',

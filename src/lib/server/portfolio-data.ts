@@ -159,19 +159,32 @@ export const portfolioItems: readonly PortfolioItem[] = [
   },
   {
     id: 6,
-    title: 'General AI Tooling for AEC Engineers',
+    title: 'AI Tooling for AEC Engineers',
     description:
-      'A kit for using general-purpose AI in architecture, engineering, and construction work. It combines reusable agent skills, repeatable workflows, executable Python workbooks, and feedback loops that turn one-off experiments into repeatable engineering processes.',
+      'Agent skills and workflows for an engineering firm: drafting inspection reports from field notes and photos, researching Florida building codes, generating COMcheck energy compliance inputs, and reviewing permit drawings. Taught to staff in an AI seminar with live demos of site visit reports, client intake, and email drafting.',
+    status: 'Internal',
+    project_url: null,
+    github_url: null,
+    technologies: ['Agent Skills', 'Claude Code', 'Codex', 'T3 Code', 'MCP'],
+    display_order: 9,
+  },
+  {
+    id: 14,
+    title: 'AEC Plan Search',
+    description:
+      'Windows desktop search across a firm’s project drawings for construction details. It previews the matching page, opens the source PDF or the project’s Dropbox folder, and keeps the shared index in Cloudflare D1. Updates install from a signed release feed.',
     status: 'Internal',
     project_url: null,
     github_url: null,
     technologies: [
-      'Agent Skills',
-      'Reusable Workflows',
-      'Python Workbooks',
-      'Feedback Loops',
+      'Electron',
+      'Bun',
+      'TypeScript',
+      'Cloudflare Workers',
+      'D1',
+      'Dropbox',
     ],
-    display_order: 9,
+    display_order: 10,
   },
   {
     id: 7,
@@ -190,7 +203,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'Codex CLI',
       'pdf-to-img',
     ],
-    display_order: 10,
+    display_order: 11,
   },
   {
     id: 9,
@@ -200,8 +213,8 @@ export const portfolioItems: readonly PortfolioItem[] = [
     status: 'Internal',
     project_url: null,
     github_url: null,
-    technologies: ['Python 3.12', 'FastMCP', 'PyRx', 'Windows COM', 'JSON-RPC'],
-    display_order: 11,
+    technologies: ['Python 3.12', 'FastMCP', 'PyRx', 'Windows COM', 'BricsCAD'],
+    display_order: 12,
   },
   {
     id: 10,
@@ -219,7 +232,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'Dexie',
       'Dropbox SDK',
     ],
-    display_order: 12,
+    display_order: 13,
   },
   {
     id: 11,
@@ -238,6 +251,6 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'D1',
       'Durable Objects',
     ],
-    display_order: 13,
+    display_order: 14,
   },
 ];
