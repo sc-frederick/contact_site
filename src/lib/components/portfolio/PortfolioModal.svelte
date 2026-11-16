@@ -52,6 +52,17 @@
     </button>
   </div>
 
+  {#if item.image}
+    <img
+      class="project-dialog__media"
+      src={item.image.src}
+      width={item.image.width}
+      height={item.image.height}
+      alt={item.image.alt}
+      decoding="async"
+    />
+  {/if}
+
   <p class="mp-body mp-body--lg">
     {item.description}
   </p>

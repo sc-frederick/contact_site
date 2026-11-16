@@ -1,4 +1,12 @@
 import type { PortfolioItem } from '#lib/types.ts';
+import forewitPanel from '#lib/assets/projects/forewit-panel.webp';
+import forewitPanelSmall from '#lib/assets/projects/forewit-panel-720.webp';
+import permitMonitor from '#lib/assets/projects/permit-monitor.webp';
+import permitMonitorSmall from '#lib/assets/projects/permit-monitor-720.webp';
+import secondSet from '#lib/assets/projects/second-set-workbench.webp';
+import secondSetSmall from '#lib/assets/projects/second-set-workbench-720.webp';
+import tsdraftDrawing from '#lib/assets/projects/tsdraft-a101.webp';
+import tsdraftDrawingSmall from '#lib/assets/projects/tsdraft-a101-720.webp';
 
 /**
  * Repository-backed portfolio content, independent of the contact database.
@@ -13,6 +21,13 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'Engineering software for people and AI agents, starting with Forewit for electrical panel schedules over MCP.',
     description:
       'Engineering software for people and AI agents. Forewit keeps electrical panel schedules and feeder calculations in shared project data that engineers and their agents use through a remote MCP server.',
+    image: {
+      src: forewitPanel,
+      srcSmall: forewitPanelSmall,
+      width: 1400,
+      height: 875,
+      alt: 'Forewit demo: panel schedule H-1 with circuits, breaker sizes, voltage drop, and an issues sidebar',
+    },
     status: 'In development',
     project_url: 'https://surfside-software.com',
     github_url: 'https://github.com/Surfside-Software',
@@ -37,6 +52,13 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'A desktop app that gives a drawing set a second review before submittal, with code citations on every finding.',
     description:
       'Desktop app that gives an engineering drawing set a second review before submittal. It runs completeness, code, coordination, and prior-comment passes on each sheet with Florida code citations, uses SAM 3.1 to count devices and zoom to each finding, and exports an HTML report.',
+    image: {
+      src: secondSet,
+      srcSmall: secondSetSmall,
+      width: 1400,
+      height: 788,
+      alt: 'Second Set workbench: a finished review of a five-sheet grading set with its list of findings',
+    },
     status: 'Open source',
     project_url: null,
     github_url: 'https://github.com/Surfside-Software/second-set',
@@ -60,12 +82,47 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'Write 2D CAD drawings in TypeScript and export DXF for CAD or SVG for previews.',
     description:
       'Write 2D CAD drawings in TypeScript and export DXF for CAD programs or SVG for previews. Includes sheet formats, title blocks from a drafting standard, plot styles, and a lint command that checks a drawing against its standard.',
+    image: {
+      src: tsdraftDrawing,
+      srcSmall: tsdraftDrawingSmall,
+      width: 1400,
+      height: 933,
+      alt: 'tsdraft example: sheet A-101, a first floor plan with dimensions, notes, and a title block',
+    },
     status: 'Open source',
     project_url: 'https://www.npmjs.com/package/tsdraft',
     github_url: 'https://github.com/Surfside-Software/tsdraft',
     technologies: ['TypeScript', 'DXF', 'SVG', 'Node.js'],
     featured: true,
     display_order: 3,
+  },
+  {
+    id: 3,
+    title: 'Permit Monitor',
+    summary:
+      'Watches Florida permit portals on a schedule and flags every status change.',
+    description:
+      'Desktop app for Windows and macOS that tracks building permits on Florida county and city portals and all five water management districts. It checks each portal on a schedule, records the verified status, and notifies on changes. TypeSafe’s Jev model picks the next step when a portal page is ambiguous.',
+    image: {
+      src: permitMonitor,
+      srcSmall: permitMonitorSmall,
+      width: 1400,
+      height: 916,
+      alt: 'Permit Monitor: permits grouped by project with status, required action, and last verified check',
+    },
+    status: 'Internal',
+    project_url: null,
+    github_url: null,
+    technologies: [
+      'Electron',
+      'TypeScript',
+      'Playwright',
+      'Zod',
+      'SQLite',
+      'TypeSafe AI',
+    ],
+    featured: true,
+    display_order: 4,
   },
   {
     id: 2,
@@ -88,7 +145,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'Rust',
       'EPANET',
     ],
-    display_order: 4,
+    display_order: 5,
   },
   {
     id: 5,
@@ -109,26 +166,6 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'Tailwind CSS 4',
       'Vitest',
       'Playwright',
-    ],
-    display_order: 5,
-  },
-  {
-    id: 3,
-    title: 'Permit Monitor',
-    summary:
-      'Watches Florida permit portals on a schedule and flags every status change.',
-    description:
-      'Desktop app for Windows and macOS that tracks building permits on Florida county and city portals and all five water management districts. It checks each portal on a schedule, records the verified status, and notifies on changes. TypeSafe’s Jev model picks the next step when a portal page is ambiguous.',
-    status: 'Internal',
-    project_url: null,
-    github_url: null,
-    technologies: [
-      'Electron',
-      'TypeScript',
-      'Playwright',
-      'Zod',
-      'SQLite',
-      'TypeSafe AI',
     ],
     display_order: 6,
   },

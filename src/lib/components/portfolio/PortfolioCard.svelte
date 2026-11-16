@@ -25,11 +25,26 @@
 
 <article
   class={cn(
-    'mp-card mp-card--interactive mp-span-4 project-card',
-    compact && 'mp-card--compact project-card--compact',
+    'mp-card mp-card--interactive project-card',
+    compact ? 'mp-span-4 mp-card--compact project-card--compact' : 'mp-span-6',
     onInk && 'mp-card--ink mp-on-ink',
   )}
 >
+  {#if item.image}
+    <img
+      class="project-card__media"
+      src={item.image.srcSmall}
+      srcset={`${item.image.srcSmall} 720w, ${item.image.src} 1400w`}
+      sizes={compact
+        ? '(max-width: 640px) 100vw, (max-width: 960px) 50vw, 400px'
+        : '(max-width: 960px) 100vw, 600px'}
+      width={item.image.width}
+      height={item.image.height}
+      alt={item.image.alt}
+      loading="lazy"
+      decoding="async"
+    />
+  {/if}
   <p class="project-status" data-status={item.status}>{item.status}</p>
   <h3 class="mp-title">
     <button

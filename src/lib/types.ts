@@ -2,6 +2,15 @@
 export type ProjectStatus =
   'Live' | 'Open source' | 'In development' | 'Internal';
 
+/** A real screenshot or drawing of a project, at two widths. */
+export interface ProjectImage {
+  readonly src: string;
+  readonly srcSmall: string;
+  readonly width: number;
+  readonly height: number;
+  readonly alt: string;
+}
+
 /** A repository-backed project displayed on the portfolio page. */
 export interface PortfolioItem {
   readonly id: number;
@@ -11,6 +20,7 @@ export interface PortfolioItem {
   /** The full description shown in the project dialog. */
   readonly description: string;
   readonly status: ProjectStatus;
+  readonly image?: ProjectImage;
   /** Flagship projects lead the portfolio and appear on the home page. */
   readonly featured?: boolean;
   readonly project_url: string | null;
