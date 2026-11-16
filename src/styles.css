@@ -174,8 +174,15 @@
   margin: 0;
 }
 
+.portfolio-stats > div {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+}
+
 .portfolio-stats dt {
-  margin-bottom: var(--space-2xs);
+  margin: var(--space-2xs) 0 0;
+  white-space: nowrap;
 }
 
 .portfolio-stats dd {

@@ -5,10 +5,13 @@
 
   let { data }: PageProps = $props();
 
+  // The three counts add up to the total so the header never leaves a gap.
   let counts = $derived({
     public: data.items.filter(
       (item) => item.status === 'Live' || item.status === 'Open source',
     ).length,
+    building: data.items.filter((item) => item.status === 'In development')
+      .length,
     internal: data.items.filter((item) => item.status === 'Internal').length,
   });
 </script>
@@ -41,15 +44,15 @@
       </div>
       <dl class="portfolio-stats">
         <div>
-          <dt class="mp-eyebrow">Projects</dt>
-          <dd>{data.items.length}</dd>
-        </div>
-        <div>
           <dt class="mp-eyebrow">Public</dt>
           <dd>{counts.public}</dd>
         </div>
         <div>
-          <dt class="mp-eyebrow">Internal tools</dt>
+          <dt class="mp-eyebrow">In development</dt>
+          <dd>{counts.building}</dd>
+        </div>
+        <div>
+          <dt class="mp-eyebrow">Internal</dt>
           <dd>{counts.internal}</dd>
         </div>
       </dl>
