@@ -5,6 +5,19 @@
   let { data }: PageProps = $props();
 </script>
 
+<svelte:head>
+  <title>Contact · Stephen Frederick</title>
+  <meta
+    name="description"
+    content="Send Stephen Frederick a message about a project or collaboration."
+  />
+  <meta property="og:title" content="Contact · Stephen Frederick" />
+  <meta
+    property="og:description"
+    content="Send Stephen Frederick a message about a project or collaboration."
+  />
+</svelte:head>
+
 <div class="min-h-screen">
   <div class="mp-shell">
     <header class="mb-12 max-w-3xl">

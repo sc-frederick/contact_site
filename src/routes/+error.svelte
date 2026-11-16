@@ -3,6 +3,8 @@
   import ArrowLeft from 'lucide-svelte/icons/arrow-left';
 </script>
 
+<svelte:head><title>{page.status} · Stephen Frederick</title></svelte:head>
+
 <div class="mp-shell flex min-h-[calc(100vh-72px)] items-center justify-center">
   <div class="mp-card max-w-md text-center">
     <p class="mp-eyebrow">Error {page.status}</p>

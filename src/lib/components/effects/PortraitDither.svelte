@@ -81,6 +81,9 @@
   <img
     {src}
     alt=""
+    width="960"
+    height="960"
+    decoding="async"
     class="h-full w-full object-cover"
     style:filter={`url(#${filterId})`}
   />

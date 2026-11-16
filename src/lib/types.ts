@@ -1,18 +1,19 @@
+/** Where a project stands, shown as a label on its card. */
+export type ProjectStatus =
+  'Live' | 'Open source' | 'In development' | 'Internal';
+
 /** A repository-backed project displayed on the portfolio page. */
 export interface PortfolioItem {
-  id: number;
-  title: string;
-  description: string;
-  image_url: string | null;
-  project_url: string | null;
-  github_url: string | null;
-  technologies: string[];
-  featured: boolean;
+  readonly id: number;
+  readonly title: string;
+  readonly description: string;
+  readonly status: ProjectStatus;
+  readonly project_url: string | null;
+  readonly github_url: string | null;
+  readonly technologies: readonly string[];
   /** Renders the card as an ink tile so it reads as the lead project. */
-  highlighted?: boolean;
-  display_order: number;
-  created_at: string;
-  updated_at: string;
+  readonly highlighted?: boolean;
+  readonly display_order: number;
 }
 
 /** Validated contact fields passed to storage and mail delivery. */

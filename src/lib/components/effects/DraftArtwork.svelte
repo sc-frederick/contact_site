@@ -26,5 +26,5 @@
       /></g
     >
   </svg>
-  <ShaderSurface artwork={{ kind: 'draft' }} />
+  <ShaderSurface scene="draft" />
 </div>

@@ -1,6 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { LayoutProps } from './$types';
+  import '@fontsource/instrument-serif/latin-400.css';
+  import '@fontsource/instrument-serif/latin-400-italic.css';
+  import '@fontsource-variable/inter-tight/wght.css';
   import '../styles.css';
   import Navbar from '#lib/components/layout/Navbar.svelte';
   import Footer from '#lib/components/layout/Footer.svelte';
@@ -47,7 +50,11 @@
   });
 </script>
 
-<svelte:head><title>Stephen Frederick</title></svelte:head>
+<svelte:head>
+  <meta name="theme-color" content="#f2ead8" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Stephen Frederick" />
+</svelte:head>
 <PixelTrail />
 <Navbar />
 <main class="flex min-h-0 flex-1 flex-col pt-[73px]">{@render children()}</main>

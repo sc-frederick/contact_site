@@ -120,49 +120,121 @@ button.motion-control:hover {
 .project-card {
   overflow: hidden;
 }
-.project-card:focus-within {
-  border-color: var(--color-violet);
+.project-card .mp-title {
+  margin: 0;
 }
-.project-art {
+.project-card.mp-card--ink .mp-title {
+  color: var(--text-inverted);
+}
+.project-card__open {
+  text-align: left;
+  color: inherit;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+/* The title button covers the card, so the whole tile opens the details. */
+.project-card__open::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.project-card__open:focus-visible {
+  outline: none;
+}
+.project-card:has(.project-card__open:focus-visible) {
+  box-shadow: var(--focus-ring);
+}
+.project-card:hover .project-card__open {
+  color: var(--color-violet-deep);
+}
+.project-card.mp-card--ink:hover .project-card__open {
+  color: var(--color-green);
+}
+.project-card__links {
   position: relative;
+  z-index: 1;
+  justify-content: flex-start;
+  margin-top: auto;
+}
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.project-card .project-tech {
+  margin-bottom: var(--space-xs);
+}
+.project-tech__more {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.mp-card--ink .project-tech__more {
+  border-color: rgba(247, 241, 223, 0.25);
+  color: rgba(247, 241, 223, 0.7);
+}
+
+.project-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--font-size-label-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.mp-card--ink .project-status {
+  color: rgba(247, 241, 223, 0.7);
+}
+.project-status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
   flex: none;
-  height: 140px;
-  width: calc(100% + var(--space-xl) * 2);
-  margin: calc(var(--space-xl) * -1) calc(var(--space-xl) * -1) 8px;
+  border-radius: 50%;
+  background: var(--color-muted-ink);
+}
+.project-status[data-status='Live']::before {
+  background: var(--color-green-deep);
+  box-shadow: 0 0 0 3px rgba(134, 244, 106, 0.35);
+}
+.project-status[data-status='Open source']::before {
+  background: var(--color-violet);
+}
+.project-status[data-status='In development']::before {
+  background: transparent;
+  border: 1.5px solid currentColor;
+}
+
+.project-dialog {
+  width: min(100% - 32px, 768px);
+  max-height: min(90vh, 860px);
+  margin: auto;
+  overflow-y: auto;
+  gap: var(--space-lg);
+  box-shadow: var(--shadow-hover);
+}
+.project-dialog[open] {
+  display: flex;
+}
+.project-dialog::backdrop {
+  background: rgba(16, 16, 16, 0.7);
+}
+body:has(.project-dialog[open]) {
   overflow: hidden;
-  border-bottom: 1px solid var(--color-stone);
-  background: var(--color-paper);
 }
-[data-motion='on'] .project-card:is(:hover, :focus-within) .project-flow {
-  animation: drawing-flow 1.8s linear infinite;
-}
-[data-motion='on'] .project-card:is(:hover, :focus-within) .project-scan {
-  animation: drawing-scan 2.4s ease-in-out infinite alternate;
-}
-[data-motion='on'] .project-card:is(:hover, :focus-within) .project-orbit {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: drawing-orbit 18s linear infinite;
-}
-.project-art:has(.shader-surface[data-shader-status='ready']) .print-artwork * {
-  animation-play-state: paused;
-}
-@keyframes drawing-flow {
-  to {
-    stroke-dashoffset: -66;
-  }
-}
-@keyframes drawing-scan {
-  from {
-    transform: translateY(-38px);
-  }
-  to {
-    transform: translateY(57px);
-  }
-}
-@keyframes drawing-orbit {
-  to {
-    transform: rotate(360deg);
+[data-motion='on'] .project-dialog[open] {
+  transition:
+    opacity var(--duration-base) var(--ease-standard),
+    translate var(--duration-slow) var(--ease-standard);
+  @starting-style {
+    opacity: 0;
+    translate: 0 12px;
   }
 }
 
@@ -226,6 +298,18 @@ button.motion-control:hover {
   }
 }
 
+/* System text classes set display, so link target sizing lives here. */
+.contact-link,
+.footer-location {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  overflow-wrap: anywhere;
+}
+.footer-location {
+  min-height: 44px;
+}
+
 .contact-details {
   overflow: hidden;
 }
@@ -280,9 +364,6 @@ button.motion-control:hover {
   }
   .portfolio-ink-strip {
     height: 64px;
-  }
-  .project-art {
-    height: 120px;
   }
   .signal-artwork {
     min-height: 180px;

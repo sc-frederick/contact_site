@@ -3,60 +3,63 @@
   import Github from 'lucide-svelte/icons/github';
   import type { PortfolioItem } from '#lib/types.ts';
   import { cn } from '#lib/utils.ts';
+  import { projectLinkLabel } from './project-links.ts';
 
   let {
     item,
     onOpen,
-    className,
   }: {
     item: PortfolioItem;
-    onOpen?: (item: PortfolioItem) => void;
-    className?: string;
+    onOpen: (item: PortfolioItem) => void;
   } = $props();
 
-  let hasLinks = $derived(Boolean(item.project_url || item.github_url));
+  /** Cards show the leading technologies; the dialog lists all of them. */
+  const visibleTechnologies = 4;
 
   let onInk = $derived(Boolean(item.highlighted));
+
+  let hiddenCount = $derived(
+    Math.max(0, item.technologies.length - visibleTechnologies),
+  );
 </script>
 
 <article
   class={cn(
-    'mp-card mp-span-4 project-card',
+    'mp-card mp-card--interactive mp-span-4 project-card',
     onInk && 'mp-card--ink mp-on-ink',
-    className,
   )}
 >
-  <h3 class="mp-title mb-1">
+  <p class="project-status" data-status={item.status}>{item.status}</p>
+  <h2 class="mp-title">
     <button
       type="button"
-      onclick={() => onOpen?.(item)}
-      class={cn(
-        'text-left',
-        onInk
-          ? 'text-[var(--text-inverted)] hover:text-[var(--color-green)]'
-          : 'hover:text-accent',
-      )}
+      onclick={() => onOpen(item)}
+      class="project-card__open"
+      aria-haspopup="dialog"
     >
       {item.title}
     </button>
-  </h3>
+  </h2>
 
-  <p class="mp-body mb-2 line-clamp-3">
+  <p class="mp-body line-clamp-3">
     {item.description}
   </p>
 
-  <div class="flex flex-wrap gap-2 mb-5">
-    {#each item.technologies as tech (tech)}
-      <span class={cn('mp-chip')}>
-        {tech}
-      </span>
+  <ul class="project-tech" aria-label="Technologies">
+    {#each item.technologies.slice(0, visibleTechnologies) as tech (tech)}
+      <li class="mp-chip">{tech}</li>
     {/each}
-  </div>
+    {#if hiddenCount > 0}
+      <li class="mp-chip project-tech__more">
+        +{hiddenCount}<span class="sr-only"> more</span>
+      </li>
+    {/if}
+  </ul>
 
-  {#if hasLinks}
+  {#if item.project_url || item.github_url}
     <div
       class={cn(
-        'mp-card__footer border-t pt-4',
+        'mp-card__footer project-card__links border-t pt-4',
         onInk ? 'border-white/15' : 'border-border',
       )}
     >
@@ -70,8 +73,9 @@
             onInk ? 'mp-btn--secondary' : 'mp-btn--ghost',
           )}
         >
-          <ExternalLink class="mp-icon mp-icon--sm" />
-          <span>Live Demo</span>
+          <ExternalLink class="mp-icon mp-icon--sm" aria-hidden="true" />
+          <span>{projectLinkLabel(item.project_url)}</span>
+          <span class="sr-only">for {item.title} (opens in a new tab)</span>
         </a>
       {/if}
 
@@ -85,8 +89,9 @@
             onInk ? 'mp-btn--secondary' : 'mp-btn--ghost',
           )}
         >
-          <Github class="mp-icon mp-icon--sm" />
+          <Github class="mp-icon mp-icon--sm" aria-hidden="true" />
           <span>Source</span>
+          <span class="sr-only">for {item.title} (opens in a new tab)</span>
         </a>
       {/if}
     </div>

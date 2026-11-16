@@ -46,7 +46,7 @@
         href="https://www.google.com/maps/search/?api=1&query=Brooksville%2C+FL"
         target="_blank"
         rel="noopener noreferrer"
-        class="mp-meta hover:text-accent"
+        class="mp-meta footer-location hover:text-accent"
       >
         Brooksville, FL
       </a>

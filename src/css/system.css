@@ -43,7 +43,9 @@
   /* Typography ---------------------------------------------- */
   --font-display:
     'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
-  --font-ui: 'Inter Tight', 'Inter', 'Helvetica Neue', system-ui, sans-serif;
+  --font-ui:
+    'Inter Tight Variable', 'Inter Tight', 'Inter', 'Helvetica Neue', system-ui,
+    sans-serif;
 
   --font-size-display-xl: 72px;
   --font-size-display-lg: 56px;
@@ -547,7 +549,8 @@ a {
     box-shadow var(--duration-base) var(--ease-standard);
 }
 
-.mp-card:hover {
+/* Only cards that respond to a click lift on hover; static tiles stay put. */
+.mp-card--interactive:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-soft);
 }

@@ -3,7 +3,7 @@
   import PortfolioCard from './PortfolioCard.svelte';
   import PortfolioModal from './PortfolioModal.svelte';
 
-  let { items }: { items: PortfolioItem[] } = $props();
+  let { items }: { items: readonly PortfolioItem[] } = $props();
 
   let activeItem = $state.raw<PortfolioItem | null>(null);
 

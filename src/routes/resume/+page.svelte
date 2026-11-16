@@ -5,6 +5,19 @@
   import DraftArtwork from '#lib/components/effects/DraftArtwork.svelte';
 </script>
 
+<svelte:head>
+  <title>Resume · Stephen Frederick</title>
+  <meta
+    name="description"
+    content="Experience, education, and skills of Stephen Frederick, MEP engineer and software developer in Florida."
+  />
+  <meta property="og:title" content="Resume · Stephen Frederick" />
+  <meta
+    property="og:description"
+    content="Experience, education, and skills of Stephen Frederick, MEP engineer and software developer in Florida."
+  />
+</svelte:head>
+
 <div class="min-h-screen">
   <div class="mp-shell max-w-5xl">
     <header class="mp-card resume-header mb-12">

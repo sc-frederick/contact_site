@@ -6,7 +6,6 @@ import { prepareCloudflareAdapter } from './tools/cloudflare-adapter.ts';
 
 export default defineConfig(async () => ({
   server: { port: 3000 },
-  optimizeDeps: { include: ['shaders/std'] },
   plugins: [
     tailwindcss(),
     sveltekit({ adapter: await Effect.runPromise(prepareCloudflareAdapter()) }),

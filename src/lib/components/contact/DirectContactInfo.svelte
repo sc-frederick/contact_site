@@ -29,7 +29,7 @@
           {#each contactData.emails as email (email.address)}
             <a
               href={`mailto:${email.address}`}
-              class="mp-body mp-on-ink hover:underline"
+              class="mp-body mp-on-ink contact-link hover:underline"
             >
               {email.address}
             </a>
@@ -46,7 +46,7 @@
         <p class="mp-eyebrow mb-1">Phone</p>
         <a
           href={`tel:${contactData.phone.number.replace(/\s/g, '')}`}
-          class="mp-body mp-on-ink hover:underline"
+          class="mp-body mp-on-ink contact-link hover:underline"
         >
           {contactData.phone.number}
         </a>

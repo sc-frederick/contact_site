@@ -42,16 +42,26 @@ export const resumeData: ResumeData = {
   name: 'Stephen Frederick',
   title: 'MEP Staff Engineer | IT Manager | Web & SEO Operations',
   summary:
-    'Engineer at Advanced Engineering Consultants with over 4 years of experience in MEP design, IT operations, and website management. Lead engineering design and documentation, manage internal technology infrastructure and support, and oversee WordPress-based website maintenance and SEO improvements.',
+    'MEP engineer at Advanced Engineering Consultants with over 5 years of experience in MEP design, cross-trained in structural and civil work. Also run the firm’s IT and website, and build software that automates engineering calculations, drawing review, and permit tracking, increasingly by directing AI coding agents.',
   experience: [
     {
       id: 5,
       company: 'Corexis',
       title: 'Software Contributor',
-      startDate: '2026',
+      startDate: 'Sep 2026',
       endDate: null,
       description: [
-        'Building the Intelligent Irrigation MVP, irrigation design software that generates more efficient designs to save water and money. Currently rebuilding the engine around a hydraulics-to-layout feedback loop.',
+        'Building the Intelligent Irrigation MVP, irrigation design software that generates more efficient designs to save water and money.',
+        'Porting the app from Rails to SvelteKit on Cloudflare and rebuilding the engine around a hydraulics-to-layout feedback loop.',
+      ],
+      technologies: [
+        'TypeScript',
+        'SvelteKit',
+        'Effect',
+        'Cloudflare Workers',
+        'Python',
+        'Rust',
+        'EPANET',
       ],
     },
     {
@@ -197,6 +207,11 @@ export const resumeData: ResumeData = {
         'Convex',
         'Docker',
         'Cloudflare Workers',
+        'Durable Objects',
+        'Alchemy',
+        'Hono',
+        'Electron',
+        'Rust',
         'AI SDK',
         'MCP Protocol',
         'AI Agents',

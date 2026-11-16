@@ -35,7 +35,14 @@
   onpointermove={move}
   onpointerleave={() => (inside = false)}
 >
-  <img {src} {alt} fetchpriority="high" class="h-full w-full object-cover" />
+  <img
+    {src}
+    {alt}
+    width="960"
+    height="960"
+    fetchpriority="high"
+    class="h-full w-full object-cover"
+  />
   <PortraitDither {src} />
   {#if motion.motionAllowed && motion.finePointer}<span class="portrait-hint"
       >Move to reveal</span

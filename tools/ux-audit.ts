@@ -123,7 +123,10 @@ const { values: args } = parseArgs({
 });
 
 const outputRoot = new URL('../.ux-audit/', import.meta.url);
-const runDir = new URL(`${args.label.replaceAll(/[^\w.-]/g, '-')}/`, outputRoot);
+const runDir = new URL(
+  `${args.label.replaceAll(/[^\w.-]/g, '-')}/`,
+  outputRoot,
+);
 const routes = args.routes.split(',').map((route) => route.trim());
 
 /** Records paint and layout metrics before any page script runs. */
@@ -157,7 +160,10 @@ const impactPenalty: Readonly<Record<string, number>> = {
  * Scores one page 0-100 from three weighted parts, like Lighthouse:
  * performance 50%, accessibility 30%, and correctness 20%.
  */
-function scorePage(result: Omit<PageResult, 'score' | 'parts'>, viewport: Viewport) {
+function scorePage(
+  result: Omit<PageResult, 'score' | 'parts'>,
+  viewport: Viewport,
+) {
   const lcpBudget = viewport.name === 'mobile' ? 1800 : 1000;
   const clamp = (value: number) => Math.max(0, Math.min(100, value));
 
@@ -353,7 +359,8 @@ async function auditPage(
   page.on('response', (response) => {
     // Turnstile rejects the production site key on localhost.
     const localTurnstile =
-      !args.url && response.url().startsWith('https://challenges.cloudflare.com/');
+      !args.url &&
+      response.url().startsWith('https://challenges.cloudflare.com/');
 
     if (response.status() >= 400 && !localTurnstile)
       consoleErrors.push(`HTTP ${response.status()} ${response.url()}`);
@@ -407,7 +414,14 @@ async function auditPage(
   });
 
   const axeResults = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'])
+    .withTags([
+      'wcag2a',
+      'wcag2aa',
+      'wcag21a',
+      'wcag21aa',
+      'wcag22aa',
+      'best-practice',
+    ])
     .analyze();
 
   const axe = axeResults.violations.map((violation) => ({
@@ -458,7 +472,9 @@ async function auditReducedMotion(
   await page.goto(new URL('/', baseUrl).href, { waitUntil: 'load' });
   await page.waitForTimeout(1500);
 
-  const canvases = await page.locator('canvas:visible').count();
+  const canvases = await page
+    .locator('[data-shader-status="ready"], .pixel-trail:visible')
+    .count();
 
   const motionAttribute = await page.evaluate(
     () => document.documentElement.dataset.motion ?? null,
@@ -499,7 +515,11 @@ function formatSummary(report: Report, baseline: Report | undefined) {
     );
 
     lines.push(
-      `| ${result.route} ${result.viewport} | ${result.score}${delta(result.score, previous?.score)} | ${result.parts.performance} | ${result.parts.accessibility} | ${result.parts.correctness} | ${result.vitals.lcp} | ${result.vitals.cls} | ${result.vitals.tbt} | ${result.weight.scriptKb} | ${result.weight.totalKb} | ${result.axe.length} | ${result.consoleErrors.length} | ${result.overflowX} | ${result.smallTargets.length} | ${Object.entries(result.shaders).map(([status, count]) => `${status}:${count}`).join(' ')} |`,
+      `| ${result.route} ${result.viewport} | ${result.score}${delta(result.score, previous?.score)} | ${result.parts.performance} | ${result.parts.accessibility} | ${result.parts.correctness} | ${result.vitals.lcp} | ${result.vitals.cls} | ${result.vitals.tbt} | ${result.weight.scriptKb} | ${result.weight.totalKb} | ${result.axe.length} | ${result.consoleErrors.length} | ${result.overflowX} | ${result.smallTargets.length} | ${Object.entries(
+        result.shaders,
+      )
+        .map(([status, count]) => `${status}:${count}`)
+        .join(' ')} |`,
     );
   }
 
@@ -512,7 +532,8 @@ function formatSummary(report: Report, baseline: Report | undefined) {
       (error) => `- ${result.route} ${result.viewport}: console ${error}`,
     ),
     ...result.smallTargets.map(
-      (target) => `- ${result.route} ${result.viewport}: small target ${target}`,
+      (target) =>
+        `- ${result.route} ${result.viewport}: small target ${target}`,
     ),
   ]);
 
@@ -557,8 +578,7 @@ async function main() {
       label: args.label,
       baseUrl,
       createdAt: new Date().toISOString(),
-      score:
-        Math.round((average - (reducedMotion.passed ? 0 : 10)) * 10) / 10,
+      score: Math.round((average - (reducedMotion.passed ? 0 : 10)) * 10) / 10,
       pages,
       reducedMotion,
     };

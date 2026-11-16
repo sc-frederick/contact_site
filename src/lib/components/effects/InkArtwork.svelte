@@ -19,5 +19,5 @@
         opacity={0.3 + (i % 3) * 0.2}
       />{/each}
   </svg>
-  <ShaderSurface artwork={{ kind: 'field' }} />
+  <ShaderSurface scene="field" />
 </div>

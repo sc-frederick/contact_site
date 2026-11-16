@@ -1,117 +1,145 @@
-import { defineShader, transformColor, wgsl } from 'shaders/std';
+/**
+ * Fragment shaders for the printed artwork, written in GLSL ES 3.00.
+ *
+ * Every program receives the shared uniforms declared in `prelude`:
+ * `u_resolution` in device pixels, `u_time` in seconds, `u_pointer` in
+ * top-left UV space, `u_pointerStrength` easing from 0 to 1 while the pointer
+ * is near the artwork, and `u_pixel` as the device pixel ratio. Colors match
+ * the Mosaic Press tokens so the canvas lines up with the static SVG beneath.
+ */
 
-/** A flowing ink field that bends locally around the pointer. */
-export const InkField = defineShader({
-  name: 'FrederickInkField',
-  animatedTime: { speed: 'speed' },
-  props: {
-    speed: { default: 0.2 },
-    ink: { default: '#5b3fff', transform: transformColor },
-    paper: { default: '#86f46a', transform: transformColor },
-  },
-  paint: wgsl`
-    let delta = (uv - pointer) * vec2f(aspect, 1.0);
-    let influence = exp(-dot(delta, delta) * 8.0);
-    let p = uv * vec2f(aspect, 1.0) + delta * influence * 0.16;
-    let wave = sin(p.x * 4.0 + sin(p.y * 6.0 - time) * 1.5 + time * 0.4);
-    let bands = 0.5 + 0.5 * sin(wave * 2.0 + p.y * 5.0 - time);
-    let value = smoothstep(0.2, 0.85, bands);
-    return vec4f(mix(ink.rgb, paper.rgb, value), 1.0);
-  `,
-});
+/** The artwork recipes a shader surface can render. */
+export type PrintScene = 'field' | 'draft' | 'signal';
 
-/** A drafting sheet whose dots, major lines, and circles flex around the pointer. */
-export const DraftingGrid = defineShader({
-  name: 'FrederickDraftingGrid',
-  props: {
-    ink: { default: '#5b3fff', transform: transformColor },
-    paper: { default: '#fbf7ec', transform: transformColor },
-  },
-  paint: wgsl`
-    let delta = (uv - pointer) * vec2f(aspect, 1.0);
-    let influence = exp(-dot(delta, delta) * 12.0);
-    let p = uv * vec2f(aspect, 1.0) + delta * influence * 0.12;
-    let cells = p * 22.0;
-    let cell = fract(cells) - 0.5;
-    let dot = 1.0 - smoothstep(0.025, 0.055, length(cell));
-    let major = abs(fract(cells / 5.0 + 0.5) - 0.5);
-    let grid = 1.0 - smoothstep(0.002, 0.008, min(major.x, major.y));
-    let d = length((p - vec2f(aspect * 0.58, 0.5)));
-    let rings = 1.0 - smoothstep(0.0015, 0.004, abs(d - 0.29));
-    let cross = max(1.0 - smoothstep(0.001, 0.004, abs(p.y - 0.5)), 1.0 - smoothstep(0.001, 0.004, abs(p.x - aspect * 0.58)));
-    let strength = max(max(dot * 0.45, grid * 0.18), max(rings * 0.65, cross * 0.2));
-    return vec4f(mix(paper.rgb, ink.rgb, strength), 1.0);
-  `,
-});
+const prelude = /* glsl */ `#version 300 es
+precision highp float;
 
-/** Concentric signal rings follow the pointer through a field of printed ink. */
-export const SignalRings = defineShader({
-  name: 'FrederickSignalRings',
-  animatedTime: { speed: 'speed' },
-  props: {
-    speed: { default: 0.35 },
-    ink: { default: '#101010', transform: transformColor },
-    accent: { default: '#86f46a', transform: transformColor },
-  },
-  paint: wgsl`
-    let center = mix(vec2f(0.5, 0.7), clamp(pointer, vec2f(0.15), vec2f(0.85)), 0.35);
-    let d = length((uv - center) * vec2f(aspect, 1.0));
-    let ring = pow(0.5 + 0.5 * cos(d * 38.0 - time * 3.0), 12.0);
-    let fade = 1.0 - smoothstep(0.1, 0.95, d);
-    return vec4f(mix(ink.rgb, accent.rgb, ring * fade * 0.85), 1.0);
-  `,
-});
+uniform vec2 u_resolution;
+uniform float u_time;
+uniform vec2 u_pointer;
+uniform float u_pointerStrength;
+uniform float u_pixel;
 
-/** Six geometric project motifs share a print palette and react to pointer movement. */
-export const ProjectDrawing = defineShader({
-  name: 'FrederickProjectDrawing',
-  animatedTime: { speed: 'speed' },
-  props: {
-    speed: { default: 0.4 },
-    motif: { default: 0 },
-    seed: { default: 1 },
-    ink: { default: '#3a26c7', transform: transformColor },
-    paper: { default: '#f2ead8', transform: transformColor },
-    accent: { default: '#86f46a', transform: transformColor },
-  },
-  paint: wgsl`
-    let delta = (uv - pointer) * vec2f(aspect, 1.0);
-    let push = delta * exp(-dot(delta, delta) * 8.0) * 0.08;
-    let p = uv * vec2f(aspect, 1.0) + push;
-    var mark = 0.0;
-    if (motif < 0.5) {
-      let cells = p * 5.0;
-      let cell = fract(cells) - 0.5;
-      let node = 1.0 - smoothstep(0.055, 0.08, length(cell));
-      let connections = 1.0 - smoothstep(0.012, 0.026, min(abs(cell.x), abs(cell.y)));
-      let pulse = 0.55 + 0.45 * sin(floor(cells.x) + floor(cells.y) + time * 2.0);
-      mark = max(node, connections * pulse * 0.65);
-    } else if (motif < 1.5) {
-      let wave = p.y * 6.0 + sin(p.x * 3.0 - time) * 0.6;
-      mark = 1.0 - smoothstep(0.025, 0.06, abs(fract(wave) - 0.5));
-      let droplets = 1.0 - smoothstep(0.07, 0.13, length(fract(p * vec2f(4.0, 6.0) - vec2f(time * 0.2, 0.0)) - 0.5));
-      mark = max(mark * 0.7, droplets);
-    } else if (motif < 2.5) {
-      let cell = abs(fract(p * 8.0) - 0.5);
-      let sheet = 1.0 - smoothstep(0.007, 0.022, min(cell.x, cell.y));
-      let scan = exp(-pow(uv.y - fract(time * 0.25 + seed * 0.13), 2.0) * 250.0);
-      mark = max(sheet * 0.32, scan);
-    } else if (motif < 3.5) {
-      let cell = abs(fract(p * 8.0) - 0.5);
-      let grid = 1.0 - smoothstep(0.01, 0.025, min(cell.x, cell.y));
-      let diag = 1.0 - smoothstep(0.012, 0.025, abs(p.y - p.x * 0.25 + 0.1 * sin(time)));
-      let circle = 1.0 - smoothstep(0.008, 0.022, abs(length(p - vec2f(aspect * 0.65, 0.5)) - 0.32));
-      mark = max(grid * 0.32, max(circle, diag));
-    } else if (motif < 4.5) {
-      let d = length(p - vec2f(aspect * 0.5, 0.5));
-      mark = 1.0 - smoothstep(0.008, 0.02, abs(fract(d * 5.0 - time * 0.05) - 0.5));
-    } else {
-      let wave = sin(p.x * 10.0 + time * 2.0 + seed) * 0.18;
-      mark = 1.0 - smoothstep(0.009, 0.028, abs(uv.y - 0.5 - wave));
-      let columns = 1.0 - smoothstep(0.02, 0.05, abs(fract(p.x * 12.0) - 0.5));
-      mark = max(mark, columns * (1.0 - smoothstep(0.03, 0.25, abs(uv.y - 0.5))) * 0.45);
-    }
-    let color = mix(ink.rgb, accent.rgb, smoothstep(0.3, 0.9, uv.x));
-    return vec4f(mix(paper.rgb, color, mark), 1.0);
-  `,
-});
+out vec4 outColor;
+
+const vec3 VIOLET = vec3(0.357, 0.247, 1.0);
+const vec3 VIOLET_DEEP = vec3(0.227, 0.149, 0.78);
+const vec3 GREEN = vec3(0.525, 0.957, 0.416);
+const vec3 INK = vec3(0.063);
+const vec3 PAPER = vec3(0.984, 0.969, 0.925);
+
+// Ordered 4x4 Bayer threshold for a printed halftone look.
+float bayer4(vec2 cell) {
+  ivec2 i = ivec2(mod(cell, 4.0));
+  float m[16] = float[16](0., 8., 2., 10., 12., 4., 14., 6., 3., 11., 1., 9., 15., 7., 13., 5.);
+  return (m[i.x + i.y * 4] + 0.5) / 16.0;
+}
+
+// Anti-aliased mask for a line at distance zero with the given half-width.
+float line(float distance, float width) {
+  float w = max(fwidth(distance), 1e-5);
+  return 1.0 - smoothstep(width - w, width + w, abs(distance));
+}
+
+vec2 uvFromFrag() {
+  return vec2(gl_FragCoord.x / u_resolution.x, 1.0 - gl_FragCoord.y / u_resolution.y);
+}
+`;
+
+/**
+ * Violet paper with flowing green contour lines, like the static ink strip.
+ * Lines run left to right; the pointer lifts a soft swell that bends them.
+ */
+const field = /* glsl */ `${prelude}
+void main() {
+  vec2 uv = uvFromFrag();
+  float aspect = u_resolution.x / u_resolution.y;
+  vec2 p = uv * vec2(aspect, 1.0);
+  float t = u_time;
+  vec2 delta = (uv - u_pointer) * vec2(aspect, 1.0);
+  float swell = exp(-dot(delta, delta) * 10.0) * u_pointerStrength;
+
+  float h = p.y * 2.4
+    + 0.42 * sin(p.x * 1.7 + t * 0.32 + p.y * 1.1)
+    + 0.16 * sin(p.x * 3.9 - t * 0.21 + 1.7)
+    - swell * 0.55;
+
+  float bands = h * 3.2;
+  float contour = line(fract(bands + 0.5) - 0.5, 0.03);
+  float major = line(fract(bands / 4.0 + 0.5) - 0.5, 0.02);
+
+  // A slow dithered tone keeps the violet printed rather than flat.
+  vec2 cell = floor(gl_FragCoord.xy / (3.0 * u_pixel));
+  float tone = 0.5 + 0.5 * sin(h * 1.6 + t * 0.15);
+  vec3 paper = mix(VIOLET_DEEP, VIOLET, step(bayer4(cell), 0.55 + tone * 0.45));
+
+  vec3 color = mix(paper, mix(VIOLET, GREEN, 0.35), contour * 0.5);
+  color = mix(color, GREEN, major * 0.95);
+  outColor = vec4(color, 1.0);
+}
+`;
+
+/**
+ * A drafting sheet: dot grid, major lines, and a compass circle whose center
+ * leans toward the pointer while a dashed radius sweeps slowly.
+ */
+const draft = /* glsl */ `${prelude}
+void main() {
+  vec2 uv = uvFromFrag();
+  float aspect = u_resolution.x / u_resolution.y;
+  vec2 p = uv * vec2(aspect, 1.0);
+  vec2 delta = (uv - u_pointer) * vec2(aspect, 1.0);
+  float lens = exp(-dot(delta, delta) * 14.0) * u_pointerStrength;
+  vec2 q = p + delta * lens * 0.18;
+
+  vec2 cells = q * 15.0;
+  vec2 cell = fract(cells) - 0.5;
+  float dotMark = 1.0 - smoothstep(0.035, 0.07, length(cell));
+  vec2 major = (fract(cells / 5.0 + 0.5) - 0.5) / 3.0;
+  float grid = max(line(major.x, 0.0), line(major.y, 0.0));
+
+  vec2 home = vec2(aspect * 0.583, 0.5);
+  vec2 target = vec2(u_pointer.x * aspect, u_pointer.y);
+  vec2 center = mix(home, target, 0.22 * u_pointerStrength);
+  vec2 r = p - center;
+  float d = length(r);
+  float ring = line(d - 0.29, 0.002);
+  float inner = line(d - 0.09, 0.0015) * step(0.5, fract(atan(r.y, r.x) * 3.0));
+  float cross = max(line(r.y, 0.0), line(r.x, 0.0)) * (1.0 - smoothstep(0.32, 0.5, d));
+
+  float angle = u_time * 0.25;
+  vec2 dir = vec2(cos(angle), sin(angle));
+  float along = dot(r, dir);
+  float sweep = line(dot(r, vec2(-dir.y, dir.x)), 0.0)
+    * step(0.0, along) * step(along, 0.29)
+    * step(0.4, fract(along * 40.0));
+
+  float strength = max(max(dotMark * 0.4, grid * 0.18), max(ring * 0.7, max(cross * 0.35, max(inner * 0.5, sweep * 0.6))));
+  outColor = vec4(mix(PAPER, VIOLET, strength), 1.0);
+}
+`;
+
+/** Dithered green signal rings radiating through ink, nudged by the pointer. */
+const signal = /* glsl */ `${prelude}
+void main() {
+  vec2 uv = uvFromFrag();
+  float aspect = u_resolution.x / u_resolution.y;
+  vec2 origin = vec2(0.5, 0.71);
+  vec2 center = mix(origin, clamp(u_pointer, vec2(0.15), vec2(0.85)), 0.3 * u_pointerStrength);
+  float d = length((uv - center) * vec2(aspect, 1.0));
+  float ring = pow(0.5 + 0.5 * cos(d * 34.0 - u_time * 2.4), 10.0);
+  float fade = 1.0 - smoothstep(0.05, 0.95, d);
+  float glow = exp(-d * d * 30.0) * 0.35;
+
+  vec2 cell = floor(gl_FragCoord.xy / (2.0 * u_pixel));
+  float value = ring * fade * 0.9 + glow;
+  outColor = vec4(mix(INK, GREEN, step(bayer4(cell), value)), 1.0);
+}
+`;
+
+/** Fragment shader source keyed by artwork kind. */
+export const printPrograms: Readonly<Record<PrintScene, string>> = {
+  field,
+  draft,
+  signal,
+};

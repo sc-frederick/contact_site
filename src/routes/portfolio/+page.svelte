@@ -6,6 +6,19 @@
   let { data }: PageProps = $props();
 </script>
 
+<svelte:head>
+  <title>Developer portfolio · Stephen Frederick</title>
+  <meta
+    name="description"
+    content="Engineering software, internal tools, and experiments by Stephen Frederick: Surfside Software, Second Set, tsdraft, and more."
+  />
+  <meta property="og:title" content="Developer portfolio · Stephen Frederick" />
+  <meta
+    property="og:description"
+    content="Engineering software, internal tools, and experiments by Stephen Frederick: Surfside Software, Second Set, tsdraft, and more."
+  />
+</svelte:head>
+
 <div class="min-h-screen">
   <div class="mp-shell">
     <header class="mp-card mp-card--ink mp-on-ink portfolio-header mb-8">

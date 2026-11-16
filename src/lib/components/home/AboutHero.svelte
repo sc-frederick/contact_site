@@ -19,20 +19,20 @@
           <h1 class="home-hero-name mp-display mp-display--xl mp-on-ink">
             Stephen <span class="mp-italic">Frederick</span>
           </h1>
-        </div>
-        <div class="home-hero-copy mp-stack">
-          <p class="mp-body mp-body--lg">
-            At
-            <strong class="mp-on-ink font-medium">
-              Advanced Engineering Consultants
-            </strong>, I design MEP systems and manage the company&apos;s IT. I
-            also build internal software that reduces repetitive drawing and
-            project delivery work.
-          </p>
-          <p class="mp-body">
-            Outside work, I build engineering software for people and AI agents
-            at Surfside Software.
-          </p>
+          <div class="home-hero-copy mp-stack mt-8">
+            <p class="mp-body mp-body--lg">
+              At
+              <strong class="mp-on-ink font-medium">
+                Advanced Engineering Consultants
+              </strong>, I design MEP systems and manage the company&apos;s IT.
+              I also build internal software that reduces repetitive drawing and
+              project delivery work.
+            </p>
+            <p class="mp-body">
+              Outside work, I build engineering software for people and AI
+              agents at Surfside Software.
+            </p>
+          </div>
         </div>
 
         <div class="mp-row mt-8">
