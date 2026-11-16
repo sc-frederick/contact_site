@@ -12,6 +12,11 @@
     return Boolean(dateStr && /^\d{4}$/.test(dateStr));
   }
 
+  /** A role at the same employer as the role above it skips the company line. */
+  function sameCompanyAsPrevious(index: number): boolean {
+    return index > 0 && items[index - 1]?.company === items[index]?.company;
+  }
+
   function formatDate(dateStr: string | null): string {
     if (!dateStr) return 'Present';
 
@@ -121,19 +126,19 @@
 
 <div {@attach track} class="timeline" data-motion={motion.motionAllowed}>
   <div class="timeline-tracker" aria-hidden="true"></div>
-  {#each items as item (item.id)}
+  {#each items as item, index (item.id)}
     <div
       class="timeline-entry grid grid-cols-1 md:grid-cols-[auto_1rem_1fr] md:gap-x-4"
     >
       <div class="hidden md:flex flex-col items-end text-right pt-1">
         <div class="mp-meta whitespace-nowrap tabular-nums">
-          {formatDate(item.startDate)}
+          {formatDate(item.startDate)} —
         </div>
         <div class="mp-meta whitespace-nowrap tabular-nums">
           {formatDate(item.endDate)}
         </div>
         {#if getDuration(item.startDate, item.endDate)}
-          <div class="mp-meta mt-1 whitespace-nowrap text-accent tabular-nums">
+          <div class="mp-meta mt-1 whitespace-nowrap tabular-nums">
             {getDuration(item.startDate, item.endDate)}
           </div>
         {/if}
@@ -153,7 +158,7 @@
           <span class="mp-meta tabular-nums">
             {formatDate(item.startDate)} — {formatDate(item.endDate)}
           </span>{#if getDuration(item.startDate, item.endDate)}
-            <span class="mp-meta ml-2 text-accent tabular-nums">
+            <span class="mp-meta ml-2 tabular-nums">
               ({getDuration(item.startDate, item.endDate)})
             </span>
           {/if}
@@ -162,29 +167,63 @@
         <h3 class="mp-title mb-1">
           {item.title}
         </h3>
-        <div class={cn('mp-body text-accent', item.location ? 'mb-1' : 'mb-3')}>
-          {item.company}
-        </div>
-        {#if item.location}
-          <div class="mp-meta mb-3">{item.location}</div>
+        {#if sameCompanyAsPrevious(index)}
+          <div class="mb-3"></div>
+        {:else}
+          <div
+            class={cn(
+              'mp-body font-medium text-text-primary',
+              item.location ? 'mb-1' : 'mb-3',
+            )}
+          >
+            {item.company}
+          </div>
+          {#if item.location}
+            <div class="mp-meta mb-3">{item.location}</div>
+          {/if}
         {/if}
 
-        <ul class="experience-list">
-          {#each item.description as desc (desc)}
-            <li class="mp-body">
-              {desc}
-            </li>
-          {/each}
-        </ul>
+        {#if item.description.length > 0}
+          <ul class="experience-list">
+            {#each item.description as desc (desc)}
+              <li class="mp-body">
+                {desc}
+              </li>
+            {/each}
+          </ul>
+        {/if}
+
+        {#if item.projects && item.projects.length > 0}
+          {#if item.projectsHeading}
+            <p class="mp-title mp-title--md role-projects__heading">
+              {item.projectsHeading}
+            </p>
+          {/if}
+          <dl class="role-projects">
+            {#each item.projects as project (project.name)}
+              <div>
+                <dt class="role-projects__name">{project.name}</dt>
+                <dd>
+                  <p class="mp-body">{project.detail}</p>
+                  {#if project.stack.length > 0}
+                    <ul class="mp-meta stack-line" aria-label="Built with">
+                      {#each project.stack as tech (tech)}
+                        <li>{tech}</li>
+                      {/each}
+                    </ul>
+                  {/if}
+                </dd>
+              </div>
+            {/each}
+          </dl>
+        {/if}
 
         {#if item.technologies && item.technologies.length > 0}
-          <div class="flex flex-wrap gap-2">
+          <ul class="mp-meta stack-line" aria-label="Tools">
             {#each item.technologies as tech (tech)}
-              <span class="mp-chip">
-                {tech}
-              </span>
+              <li>{tech}</li>
             {/each}
-          </div>
+          </ul>
         {/if}
       </div>
     </div>

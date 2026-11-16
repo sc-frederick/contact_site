@@ -25,19 +25,23 @@
     "cf:dry-run": "pnpm infra:plan",
     "cf:dev": "cf dev",
     "cf:types": "cf workers types",
-    "cf:deploy": "pnpm deploy"
+    "cf:deploy": "pnpm deploy",
+    "ux:audit": "node tools/ux-audit.ts",
+    "ux:mobile": "docker run --rm --network host --user \"$(id -u):$(id -g)\" -e HOME=/tmp -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.65.1-noble node tools/ux-mobile.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fontsource-variable/inter-tight": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
     "clsx": "^2.1.1",
     "effect": "4.0.1",
     "lucide-svelte": "0.460.0",
-    "shaders": "^4.0.0",
     "tailwind-merge": "^2.6.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@cloudflare/config": "0.23.0",
     "@effect/platform-node": "4.0.1",
     "@oxlint/plugins": "1.87.0",
@@ -49,6 +53,7 @@
     "alchemy": "2.0.0-beta.81",
     "cf": "1.0.0-beta.12",
     "oxlint": "1.87.0",
+    "playwright": "^1.65.1",
     "prettier": "3.9.9",
     "prettier-plugin-svelte": "4.1.1",
     "svelte": "5.57.2",

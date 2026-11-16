@@ -9,13 +9,14 @@ export interface ContactInfo {
   websites: { label: string; url: string }[];
   github: string;
   linkedin: string;
+  x: string;
   services: string[];
 }
 
 /** Existing public profile and contact content. */
 export const contactData: ContactInfo = {
   name: 'Stephen Frederick',
-  title: 'Staff Engineer',
+  title: 'MEP Designer and Software Developer',
   company: 'Advanced Engineering Consultants',
   location: 'Brooksville, FL',
   emails: [{ label: 'Contact', address: 'contact@sfrederick.dev' }],
@@ -26,6 +27,7 @@ export const contactData: ContactInfo = {
   ],
   github: 'https://github.com/sc-frederick',
   linkedin: 'https://www.linkedin.com/in/stephencfrederick/',
+  x: 'https://x.com/scfred',
   services: [
     'Civil Engineering',
     'Structural Engineering',

@@ -214,7 +214,7 @@ Two families share the workload:
 
 **Scale.** Display sizes 56–72 px set hero moments. Headline sizes 32–40 px lead cards and sections. Title sizes 20–24 px act as card titles or large list entries. Body sizes 13–16 px cover paragraphs, descriptions, and captions. The `label-sm` token sets 12 px uppercase tracked text for eyebrow labels and tag rows.
 
-**Treatment.** Pair serif headlines with a sans eyebrow above and sans body below for editorial rhythm. Use the italic of Instrument Serif sparingly for emphasis inside a single headline. Body copy uses 1.5 line height; large display blocks compress to 1.0–1.2.
+**Treatment.** Use an eyebrow only when it carries information the headline doesn't, such as a status, date, location, or owner. Never use one to restate the headline or name the page. Use the italic of Instrument Serif sparingly for emphasis inside a single headline. Body copy uses 1.5 line height; large display blocks compress to 1.0–1.2.
 
 ## Layout
 
@@ -315,17 +315,18 @@ The signature element is the **Feature Tile** - an oversized editorial tile that
 
 ### Icons
 
-The system uses **Lucide** (ISC license, https://lucide.dev/) as its single icon library. Lucide's clean outline weight matches the editorial mood without competing with the serif display type. Icons inherit `currentColor` and use the `.mp-icon` class to set an 18 × 18 px footprint inside chips, buttons, and inputs. Do not mix in icons from other libraries.
+The system uses **Lucide** (ISC license, https://lucide.dev/) as its single icon library. Lucide's clean outline weight matches the editorial mood without competing with the serif display type. Icons inherit `currentColor` and use the `.mp-icon` class to set an 18 × 18 px footprint inside chips, buttons, and inputs. Do not mix in icons from other libraries. The one exception is the X logo (`src/lib/components/icons/XLogo.svelte`), because Lucide has only the retired Twitter bird.
 
 ### Motion and printed artwork
 
 Motion follows the print materials: dithered portrait ink, violet and green
 contours, project diagrams, a drafting grid, and contact signal rings. Keep
 artwork in dedicated regions so text, links, and form fields remain easy to use.
-Project diagrams animate on hover or keyboard focus; the timeline marks the
-experience currently being read. Cursor pixels stay in the page margins.
+Project cards stay typographic: a status label, a serif title, a short
+summary, and the leading technologies. The timeline marks the experience
+currently being read. Cursor pixels stay in the page margins.
 
-Render static artwork first. WebGPU adds motion when available, with canvases
+Render static artwork first. WebGL2 adds motion when available, with canvases
 active only while visible. Honor reduced motion and the footer's Pause motion
 control. Touch devices keep the artwork without cursor interactions. The
 contact ripple follows a confirmed successful submission and plays once.
@@ -334,7 +335,7 @@ contact ripple follows a confirmed successful submission and plays once.
 
 **Do**
 - Lead with cream paper as the page background and let ink and accent tiles punctuate the layout.
-- Pair a serif headline with a small uppercase eyebrow above and sans body below.
+- Let a serif headline stand on its own; add an eyebrow only for real data (status, date, owner), never as decoration.
 - Use the diagonal violet-to-green gradient on at most one feature tile per surface so it stays signature, not decorative noise.
 - Keep card padding at 32 px and rely on white space and grid composition for hierarchy.
 - Use Lumen Green only inside the gradient or sparingly as a chip - it is a punctuation color, not a surface.

@@ -6,6 +6,8 @@
 :root {
   /* Colors -------------------------------------------------- */
   --color-paper: #f2ead8;
+  /* Shared horizontal inset for nav, page content, and footer. */
+  --shell-inline: var(--space-xl);
   --color-cloud: #fbf7ec;
   --color-stone: #e2d9c2;
   --color-ink: #101010;
@@ -43,7 +45,9 @@
   /* Typography ---------------------------------------------- */
   --font-display:
     'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
-  --font-ui: 'Inter Tight', 'Inter', 'Helvetica Neue', system-ui, sans-serif;
+  --font-ui:
+    'Inter Tight Variable', 'Inter Tight', 'Inter', 'Helvetica Neue', system-ui,
+    sans-serif;
 
   --font-size-display-xl: 72px;
   --font-size-display-lg: 56px;
@@ -199,6 +203,9 @@ a {
 .mp-title {
   font-size: var(--font-size-title-lg);
   line-height: var(--leading-snug);
+  /* Instrument Serif is already condensed; tight tracking below 32px
+     collapses word spaces. */
+  letter-spacing: 0;
 }
 
 .mp-title--md {
@@ -227,6 +234,7 @@ a {
 }
 
 .mp-eyebrow {
+  text-wrap: balance;
   font-family: var(--font-ui);
   font-size: var(--font-size-label-sm);
   font-weight: 500;
@@ -280,11 +288,16 @@ a {
    Layout primitives
    ============================================================ */
 
-.mp-shell {
+.mp-shell,
+.site-shell {
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
-  padding: var(--space-2xl) var(--space-xl);
+  padding: var(--space-2xl) var(--shell-inline);
+}
+
+.site-shell {
+  padding-block: 0;
 }
 
 .mp-stack {
@@ -465,7 +478,8 @@ a {
 .mp-select {
   width: 100%;
   font-family: var(--font-ui);
-  font-size: var(--font-size-body-md);
+  /* 16px or larger keeps iOS Safari from zooming the page on focus. */
+  font-size: var(--font-size-body-lg);
   color: var(--text-primary);
   background: var(--color-cloud);
   border: 1px solid var(--color-stone);
@@ -547,7 +561,8 @@ a {
     box-shadow var(--duration-base) var(--ease-standard);
 }
 
-.mp-card:hover {
+/* Only cards that respond to a click lift on hover; static tiles stay put. */
+.mp-card--interactive:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-soft);
 }
@@ -812,13 +827,13 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 4px 10px;
   border-radius: var(--radius-pill);
   font-family: var(--font-ui);
-  font-size: var(--font-size-label-sm);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: var(--font-size-body-sm);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0;
   background: var(--color-paper);
   border: var(--border-hairline);
   color: var(--text-primary);
@@ -896,8 +911,11 @@ a {
    ============================================================ */
 
 @media (max-width: 960px) {
+  :root {
+    --shell-inline: var(--space-lg);
+  }
   .mp-shell {
-    padding: var(--space-xl) var(--space-lg);
+    padding-block: var(--space-xl);
   }
   .mp-span-3,
   .mp-span-4,

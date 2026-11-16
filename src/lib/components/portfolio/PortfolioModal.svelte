@@ -3,109 +3,90 @@
   import Github from 'lucide-svelte/icons/github';
   import X from 'lucide-svelte/icons/x';
   import type { PortfolioItem } from '#lib/types.ts';
+  import { projectLinkLabel } from './project-links.ts';
 
   let { item, onClose }: { item: PortfolioItem; onClose: () => void } =
     $props();
 
-  let dialog: HTMLDivElement;
+  let dialog: HTMLDialogElement | undefined;
 
-  function keydown(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      onClose();
+  const titleId = $props.id();
 
-      return;
-    }
-
-    if (event.key !== 'Tab') return;
-
-    const focusable = dialog.querySelectorAll<HTMLElement>(
-      'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-    );
-
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-
-    if (!first || !last) return;
-
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  }
-
-  function trap(element: HTMLDivElement) {
+  // The native modal dialog traps focus, makes the page inert, closes on
+  // Escape, and returns focus to the card's button when it closes.
+  function open(element: HTMLDialogElement) {
     dialog = element;
-    const previousFocus = document.activeElement;
-    element.querySelector<HTMLButtonElement>('[data-close-button]')?.focus();
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    element.showModal();
+    element.addEventListener('close', onClose);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-
-      if (previousFocus instanceof HTMLElement) previousFocus.focus();
+      element.removeEventListener('close', onClose);
+      dialog = undefined;
     };
   }
 </script>
 
-<div
-  class="fixed inset-0 z-50 flex items-center justify-center bg-[#101010]/70 p-4"
-  role="presentation"
+<dialog
+  {@attach open}
+  aria-labelledby={titleId}
+  class="project-dialog mp-card"
   onclick={(event) => {
-    if (event.target === event.currentTarget) onClose();
+    // Clicks on the backdrop target the dialog element itself.
+    if (event.target === event.currentTarget) dialog?.close();
   }}
-  onkeydown={keydown}
 >
-  <div
-    {@attach trap}
-    tabindex="-1"
-    role="dialog"
-    aria-modal="true"
-    aria-label={`${item.title} project details`}
-    class="mp-card max-h-[90vh] w-full max-w-3xl overflow-y-auto"
-  >
-    <div class="flex items-start justify-between gap-4 mb-6">
-      <h2 class="mp-headline">{item.title}</h2>
-      <button
-        data-close-button
-        type="button"
-        onclick={onClose}
-        class="mp-btn mp-btn--secondary mp-btn--icon"
-        aria-label="Close project details"
-      >
-        <X class="mp-icon" />
-      </button>
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <p class="project-status mb-2" data-status={item.status}>
+        {item.status}
+      </p>
+      <h2 id={titleId} class="mp-headline">{item.title}</h2>
     </div>
+    <button
+      type="button"
+      onclick={() => dialog?.close()}
+      class="mp-btn mp-btn--secondary mp-btn--icon"
+      aria-label="Close project details"
+    >
+      <X class="mp-icon" aria-hidden="true" />
+    </button>
+  </div>
 
-    <p class="mp-body mb-6">
-      {item.description}
-    </p>
+  {#if item.image}
+    <img
+      class="project-dialog__media"
+      src={item.image.src}
+      width={item.image.width}
+      height={item.image.height}
+      alt={item.image.alt}
+      decoding="async"
+    />
+  {/if}
 
-    <div class="mb-8">
-      <h3 class="mp-title mb-3">Tech Stack</h3>
-      <div class="flex flex-wrap gap-2">
-        {#each item.technologies as tech (tech)}
-          <span class="mp-chip">
-            {tech}
-          </span>
-        {/each}
-      </div>
-    </div>
+  <p class="mp-body mp-body--lg">
+    {item.description}
+  </p>
 
+  <div>
+    <ul class="project-tech" aria-label="Built with">
+      {#each item.technologies as tech (tech)}
+        <li class="mp-chip">{tech}</li>
+      {/each}
+    </ul>
+  </div>
+
+  {#if item.project_url || item.github_url}
     <div class="mp-card__footer border-t border-border pt-4">
       {#if item.project_url}
         <a
           href={item.project_url}
           target="_blank"
           rel="noopener noreferrer"
-          class="mp-btn mp-btn--secondary mp-btn--sm"
+          class="mp-btn mp-btn--sm"
         >
-          <ExternalLink class="mp-icon mp-icon--sm" />
-          <span>Live Demo</span>
+          <ExternalLink class="mp-icon mp-icon--sm" aria-hidden="true" />
+          <span>{projectLinkLabel(item.project_url)}</span>
+          <span class="sr-only">(opens in a new tab)</span>
         </a>
       {/if}
       {#if item.github_url}
@@ -115,10 +96,13 @@
           rel="noopener noreferrer"
           class="mp-btn mp-btn--secondary mp-btn--sm"
         >
-          <Github class="mp-icon mp-icon--sm" />
+          <Github class="mp-icon mp-icon--sm" aria-hidden="true" />
           <span>Source</span>
+          <span class="sr-only">(opens in a new tab)</span>
         </a>
       {/if}
     </div>
-  </div>
-</div>
+  {:else}
+    <p class="mp-meta border-t border-border pt-4">Private repository.</p>
+  {/if}
+</dialog>

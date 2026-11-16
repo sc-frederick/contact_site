@@ -2,24 +2,44 @@
   import { resumeData } from '#lib/resume-data.ts';
   import Timeline from '#lib/components/resume/Timeline.svelte';
   import SkillsSection from '#lib/components/resume/SkillsSection.svelte';
-  import DraftArtwork from '#lib/components/effects/DraftArtwork.svelte';
+  import Download from 'lucide-svelte/icons/download';
 </script>
 
+<svelte:head>
+  <title>Resume · Stephen Frederick</title>
+  <meta
+    name="description"
+    content="Experience, education, and skills of Stephen Frederick, MEP designer and software developer in Florida."
+  />
+  <meta property="og:title" content="Resume · Stephen Frederick" />
+  <meta
+    property="og:description"
+    content="Experience, education, and skills of Stephen Frederick, MEP designer and software developer in Florida."
+  />
+</svelte:head>
+
 <div class="min-h-screen">
-  <div class="mp-shell max-w-5xl">
+  <div class="mp-shell resume-page">
     <header class="mp-card resume-header mb-12">
       <div class="resume-identity">
         <div>
-          <p class="mp-eyebrow">Profile</p>
           <h1 class="mp-display">
             Stephen <span class="mp-italic">Frederick</span>
           </h1>
           <p class="mp-body mp-body--lg">{resumeData.title}</p>
+          <p class="mp-meta mt-2">{resumeData.availability}</p>
+          <a
+            href="/Stephen_Frederick_Resume.pdf"
+            download
+            class="mp-btn mp-btn--sm mt-5"
+          >
+            <Download class="mp-icon mp-icon--sm" aria-hidden="true" />
+            Download PDF
+          </a>
         </div>
-        <DraftArtwork />
       </div>
       <hr class="mp-divider" />
-      <h2 class="mp-title">Professional Summary</h2>
+      <h2 class="sr-only">Summary</h2>
       <p class="mp-body mp-body--lg max-w-3xl">
         {resumeData.summary}
       </p>
@@ -49,7 +69,7 @@
                 <h3 class="mp-title mb-1">
                   {edu.institution}
                 </h3>
-                <div class="mp-body text-accent">
+                <div class="mp-body font-medium text-text-primary">
                   {edu.degree} in {edu.field}
                 </div>
                 <div class="mp-meta">

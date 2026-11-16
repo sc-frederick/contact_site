@@ -1,5 +1,5 @@
 import { Effect } from 'effect';
-import { portfolioItems } from './portfolio-data';
+import { portfolioItems } from '#lib/portfolio-data.ts';
 
 /** Load the same repository-backed portfolio list used by the previous UI. */
 export const getPortfolioItems = Effect.fn('getPortfolioItems')(() =>

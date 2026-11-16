@@ -1,18 +1,36 @@
+/** Where a project stands, shown as a label on its card. */
+export type ProjectStatus = 'Live' | 'In development' | 'Internal';
+
+/** Who the project was built for; the portfolio groups projects by owner. */
+export type ProjectOwner =
+  'Surfside Software' | 'Advanced Engineering Consultants' | 'Other';
+
+/** A real screenshot or drawing of a project, at two widths. */
+export interface ProjectImage {
+  readonly src: string;
+  readonly srcSmall: string;
+  readonly width: number;
+  readonly height: number;
+  readonly alt: string;
+}
+
 /** A repository-backed project displayed on the portfolio page. */
 export interface PortfolioItem {
-  id: number;
-  title: string;
-  description: string;
-  image_url: string | null;
-  project_url: string | null;
-  github_url: string | null;
-  technologies: string[];
-  featured: boolean;
+  readonly id: number;
+  readonly title: string;
+  /** One complete sentence for the card, about 120 characters at most. */
+  readonly summary: string;
+  /** The full description shown in the project dialog. */
+  readonly description: string;
+  readonly status: ProjectStatus;
+  readonly image?: ProjectImage;
+  readonly owner: ProjectOwner;
+  readonly project_url: string | null;
+  readonly github_url: string | null;
+  readonly technologies: readonly string[];
   /** Renders the card as an ink tile so it reads as the lead project. */
-  highlighted?: boolean;
-  display_order: number;
-  created_at: string;
-  updated_at: string;
+  readonly highlighted?: boolean;
+  readonly display_order: number;
 }
 
 /** Validated contact fields passed to storage and mail delivery. */

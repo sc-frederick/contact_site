@@ -14,7 +14,7 @@ and server workflows; Alchemy manages production infrastructure.
 | `/contact` | Direct contact details and the contact form |
 
 The site retains the previous design, responsive layouts, text, icons, motion
-controls, SVG artwork, and progressive WebGPU effects. It also has a custom 404.
+controls, SVG artwork, and progressive WebGL2 effects. It also has a custom 404.
 There are no blog or admin routes.
 
 ## Stack
@@ -22,7 +22,7 @@ There are no blog or admin routes.
 - SvelteKit **3.0.1**, Svelte **5.57.2**, TypeScript **6**
 - Effect **4.0.1**
 - Alchemy **2.0.0-beta.81** (the Effect 4 implementation)
-- Vite 8, Tailwind CSS 4, Shaders 4
+- Vite 8, Tailwind CSS 4, self-hosted Fontsource fonts
 - Cloudflare Workers, D1, native Rate Limiting, Turnstile, and Email Sending
 - Cloudflare CLI `cf` **1.0.0-beta.12**
 - Oxlint with the vendored anti-slop and Effect rules
@@ -72,8 +72,10 @@ site does not call it. Metadata remains bounded, and IP/user agent columns remai
 empty.
 
 `src/hooks.server.ts` preserves the HTTPS redirect and response security headers.
-Effects live in `src/lib/components/effects/` and `src/css/effects.css`. GPU code
-loads near the viewport and static SVG artwork remains available without WebGPU.
+Effects live in `src/lib/components/effects/` and `src/css/effects.css`. A small
+WebGL2 renderer (`print-renderer.ts`) draws the GLSL scenes in `print-shaders.ts`
+over static SVG artwork. It starts near the viewport, runs only while visible, and
+leaves the SVG in place when WebGL2 is unavailable.
 Reduced motion, page visibility, and the footer's motion control govern animation.
 Pointer effects require a hover-capable fine pointer. Printing shows the original
 portrait.
@@ -89,10 +91,36 @@ portrait.
 | `pnpm format` / `pnpm format:check` | Format / check application and infrastructure code |
 | `pnpm typecheck` | Generate bindings, check Svelte, and typecheck the Alchemy stack |
 | `pnpm test` | Vitest validation and contact workflow tests |
+| `pnpm ux:mobile` | With the build served on port 4320, run iPhone SE, iPhone 15 Pro, and landscape checks in WebKit through Docker |
+| `pnpm ux:audit` | After `pnpm build`, serve the worker locally and score every route at desktop and mobile sizes (see below) |
 | `pnpm cf-typegen` | `cf workers types`, generated in `.cloudflare/types/` |
 | `pnpm db:setup` / `pnpm db:seed` | Apply local migrations / optional seed through `cf` |
 | `pnpm infra:plan` | Build, then plan adoption of existing production resources |
 | `pnpm deploy` | Build, then deploy through Alchemy with resource adoption |
+
+## UX audit
+
+`pnpm ux:audit` is a hillclimbing check for UI changes. It serves the current
+build with `wrangler dev` and `.dev.vars`, opens each route in Chromium at
+1440×900 and at 390×844 with 4× CPU slowdown, and records:
+
+- full-page screenshots
+- axe WCAG 2.2 AA violations and controls smaller than 24×24 px
+- LCP, CLS, total blocking time, and transfer weight by type
+- console errors, failed requests, and horizontal overflow
+- shader status, and whether reduced motion disables all animation
+
+Each page scores 0–100: performance 50%, accessibility 30%, correctness 20%.
+Results go to `.ux-audit/<label>/` (ignored by git) with a comparison against
+`.ux-audit/baseline.json`.
+
+```sh
+pnpm build
+pnpm ux:audit --label before --save-baseline
+# change something, rebuild
+pnpm build && pnpm ux:audit --label after
+pnpm ux:audit --url https://sfrederick.dev --label production
+```
 
 ## Infrastructure and deployment
 

@@ -25,6 +25,6 @@
         />{/each}</g
     >
   </svg>
-  <ShaderSurface artwork={{ kind: 'signal' }} />
+  <ShaderSurface scene="signal" />
   <span class="signal-outgoing"></span>
 </div>

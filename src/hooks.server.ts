@@ -1,11 +1,11 @@
 import type { Handle } from '@sveltejs/kit/hooks';
 
-const contentSecurityPolicy = [
+const contentSecurityPolicyDirectives = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
   "script-src-attr 'none'",
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "font-src 'self' https://fonts.gstatic.com",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self'",
   "img-src 'self' data:",
   'frame-src https://challenges.cloudflare.com',
   "connect-src 'self' https://challenges.cloudflare.com",
@@ -13,8 +13,17 @@ const contentSecurityPolicy = [
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
+];
+
+/** Production upgrades subresources to HTTPS; local HTTP servers can't. */
+const contentSecurityPolicy = [
+  ...contentSecurityPolicyDirectives,
   'upgrade-insecure-requests',
 ].join('; ');
+
+// WebKit applies upgrade-insecure-requests to localhost too, which breaks
+// local testing in Safari over plain HTTP.
+const localContentSecurityPolicy = contentSecurityPolicyDirectives.join('; ');
 
 /** Preserve the previous HTTPS redirect and response security headers. */
 export const handle: Handle = async ({ event, resolve }) => {
@@ -34,7 +43,10 @@ export const handle: Handle = async ({ event, resolve }) => {
     'Strict-Transport-Security',
     'max-age=31536000; includeSubDomains',
   );
-  response.headers.set('Content-Security-Policy', contentSecurityPolicy);
+  response.headers.set(
+    'Content-Security-Policy',
+    local ? localContentSecurityPolicy : contentSecurityPolicy,
+  );
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');

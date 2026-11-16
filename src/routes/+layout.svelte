@@ -1,6 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { LayoutProps } from './$types';
+  import '@fontsource/instrument-serif/latin-400.css';
+  import '@fontsource/instrument-serif/latin-400-italic.css';
+  import '@fontsource-variable/inter-tight/wght.css';
+  // Preloading the faces used above the fold keeps the font swap from
+  // shifting the hero layout.
+  import serifItalicUrl from '@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2?url';
+  import serifUrl from '@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url';
+  import uiFontUrl from '@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url';
   import '../styles.css';
   import Navbar from '#lib/components/layout/Navbar.svelte';
   import Footer from '#lib/components/layout/Footer.svelte';
@@ -47,7 +55,20 @@
   });
 </script>
 
-<svelte:head><title>Stephen Frederick</title></svelte:head>
+<svelte:head>
+  {#each [serifUrl, serifItalicUrl, uiFontUrl] as href (href)}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      {href}
+    />
+  {/each}
+  <meta name="theme-color" content="#f2ead8" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Stephen Frederick" />
+</svelte:head>
 <PixelTrail />
 <Navbar />
 <main class="flex min-h-0 flex-1 flex-col pt-[73px]">{@render children()}</main>

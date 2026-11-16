@@ -1,14 +1,14 @@
 <script lang="ts">
   import Github from 'lucide-svelte/icons/github';
   import Linkedin from 'lucide-svelte/icons/linkedin';
-  import Mail from 'lucide-svelte/icons/mail';
+  import XLogo from '../icons/XLogo.svelte';
   import { contactData } from '#lib/contact-data.ts';
   import MotionControl from '../effects/MotionControl.svelte';
 </script>
 
-<footer class="border-t border-border bg-bg-surface px-6 py-8">
+<footer class="border-t border-border bg-bg-surface py-8">
   <div
-    class="mx-auto grid max-w-[1240px] items-center gap-6 text-center md:grid-cols-3 md:text-left"
+    class="site-shell grid items-center gap-6 text-center md:grid-cols-3 md:text-left"
   >
     <div class="flex flex-col items-center gap-2 md:items-start">
       <p class="mp-meta">
@@ -18,10 +18,11 @@
       <MotionControl />
     </div>
 
-    <a href="/contact" class="mp-btn mp-btn--accent justify-self-center">
-      <Mail class="mp-icon" />
-      Get in touch
-    </a>
+    <a
+      href={`mailto:${contactData.emails[0].address}`}
+      class="mp-meta footer-email justify-self-center hover:text-accent"
+      >{contactData.emails[0].address}</a
+    >
 
     <div class="flex items-center justify-center gap-4 md:justify-self-end">
       <a
@@ -43,10 +44,19 @@
         <Linkedin class="mp-icon" />
       </a>
       <a
+        href={contactData.x}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mp-btn mp-btn--ghost mp-btn--icon"
+        aria-label="X"
+      >
+        <XLogo class="mp-icon" />
+      </a>
+      <a
         href="https://www.google.com/maps/search/?api=1&query=Brooksville%2C+FL"
         target="_blank"
         rel="noopener noreferrer"
-        class="mp-meta hover:text-accent"
+        class="mp-meta footer-location hover:text-accent"
       >
         Brooksville, FL
       </a>

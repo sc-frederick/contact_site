@@ -6,18 +6,29 @@
   let { data }: PageProps = $props();
 </script>
 
+<svelte:head>
+  <title>Projects · Stephen Frederick</title>
+  <meta
+    name="description"
+    content="Engineering software, internal tools, and experiments by Stephen Frederick: Surfside Software, Second Set, tsdraft, and more."
+  />
+  <meta property="og:title" content="Projects · Stephen Frederick" />
+  <meta
+    property="og:description"
+    content="Engineering software, internal tools, and experiments by Stephen Frederick: Surfside Software, Second Set, tsdraft, and more."
+  />
+</svelte:head>
+
 <div class="min-h-screen">
   <div class="mp-shell">
-    <header class="mp-card mp-card--ink mp-on-ink portfolio-header mb-8">
-      <div>
-        <p class="mp-eyebrow">Selected work</p>
-        <h1 class="mp-display mp-on-ink">
-          Developer <span class="mp-italic">portfolio.</span>
-        </h1>
+    <header class="mp-card mp-card--ink mp-on-ink portfolio-header mb-10">
+      <div class="portfolio-header__intro">
+        <h1 class="mp-display mp-on-ink mb-4">Projects</h1>
+        <p class="mp-body mp-body--lg max-w-[48ch]">
+          Engineering software and internal tools for MEP design, drawing
+          review, and permits.
+        </p>
       </div>
-      <p class="mp-body max-w-md">
-        Software, internal tools, and experiments that solve workflow problems.
-      </p>
       <InkArtwork class="portfolio-ink-strip" />
     </header>
     <PortfolioGrid items={data.items} />
