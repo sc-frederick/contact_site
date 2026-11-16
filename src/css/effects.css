@@ -313,8 +313,8 @@ body:has(.project-dialog[open]) {
 .contact-socials {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-xs) var(--space-lg);
-  margin: 0;
+  gap: var(--space-sm);
+  margin: var(--space-2xs) 0 0;
   padding: 0;
   list-style: none;
 }

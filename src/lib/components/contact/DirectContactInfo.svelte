@@ -3,6 +3,9 @@
   import Phone from 'lucide-svelte/icons/phone';
   import MapPin from 'lucide-svelte/icons/map-pin';
   import AtSign from 'lucide-svelte/icons/at-sign';
+  import Github from 'lucide-svelte/icons/github';
+  import Linkedin from 'lucide-svelte/icons/linkedin';
+  import XLogo from '../icons/XLogo.svelte';
   import { contactData } from '#lib/contact-data.ts';
   import SignalArtwork from '../effects/SignalArtwork.svelte';
 
@@ -72,17 +75,42 @@
       <div class="flex-1">
         <p class="mp-eyebrow mb-1">Elsewhere</p>
         <ul class="contact-socials">
-          {#each [{ label: 'GitHub', href: contactData.github }, { label: 'LinkedIn', href: contactData.linkedin }, { label: 'X', href: contactData.x }] as social (social.label)}
-            <li>
-              <a
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="mp-body mp-on-ink contact-link hover:underline"
-                >{social.label}</a
-              >
-            </li>
-          {/each}
+          <li>
+            <a
+              href={contactData.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mp-btn mp-btn--secondary mp-btn--icon"
+              aria-label="GitHub"
+              title="GitHub"
+            >
+              <Github class="mp-icon" aria-hidden="true" />
+            </a>
+          </li>
+          <li>
+            <a
+              href={contactData.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mp-btn mp-btn--secondary mp-btn--icon"
+              aria-label="LinkedIn"
+              title="LinkedIn"
+            >
+              <Linkedin class="mp-icon" aria-hidden="true" />
+            </a>
+          </li>
+          <li>
+            <a
+              href={contactData.x}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mp-btn mp-btn--secondary mp-btn--icon"
+              aria-label="X"
+              title="X"
+            >
+              <XLogo class="mp-icon" />
+            </a>
+          </li>
         </ul>
       </div>
     </div>
