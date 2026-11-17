@@ -153,7 +153,7 @@ export const resumeData: ResumeData = {
         {
           name: 'Forewit',
           detail:
-            'Electrical calculations for buildings: panel schedules, riser diagrams, voltage drop, available fault current, and NEC Article 220 loads. The public demo runs them in a web app, and agents connect through MCP to the same project data. Voltage drop, fault current, and load results stay flagged until their table values are checked against the code book. Next is a source-available library and CLI that turns a project into its schedules, diagrams, and reports as files.',
+            'Electrical calculations for buildings: panel schedules, riser diagrams, voltage drop, available fault current, and NEC Article 220 loads. The public demo runs them in a web app, and agents connect through MCP to the same project data. Voltage drop, fault current, and load results stay flagged until their table values are checked against the code book. Next is a source-available library and CLI that turns a project into its schedules, diagrams, and reports as files. A paid hosted API is planned.',
           stack: [
             'TypeScript',
             'SvelteKit',

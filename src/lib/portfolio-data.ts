@@ -49,7 +49,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
       height: 875,
       alt: 'Forewit demo: panel schedule H-1 with circuits, breaker sizes, voltage drop, and an issues sidebar',
     },
-    status: 'In development',
+    status: 'Live',
     owner: 'Surfside Software',
     project_url: 'https://surfside-software.com/forewit',
     github_url: null,
