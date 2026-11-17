@@ -37,9 +37,10 @@
             <p class="mp-body mp-body--lg">
               I design MEP systems and run IT at Advanced Engineering
               Consultants, where everyone in the office uses the internal tools
-              I build. On my own time I build engineering software for people
-              and AI agents at
-              <strong class="mp-on-ink font-medium">Surfside Software</strong>.
+              I build. On my own time I run
+              <strong class="mp-on-ink font-medium">Surfside Software</strong>,
+              where I build tsdraft, CAD drawings in TypeScript, and Forewit,
+              electrical calculations for buildings.
             </p>
           </div>
         </div>

@@ -24,7 +24,6 @@
     {
       owner: 'Surfside Software',
       heading: 'Surfside Software',
-      note: 'My company: engineering software for people and AI agents.',
       href: 'https://surfside-software.com',
       compact: false,
     },

@@ -10,12 +10,12 @@
   <title>Projects · Stephen Frederick</title>
   <meta
     name="description"
-    content="Engineering software, internal tools, and experiments by Stephen Frederick: Surfside Software, Second Set, tsdraft, and more."
+    content="Engineering software, internal tools, and experiments by Stephen Frederick: tsdraft, Forewit, Second Set, and more."
   />
   <meta property="og:title" content="Projects · Stephen Frederick" />
   <meta
     property="og:description"
-    content="Engineering software, internal tools, and experiments by Stephen Frederick: Surfside Software, Second Set, tsdraft, and more."
+    content="Engineering software, internal tools, and experiments by Stephen Frederick: tsdraft, Forewit, Second Set, and more."
   />
 </svelte:head>
 
