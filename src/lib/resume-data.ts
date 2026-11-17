@@ -59,7 +59,7 @@ export const resumeData: ResumeData = {
   availability:
     'Open to remote or hybrid work in Florida, or on-site work in San Francisco or New York.',
   summary:
-    'I am an MEP designer with more than five years at Advanced Engineering Consultants in Tampa, where I design building systems, run IT, and build the firm’s internal software by directing AI coding agents. All eight people in the office use that software on live projects to review permit drawing sets, track permits, and manage projects. I also built MCP servers that let AI agents draft in live BricsCAD and AutoCAD sessions. On my own time I build engineering tools for people and AI agents at Surfside Software. I am looking for work that combines the AEC industry with AI agents.',
+    'I am an MEP designer with more than five years at Advanced Engineering Consultants in Tampa, where I design building systems, run IT, and build the firm’s internal software by directing AI coding agents. All eight people in the office use that software on live projects to review permit drawing sets, track permits, and manage projects. I also built MCP servers that let AI agents draft in live BricsCAD and AutoCAD sessions. On my own time I run Surfside Software, where I build tsdraft (CAD drawings in TypeScript) and Forewit (electrical calculations for buildings). I am looking for work that combines the AEC industry with AI agents.',
   experience: [
     {
       id: 1,
@@ -145,9 +145,15 @@ export const resumeData: ResumeData = {
       description: [],
       projects: [
         {
+          name: 'tsdraft',
+          detail:
+            'A TypeScript library, MIT and on npm, for writing 2D CAD drawings as code. It writes DXF, SVG, and PDF, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks, and reads DXF back. Its unreleased DWG writer produces files that AutoCAD opens and plots, using no Autodesk or ODA libraries, and will run behind a planned paid hosted API. Its examples include a 15-sheet residential permit set built from one house model, written as DXF and SVG.',
+          stack: [],
+        },
+        {
           name: 'Forewit',
           detail:
-            'A shared workspace for electrical panel schedules and riser diagrams. Engineers use the web app, and AI agents connect through MCP to the same project data and calculation logic. The demo includes voltage drop, fault current, and load calculations, which stay marked in progress until their table data is checked against the code book.',
+            'Electrical calculations for buildings: panel schedules, riser diagrams, voltage drop, available fault current, and NEC Article 220 loads. The public demo runs them in a web app, and agents connect through MCP to the same project data. Voltage drop, fault current, and load results stay flagged until their table values are checked against the code book. Next is a source-available library and CLI that turns a project into its schedules, diagrams, and reports as files. A paid hosted API is planned.',
           stack: [
             'TypeScript',
             'SvelteKit',
@@ -157,12 +163,6 @@ export const resumeData: ResumeData = {
             'Alchemy',
             'MCP',
           ],
-        },
-        {
-          name: 'tsdraft',
-          detail:
-            'A TypeScript library, published on npm, for writing 2D CAD drawings as code. The open-source core writes DXF and SVG, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks. An unreleased add-on writes DWG files that AutoCAD opens and plots, using its own writer and no Autodesk or ODA libraries. A demo builds a 15-sheet residential permit set from one house model and exports it as DWG, DXF, and PDF.',
-          stack: [],
         },
         {
           name: 'Second Set',

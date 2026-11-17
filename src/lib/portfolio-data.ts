@@ -15,12 +15,33 @@ import tsdraftDrawingSmall from '#lib/assets/projects/tsdraft-a101-720.webp';
  */
 export const portfolioItems: readonly PortfolioItem[] = [
   {
+    id: 13,
+    title: 'tsdraft',
+    summary:
+      '2D CAD drawings as TypeScript, free on npm. Writes DXF, SVG, and PDF with layers, blocks, dimensions, and title blocks.',
+    description:
+      'A TypeScript library for writing 2D CAD drawings as code. The MIT library on npm writes DXF, SVG, and PDF, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks, and reads DXF back. Its DWG writer produces files that AutoCAD opens and plots, using no Autodesk or ODA libraries. It is unreleased and will run behind a planned paid hosted API that reads, writes, and edits DWG. Its examples include a 15-sheet residential permit set built from one house model, written as DXF and SVG.',
+    image: {
+      src: tsdraftDrawing,
+      srcSmall: tsdraftDrawingSmall,
+      width: 1400,
+      height: 933,
+      alt: 'tsdraft example: sheet A-101, a first floor plan with dimensions, notes, and a title block',
+    },
+    status: 'Live',
+    owner: 'Surfside Software',
+    project_url: 'https://www.npmjs.com/package/tsdraft',
+    github_url: 'https://github.com/Surfside-Software/tsdraft',
+    technologies: ['TypeScript', 'DXF', 'SVG', 'Node.js'],
+    display_order: 1,
+  },
+  {
     id: 1,
     title: 'Forewit',
     summary:
-      'A shared workspace for electrical panel schedules and riser diagrams that engineers and AI agents use through MCP.',
+      'Electrical calculations for buildings: panel schedules, riser diagrams, voltage drop, fault current, and Article 220 loads. Live as a demo, with an MCP server for agents.',
     description:
-      'Surfside Software’s first product: a shared workspace for electrical panel schedules and riser diagrams. Engineers use the web app, and AI agents connect through MCP to the same project data and calculation logic. The demo includes voltage drop, fault current, and load calculations, which stay marked in progress until their table data is checked against the code book.',
+      'Electrical calculations for buildings: panel schedules, riser diagrams, voltage drop, available fault current, and NEC Article 220 loads. The public demo runs them in a web app, and agents connect through MCP to the same project data. Voltage drop, fault current, and load results stay flagged until their table values are checked against the code book. Next is a source-available library and CLI that turns a project into its schedules, diagrams, and reports as files. A paid hosted API is planned.',
     image: {
       src: forewitPanel,
       srcSmall: forewitPanelSmall,
@@ -28,10 +49,10 @@ export const portfolioItems: readonly PortfolioItem[] = [
       height: 875,
       alt: 'Forewit demo: panel schedule H-1 with circuits, breaker sizes, voltage drop, and an issues sidebar',
     },
-    status: 'In development',
+    status: 'Live',
     owner: 'Surfside Software',
-    project_url: 'https://surfside-software.com',
-    github_url: 'https://github.com/Surfside-Software',
+    project_url: 'https://surfside-software.com/forewit',
+    github_url: null,
     technologies: [
       'TypeScript',
       'SvelteKit',
@@ -43,7 +64,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'MCP',
     ],
     highlighted: true,
-    display_order: 1,
+    display_order: 2,
   },
   {
     id: 12,
@@ -73,27 +94,6 @@ export const portfolioItems: readonly PortfolioItem[] = [
       'SQLite',
       'pdf.js',
     ],
-    display_order: 2,
-  },
-  {
-    id: 13,
-    title: 'tsdraft',
-    summary:
-      '2D CAD drawings as TypeScript, published on npm. Writes DXF and SVG with layers, blocks, dimensions, and title blocks.',
-    description:
-      'A TypeScript library for writing 2D CAD drawings as code. The open-source core writes DXF and SVG, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks. An unreleased add-on writes DWG files that AutoCAD opens and plots, using its own writer and no Autodesk or ODA libraries. A demo builds a 15-sheet residential permit set from one house model and exports it as DWG, DXF, and PDF.',
-    image: {
-      src: tsdraftDrawing,
-      srcSmall: tsdraftDrawingSmall,
-      width: 1400,
-      height: 933,
-      alt: 'tsdraft example: sheet A-101, a first floor plan with dimensions, notes, and a title block',
-    },
-    status: 'Live',
-    owner: 'Surfside Software',
-    project_url: 'https://www.npmjs.com/package/tsdraft',
-    github_url: 'https://github.com/Surfside-Software/tsdraft',
-    technologies: ['TypeScript', 'DXF', 'SVG', 'Node.js'],
     display_order: 3,
   },
   {
