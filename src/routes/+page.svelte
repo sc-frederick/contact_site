@@ -6,7 +6,7 @@
   <title>Stephen Frederick · MEP designer and software developer</title>
   <meta
     name="description"
-    content="MEP designer at Advanced Engineering Consultants and founder of Surfside Software, which makes tsdraft, CAD drawings in TypeScript, and Forewit, electrical calculations for buildings."
+    content="MEP designer at Advanced Engineering Consultants and founder of Surfside Software, which makes tsdraft (CAD drawings in TypeScript) and Forewit (electrical calculations for buildings)."
   />
   <meta
     property="og:title"
@@ -14,7 +14,7 @@
   />
   <meta
     property="og:description"
-    content="MEP designer at Advanced Engineering Consultants and founder of Surfside Software, which makes tsdraft, CAD drawings in TypeScript, and Forewit, electrical calculations for buildings."
+    content="MEP designer at Advanced Engineering Consultants and founder of Surfside Software, which makes tsdraft (CAD drawings in TypeScript) and Forewit (electrical calculations for buildings)."
   />
 </svelte:head>
 

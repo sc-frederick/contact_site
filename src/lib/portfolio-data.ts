@@ -20,7 +20,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
     summary:
       '2D CAD drawings as TypeScript, free on npm. Writes DXF, SVG, and PDF with layers, blocks, dimensions, and title blocks.',
     description:
-      'A TypeScript library for writing 2D CAD drawings as code. The MIT library on npm writes DXF, SVG, and PDF, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks, and reads DXF back. Its DWG writer, which AutoCAD opens and plots, uses no Autodesk or ODA libraries. It is unreleased and will run behind a planned paid hosted API that reads, writes, and edits DWG. A demo builds a 15-sheet residential permit set from one house model and exports it as DWG, DXF, and PDF.',
+      'A TypeScript library for writing 2D CAD drawings as code. The MIT library on npm writes DXF, SVG, and PDF, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks, and reads DXF back. Its DWG writer produces files that AutoCAD opens and plots, using no Autodesk or ODA libraries. It is unreleased and will run behind a planned paid hosted API that reads, writes, and edits DWG. Its examples include a 15-sheet residential permit set built from one house model, written as DXF and SVG.',
     image: {
       src: tsdraftDrawing,
       srcSmall: tsdraftDrawingSmall,
@@ -51,8 +51,8 @@ export const portfolioItems: readonly PortfolioItem[] = [
     },
     status: 'In development',
     owner: 'Surfside Software',
-    project_url: 'https://surfside-software.com',
-    github_url: 'https://github.com/Surfside-Software',
+    project_url: 'https://surfside-software.com/forewit',
+    github_url: null,
     technologies: [
       'TypeScript',
       'SvelteKit',

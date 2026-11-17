@@ -59,7 +59,7 @@ export const resumeData: ResumeData = {
   availability:
     'Open to remote or hybrid work in Florida, or on-site work in San Francisco or New York.',
   summary:
-    'I am an MEP designer with more than five years at Advanced Engineering Consultants in Tampa, where I design building systems, run IT, and build the firm’s internal software by directing AI coding agents. All eight people in the office use that software on live projects to review permit drawing sets, track permits, and manage projects. I also built MCP servers that let AI agents draft in live BricsCAD and AutoCAD sessions. On my own time I run Surfside Software, where I build tsdraft, CAD drawings in TypeScript, and Forewit, electrical calculations for buildings. I am looking for work that combines the AEC industry with AI agents.',
+    'I am an MEP designer with more than five years at Advanced Engineering Consultants in Tampa, where I design building systems, run IT, and build the firm’s internal software by directing AI coding agents. All eight people in the office use that software on live projects to review permit drawing sets, track permits, and manage projects. I also built MCP servers that let AI agents draft in live BricsCAD and AutoCAD sessions. On my own time I run Surfside Software, where I build tsdraft (CAD drawings in TypeScript) and Forewit (electrical calculations for buildings). I am looking for work that combines the AEC industry with AI agents.',
   experience: [
     {
       id: 1,
@@ -147,7 +147,7 @@ export const resumeData: ResumeData = {
         {
           name: 'tsdraft',
           detail:
-            'A TypeScript library, MIT and on npm, for writing 2D CAD drawings as code. It writes DXF, SVG, and PDF, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks, and reads DXF back. Its unreleased DWG writer, which AutoCAD opens and plots, uses no Autodesk or ODA libraries and will run behind a planned paid hosted API. A demo builds a 15-sheet residential permit set from one house model and exports it as DWG, DXF, and PDF.',
+            'A TypeScript library, MIT and on npm, for writing 2D CAD drawings as code. It writes DXF, SVG, and PDF, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks, and reads DXF back. Its unreleased DWG writer produces files that AutoCAD opens and plots, using no Autodesk or ODA libraries, and will run behind a planned paid hosted API. Its examples include a 15-sheet residential permit set built from one house model, written as DXF and SVG.',
           stack: [],
         },
         {

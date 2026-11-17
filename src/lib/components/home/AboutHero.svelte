@@ -39,8 +39,8 @@
               Consultants, where everyone in the office uses the internal tools
               I build. On my own time I run
               <strong class="mp-on-ink font-medium">Surfside Software</strong>,
-              where I build tsdraft, CAD drawings in TypeScript, and Forewit,
-              electrical calculations for buildings.
+              where I build tsdraft (CAD drawings in TypeScript) and Forewit
+              (electrical calculations for buildings).
             </p>
           </div>
         </div>
