@@ -147,7 +147,7 @@ export const resumeData: ResumeData = {
         {
           name: 'tsdraft',
           detail:
-            'A TypeScript library, MIT and on npm, for writing 2D CAD drawings as code. It writes DXF, SVG, and PDF, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks, and reads DXF back. Its unreleased DWG writer produces files that AutoCAD opens and plots, using no Autodesk or ODA libraries, and will run behind a planned paid hosted API. Its examples include a 15-sheet residential permit set built from one house model, written as DXF and SVG.',
+            'A TypeScript library, MIT and on npm, for writing 2D CAD drawings as code. It writes DXF, SVG, and PDF, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks, and reads DXF files to inspect them. A DWG writer is in development and will run behind a planned paid hosted API. Its examples include a 15-sheet residential permit set built from one house model, written as DXF and SVG.',
           stack: [],
         },
         {

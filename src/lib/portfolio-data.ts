@@ -20,7 +20,7 @@ export const portfolioItems: readonly PortfolioItem[] = [
     summary:
       '2D CAD drawings as TypeScript, free on npm. Writes DXF, SVG, and PDF with layers, blocks, dimensions, and title blocks.',
     description:
-      'A TypeScript library for writing 2D CAD drawings as code. The MIT library on npm writes DXF, SVG, and PDF, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks, and reads DXF back. Its DWG writer produces files that AutoCAD opens and plots, using no Autodesk or ODA libraries. It is unreleased and will run behind a planned paid hosted API that reads, writes, and edits DWG. Its examples include a 15-sheet residential permit set built from one house model, written as DXF and SVG.',
+      'A TypeScript library for writing 2D CAD drawings as code. The MIT library on npm writes DXF, SVG, and PDF, with layers, blocks with attributes, DWG xrefs, dimensions, and plotted layouts with title blocks, and reads DXF files to inspect them. A DWG writer is in development, for a planned paid hosted API that reads, writes, and edits DWG. Its examples include a 15-sheet residential permit set built from one house model, written as DXF and SVG.',
     image: {
       src: tsdraftDrawing,
       srcSmall: tsdraftDrawingSmall,
