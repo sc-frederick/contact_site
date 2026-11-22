@@ -30,9 +30,6 @@
           <h1 class="home-hero-name mp-display mp-display--xl mp-on-ink">
             Stephen <span class="mp-italic">Frederick</span>
           </h1>
-          <p class="home-hero-tagline">
-            MEP designer who builds software for engineers.
-          </p>
           <div class="home-hero-copy mt-6">
             <p class="mp-body mp-body--lg">
               I design MEP systems and run IT at Advanced Engineering
